@@ -31,6 +31,7 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// Apply password middleware to insertMany (for seeding purposes)
 userSchema.pre("insertMany", async function (next, docs) {
   try {
     for (const doc of docs) {
