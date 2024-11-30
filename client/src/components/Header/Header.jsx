@@ -4,11 +4,11 @@ import Nav from "react-bootstrap/Nav";
 import "../../styles/index.css";
 import "./header.css";
 import AuthService from "../../utils/auth.js";
-import { useMainContext } from "../../utils/GlobalState.jsx";
+import { useGlobalContext } from "../../utils/GlobalState.jsx";
 import HeaderStyleRouter from "./HeaderStyleRouter.js";
 
 function Header() {
-  const [state, dispatch] = useMainContext();
+  const [state, dispatch] = useGlobalContext();
   const styleRouter = new HeaderStyleRouter(state);
 
   return (

@@ -2,8 +2,8 @@ import { createContext, useContext, useReducer } from "react";
 import { useMediaQuery } from "react-responsive";
 import reducer from "./reducers";
 
-const MainContext = createContext();
-const { Provider } = MainContext;
+const GlobalContext = createContext();
+const { Provider } = GlobalContext;
 
 const MainProvider = ({ value = [], ...props }) => {
   const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
@@ -21,8 +21,8 @@ const MainProvider = ({ value = [], ...props }) => {
   return <Provider value={[state, dispatch]} {...props} />;
 };
 
-const useMainContext = () => {
-  return useContext(MainContext);
+const useGlobalContext = () => {
+  return useContext(GlobalContext);
 };
 
-export { MainProvider, useMainContext };
+export { MainProvider, useGlobalContext };
