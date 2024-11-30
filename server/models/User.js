@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 const bcrypt = require("bcrypt");
 
+const saltRounds = 10;
+
 const userSchema = new Schema({
   username: {
     type: String,
@@ -23,8 +25,19 @@ const userSchema = new Schema({
 // set up pre-save middleware to create password
 userSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {
-    const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
+  }
+
+  next();
+});
+
+userSchema.pre("insertMany", async function (next, docs) {
+  try {
+    for (const doc of docs) {
+      doc.password = await bcrypt.hash(doc.password, saltRounds);
+    }
+  } catch (err) {
+    throw err;
   }
 
   next();
