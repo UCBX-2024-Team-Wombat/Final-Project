@@ -29,7 +29,7 @@ function Login() {
   };
 
   return (
-    <div className="container my-1">
+    <>
       <h2>Login</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
@@ -61,7 +61,7 @@ function Login() {
           <button type="submit">Submit</button>
         </div>
       </form>
-    </div>
+    </>
   );
 }
 
