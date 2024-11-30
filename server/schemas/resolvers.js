@@ -4,19 +4,12 @@ const { signToken, AuthenticationError } = require("../utils/auth.js");
 const resolvers = {
   Query: {
     user: async (parent, args, context) => {
-      if (context.user) {
-        const user = await User.findById(context.user._id);
-
-        user.orders.sort((a, b) => b.purchaseDate - a.purchaseDate);
-
-        return user;
-      }
-
-      throw AuthenticationError;
+      const user = await User.findOne({ username: context.args.username });
+      return user;
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id }).populate("thoughts");
+        return User.findOne({ _id: context.user._id });
       }
       throw AuthenticationError;
     },
