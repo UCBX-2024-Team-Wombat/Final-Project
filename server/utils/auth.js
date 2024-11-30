@@ -6,9 +6,6 @@ require("dotenv").config();
 const secret = process.env.JWT_SECRET;
 const expiration = process.env.JWT_TOKEN_EXPIRATION;
 
-// const secret = "aslekjfew";
-// const expiration = "2h";
-
 console.log("secret", secret);
 console.log("expiration", expiration);
 
