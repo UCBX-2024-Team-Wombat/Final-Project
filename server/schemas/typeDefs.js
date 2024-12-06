@@ -6,7 +6,7 @@ const typeDefs = `
     password: String
     location: Location!
   }
-
+  
   type Auth {
     token: ID
     user: User
@@ -28,16 +28,17 @@ const typeDefs = `
   }
 
   type Mutation {
-    addUser(username: String!, email: String!, password: String!, location: LocationInput!): Auth
+    addUser(username: String!, email: String!, password: String!, location: Location!): Auth
     login(email: String!, password: String!): Auth
   }
-   input ProvinceInput {
+  type Province {
     name: String!
   }
-  input LocationInput {
+  type Country {
+    name: 
     city: String!
-    province: ProvinceInput
-    state: ProvinceInput
+    province: Province
+    state: Province
   }
 `;
 
