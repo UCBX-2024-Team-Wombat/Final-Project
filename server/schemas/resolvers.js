@@ -1,4 +1,4 @@
-const { User } = require("../models/index.js");
+const { User, Skill, SkillRelationship } = require("../models/index.js");
 const { signToken, AuthenticationError } = require("../utils/auth.js");
 
 const resolvers = {
