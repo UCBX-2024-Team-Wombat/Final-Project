@@ -6,15 +6,11 @@ const skillRelationshipSchema = Schema({
         type: Schema.Types.ObjectId, 
         ref: 'Skill',
     },
-    SkillInQuestion: {
-        type: String,
-        required: true,
-    },
-    YearsOfExpereince: {
+    yearsOfExpereince: {
         type: Number,
         required: true,
     },
-    AreasOfExpertise: {
+    areasOfExpertise: {
         type: String,
     },
     user: [{ type: Schema.Types.ObjectId, ref: 'User'}]
