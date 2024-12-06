@@ -2,6 +2,11 @@
     {
         "username": "janeTest",
         "email": "jane@test.com",
-        "password": "abc123"
+        "password": "abc123",
+        "city": {
+            "irvine": {
+              "province": "Orange County",
+              "state": "California"
+            }
     }
 ]
