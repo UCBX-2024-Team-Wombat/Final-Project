@@ -33,8 +33,8 @@ const typeDefs = `
   }
   input LocationInput {
     city: String!
-    province: String
-    state: String
+    province: String!
+    state: String!
   }
 `;
 
