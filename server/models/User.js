@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 const bcrypt = require("bcrypt");
+const LocationSchema = require('./Location').schema;
 
 const saltRounds = 10;
 
@@ -20,6 +21,12 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  
+  location: {
+    type: LocationSchema,
+    required: true,
+  },
+
 });
 
 // set up pre-save middleware to create password
