@@ -9,21 +9,18 @@ const ProvinceSchema = new Schema({
     },
   });
   
-const locationSchema = new Schema({
+const LocationSchema = new Schema({
     city: {
         type: String,
         required: true,
-        trim: true,
       },
       province: {
-        type: String,
-        required: false,
-        trim: true,
+        type: ProvinceSchema,
+        required: true,
       },
       state: {
-        type: String,
-        required: false,
-        trim: true,
+        type: ProvinceSchema,
+        required: true,
       },
 });
 
