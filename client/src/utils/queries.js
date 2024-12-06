@@ -20,4 +20,23 @@ const QUERY_ME = gql`
   }
 `;
 
-export { QUERY_USER, QUERY_ME };
+const QUERY_SKILLRELATIONSHIPS = gql`
+query GetSkillRelationships {
+  getSkillRelationships {
+    yearsOfExperience
+    areasOfExpertise
+    skill {
+      name
+      description
+    }
+    user {
+      _id
+      username
+      email
+      password
+    }
+  }
+}
+`;
+
+export { QUERY_USER, QUERY_ME, QUERY_SKILLRELATIONSHIPS };

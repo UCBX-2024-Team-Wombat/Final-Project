@@ -6,14 +6,14 @@ const skillRelationshipSchema = Schema({
         type: Schema.Types.ObjectId, 
         ref: 'Skill',
     },
-    yearsOfExpereince: {
+    yearsOfExperience: {
         type: Number,
         required: true,
     },
     areasOfExpertise: {
         type: String,
     },
-    user: [{ type: Schema.Types.ObjectId, ref: 'User'}]
+    user: { type: Schema.Types.ObjectId, ref: 'User'}
 });
 
 const SkillRelationship = mongoose.model("SkillRelationship", skillRelationshipSchema);
