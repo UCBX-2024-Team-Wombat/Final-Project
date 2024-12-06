@@ -16,6 +16,6 @@ const skillRelationshipSchema = Schema({
     user: [{ type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
-const SkillRelationship = mongoose.model("Skill", skillRelationshipSchema);
+const SkillRelationship = mongoose.model("SkillRelationship", skillRelationshipSchema);
 
 module.exports = SkillRelationship;
