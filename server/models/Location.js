@@ -1,6 +1,14 @@
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 
+// Subdocument schema for province/state
+const ProvinceSchema = new Schema({
+    name: {
+      type: String,
+      required: true,
+    },
+  });
+  
 const locationSchema = new Schema({
     city: {
         type: String,
