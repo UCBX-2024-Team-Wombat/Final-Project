@@ -8,6 +8,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Error from "./pages/Error";
+import SearchPage from "./pages/SearchPage/SearchPage.jsx"
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
         path: "/signup",
         element: <Signup />,
       },
+      {
+        path: "/search",
+        element: <SearchPage />,
+      }
     ],
   },
 ]);
