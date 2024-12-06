@@ -10,7 +10,7 @@ const skillSchema = new Schema(
     },
     description: {
         type: string,
-        required: true
+        required: false
     }
 });
 
