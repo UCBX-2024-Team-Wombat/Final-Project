@@ -1,4 +1,4 @@
-const typeDefs = gql`
+const typeDefs = `
   type User {
     _id: ID
     username: String
@@ -21,7 +21,7 @@ const typeDefs = gql`
     skill: Skill
     yearsOfExperience: Int
     areasOfExpertise: String
-    user: [User]
+    user: User
   }
 
   type Query {
