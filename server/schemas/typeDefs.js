@@ -31,10 +31,13 @@ const typeDefs = `
     addUser(username: String!, email: String!, password: String!, location: LocationInput!): Auth
     login(email: String!, password: String!): Auth
   }
+   input ProvinceInput {
+    name: String!
+  }
   input LocationInput {
     city: String!
-    province: String!
-    state: String!
+    province: ProvinceInput
+    state: ProvinceInput
   }
 `;
 
