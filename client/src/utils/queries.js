@@ -16,6 +16,12 @@ const QUERY_ME = gql`
       _id
       username
       email
+      location {
+      city
+      province
+      state
+    }
+
     }
   }
 `;
