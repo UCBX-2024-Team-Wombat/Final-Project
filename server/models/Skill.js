@@ -5,11 +5,11 @@ const skillSchema = new Schema(
     {
         //help from module 21, activity 5 
     name: {
-        type: string,
+        type: String,
         required: true
     },
     description: {
-        type: string,
+        type: String,
         required: false
     }
 });
