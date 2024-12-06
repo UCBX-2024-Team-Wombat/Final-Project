@@ -11,6 +11,16 @@ const typeDefs = `
     user: User
   }
 
+  type Skill {
+    _id: ID
+    name: String
+    description: String
+  }
+
+  type SkillRelationship {
+  
+  }
+
   type Query {
     user(id: ID!): User
     me: User
