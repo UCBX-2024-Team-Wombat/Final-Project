@@ -36,8 +36,8 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
-    addSkill(name: String!, description: String!): Skill
-    modifySkill(id: ID!, name: String!, description: String!): Skill
+    addSkill(name: String!, description: String): Skill
+    modifySkill(id: ID!, name: String, description: String): Skill
     deleteSkill(id: ID!): Skill
     addSkillRelationship(skill: ID!, yearsOfExperience: Int!, areasOfExpertise: String!, user: ID!): SkillRelationship
   }
