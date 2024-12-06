@@ -18,8 +18,12 @@ const QUERY_ME = gql`
       email
       location {
       city
-      province
-      state
+      province {
+        name
+      }
+      state {
+        name
+      }
     }
 
     }
