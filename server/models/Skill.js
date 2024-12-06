@@ -3,6 +3,7 @@ const { Schema } = require("mongoose");
 
 const skillSchema = new Schema(
     {
+        //help from module 21, activity 5 
     name: {
         type: string,
         required: true
