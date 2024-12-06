@@ -19,7 +19,7 @@ const typeDefs = `
 
   type SkillRelationship {
     skill: Skill
-    yearsOfExperience: Int
+    yearsOfExperience: String
     areasOfExpertise: String
     user: User
   }
@@ -39,7 +39,7 @@ const typeDefs = `
     addSkill(name: String!, description: String): Skill
     modifySkill(id: ID!, name: String, description: String): Skill
     deleteSkill(id: ID!): Skill
-    addSkillRelationship(skill: ID!, yearsOfExperience: Int!, areasOfExpertise: String!, user: ID!): SkillRelationship
+    addSkillRelationship(skill: ID!, yearsOfExperience: String!, areasOfExpertise: String, user: ID!): SkillRelationship
   }
 `;
 
