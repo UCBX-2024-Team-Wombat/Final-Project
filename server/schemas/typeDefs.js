@@ -17,9 +17,7 @@ const typeDefs = `
     description: String
   }
 
-  type SkillRelationship {
-  
-  }
+
 
   type Query {
     user(id: ID!): User
