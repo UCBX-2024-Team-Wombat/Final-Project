@@ -1,0 +1,102 @@
+[
+    {
+        "name": "Language - American Sign Language",
+        "description": "",
+        "seedId": 1
+    },
+    {
+        "name": "Language - Spanish",
+        "description": "",
+        "seedId": 2
+    },
+    {
+        "name": "Game Design - Tabletop Games",
+        "description": "Designing, building, and testing tabletop games",
+        "seedId": 3
+    },
+    {
+        "name": "Game Design - Video Games",
+        "description": "Designing, building, and testing video games",
+        "seedId": 4
+    },
+    {
+        "name": "Coding - MERN",
+        "description": "The MERN stack (MongoDB, Express, React, Node)",
+        "seedId": 5
+    },
+    {
+        "name": "Coding - Python",
+        "description": "The python coding language (https://www.python.org/)",
+        "seedId": 6
+    },
+    {
+        "name": "Coding - JavaScript",
+        "description": "The coding language JavaScript (https://www.javascript.com/)",
+        "seedId": 7
+    },
+    {
+        "name": "Coding - Git",
+        "description": "The version control language git (https://git-scm.com/)",
+        "seedId": 8
+    },
+    {
+        "name": "Registered Health Coaching",
+        "description": "",
+        "seedId": 9
+    },
+    {
+        "name": "Nutrition",
+        "description": "",
+        "seedId": 10
+    },
+    {
+        "name": "Search Engine Optimization (SEO)",
+        "description": "",
+        "seedId": 11
+    },
+    {
+        "name": "Social Media Marketing",
+        "description": "",
+        "seedId": 12
+    },
+    {
+        "name": "Coding - React",
+        "description": "",
+        "seedId": 13
+    },
+    {
+        "name": "Martial Arts - Taekwondo",
+        "description": "",
+        "seedId": 14
+    },
+    {
+        "name": "Martial Arts - Self Defense",
+        "description": "",
+        "seedId": 15
+    },
+    {
+        "name": "Free Diving",
+        "description": "",
+        "seedId": 16
+    },
+    {
+        "name": "Certified Dog Training",
+        "description": "",
+        "seedId": 17
+    },
+    {
+        "name": "Holistic Nutrition",
+        "description": "",
+        "seedId": 18
+    },
+    {
+        "name": "Surfing",
+        "description": "",
+        "seedId": 19
+    },
+    {
+        "name": "Horseback Riding",
+        "description": "",
+        "seedId": 20
+    }
+]
