@@ -12,4 +12,6 @@ Applying Password Hashing on insertMany hook
 - Sources:
   - https://www.linkedin.com/pulse/mongoose-pre-hooks-insertmany-model-functions-palash-chanda/
   - https://stackoverflow.com/questions/64029437/mongoose-schema-pre-insertmany-middleware
+  https://www.npmjs.com/package/csv-parser //yv 
+
 - Use: `server/models/User.js`
