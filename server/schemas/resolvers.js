@@ -1,5 +1,8 @@
 const { User } = require("../models/index.js");
 const { signToken, AuthenticationError } = require("../utils/auth.js");
+const Country = require('../models/Country');
+const State = require('../models/State');
+const City = require('../models/City');
 
 const resolvers = {
   Query: {
