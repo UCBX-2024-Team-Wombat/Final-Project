@@ -6,6 +6,19 @@ const City = require('../models/City');
 
 const resolvers = {
   Query: {
+    getCountries: async () => await Country.find().populate('states'),
+    getProvinces: async (_, { countryName }) => {
+      const country = await Country.findOne({ name: countryName }).populate('states');
+      return country ? country.states : [];
+    },
+    getCities: async (_, { stateName }) => {
+      const state = await State.findOne({ name: stateName }).populate('cities');
+      return state ? state.cities : [];
+    },
+    getCounties: async (_, { cityName }) => {
+      const city = await City.findOne({ name: cityName });
+      return city ? city.counties : [];
+    },
     user: async (parent, args, context) => {
       const user = await User.findOne({ username: context.args.username });
       return user;
