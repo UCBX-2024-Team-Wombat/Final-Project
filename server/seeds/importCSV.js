@@ -35,6 +35,26 @@ const importCSV = async () => {
         city = { name: CityName, counties: [] };
         state.cities.push(city);
       }
+      if (!city.counties.some((county) => county.name === CountyName)) {
+        city.counties.push({ name: CountyName });
+      }
+    })
+    .on('end', async () => {
+      try {
+        for (const countryName in countries) {
+          const country = new Country(countries[countryName]);
+          await country.save();
+        }
+        console.log('CSV data imported successfully!');
+        mongoose.connection.close();
+      } catch (err) {
+        console.error(err);
+        mongoose.connection.close();
+      }
+    });
+};
+
+importCSV();
 
 
   
