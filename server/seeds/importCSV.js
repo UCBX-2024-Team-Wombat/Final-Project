@@ -17,6 +17,24 @@ const importCSV = async () => {
     .pipe(csv()) 
     .on('data', (row) => {
       const { CountryName, StateName, CityName, CountyName } = row;
+      if (!countries[CountryName]) {
+        countries[CountryName] = { name: CountryName, states: [] };
+      }
+
+      const country = countries[CountryName];
+      let state = country.states.find((s) => s.name === StateName);
+
+      if (!state) {
+        state = { name: StateName, cities: [] };
+        country.states.push(state);
+      }
+
+      let city = state.cities.find((c) => c.name === CityName);
+
+      if (!city) {
+        city = { name: CityName, counties: [] };
+        state.cities.push(city);
+      }
 
 
   
