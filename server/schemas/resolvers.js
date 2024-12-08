@@ -20,7 +20,7 @@ const resolvers = {
       return city ? city.counties : [];
     },
     user: async (parent, args, context) => {
-      const user = await User.findOne({ username: context.args.username });
+      const user = await User.findOne({ username: context.args.username }).populate(['city', 'county', 'state', 'country']); // users has location data 
       return user;
     },
     me: async (parent, args, context) => {
