@@ -22,10 +22,22 @@ const userSchema = new Schema({
     minlength: 5,
   },
   
-  location: {
-    type: LocationSchema,
-    required: true,
+  city: { 
+    type: Schema.Types.ObjectId, 
+    ref: 'City' 
   },
+  county: { 
+    type: Map, 
+    of: String 
+  },
+  state: { 
+    type: Schema.Types.ObjectId, 
+    ref: 'State'
+   },
+  country: {
+     type: Schema.Types.ObjectId, 
+     ref: 'Country' 
+    },
 
 });
 
