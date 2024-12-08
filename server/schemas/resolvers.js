@@ -67,9 +67,9 @@ const resolvers = {
       const skill = await Skill.findByIdAndDelete(id);
       return skill;
     },
-    addSkillRelationship: async (parent, { skill, yearsOfExperience, areasOfExpertise, user }) => {
+    addSkillRelationship: async (parent, { skill, yearsOfExperience, areasOfExpertise, userId }) => {
       //creates a skill relationship and adds the skill, years of experience and areas of experience
-      const skillRelationship = await SkillRelationship.create({ skill, yearsOfExperience, areasOfExpertise, user });
+      const skillRelationship = await SkillRelationship.create({ skill, yearsOfExperience, areasOfExpertise, userId });
       return skillRelationship;
     },
   },
