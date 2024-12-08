@@ -23,7 +23,7 @@ const resolvers = {
     },
     getSkillRelationships: async (parent, args, { userId }) => {
       //populate taken from module 21, activity 5 /schemas/resolvers.js
-      const skillRelationships = await SkillRelationship.findById({ userId }).populate('skill').populate('user');
+      const skillRelationships = await SkillRelationship.find({ userId }).populate('skill').populate('user');
       //this will return an array of the skillRelationships objects 
       return skillRelationships;
     },
