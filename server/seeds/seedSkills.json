@@ -98,5 +98,30 @@
         "name": "Horseback Riding",
         "description": "",
         "seedId": 20
+    },
+    {
+        "name": "Customer Service",
+        "description": "",
+        "seedId": 21
+    },
+    {
+        "name": "Case Management",
+        "description": "",
+        "seedId": 22
+    },
+    {
+        "name": "Golf",
+        "description": "",
+        "seedId": 23
+    },
+    {
+        "name": "Language - Cantonese",
+        "description": "",
+        "seedId": 24
+    },
+    {
+        "name": "Cooking",
+        "description": "",
+        "seedId": 25
     }
 ]
