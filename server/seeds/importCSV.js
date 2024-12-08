@@ -11,6 +11,12 @@ mongoose.connect('mongodb://localhost:27017/OUR DATABASE', { // dont forget to w
 });
 
 const importCSV = async () => {
-  const countries = {};
+  const countries = {}; // i want to use object instead of array 
+
+  fs.createReadStream('data.csv')
+    .pipe(csv()) 
+    .on('data', (row) => {
+      const { CountryName, StateName, CityName, CountyName } = row;
+
 
   
