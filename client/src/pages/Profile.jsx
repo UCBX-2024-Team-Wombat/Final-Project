@@ -20,6 +20,26 @@ const Profile = () => {
     console.log(userData);
     // console.log("Skills: ", foundSkillData);
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setUserData({
+          ...userData,
+          [name]: value,
+        });
+      };
+      const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+          await updateUserProfile({
+            variables: { ...userData },
+          });
+          alert('Profile updated!');
+        } catch (err) {
+          console.error(err);
+          alert('Error cannot update profile.');
+        }
+      };
+
 
     if (loading) {
         return <h2>Loading...</h2>
@@ -28,6 +48,29 @@ const Profile = () => {
         <div className = "myProfile">
             <h1>My Profile</h1>
             <ProfileSkills id={userData._id}/>
+            <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name:</label>
+          <input
+            type="text"
+            name="name"
+            value={userData.name}
+            onChange={handleChange}
+          />
+        </div>
+        <br></br>
+        <div>
+          <label>Email:</label>
+          <input
+            type="email"
+            name="email"
+            value={userData.email}
+            onChange={handleChange}
+          />
+        </div>
+        <br></br>
+        <button type="submit">Update Profile</button>
+      </form>
         </div>
     )
 }

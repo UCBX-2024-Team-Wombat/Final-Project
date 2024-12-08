@@ -21,11 +21,11 @@ const resolvers = {
       //this will grab a skill by it's id
       return await Skill.findById(id);
     },
-    getSkillRelationships: async (parent, args, context) => {
+    getSkillRelationships: async (parent, args, { userId }) => {
       //populate taken from module 21, activity 5 /schemas/resolvers.js
-      return await SkillRelationship.find({}).populate('skill').populate('user');
+      const skillRelationships = await SkillRelationship.findById({ userId }).populate('skill').populate('user');
       //this will return an array of the skillRelationships objects 
-      return[];
+      return skillRelationships;
     },
   },
   Mutation: {

@@ -29,8 +29,7 @@ const typeDefs = `
     me: User
     skills: [Skill]
     skill(id: ID!): Skill
-    getSkillRelationships: [SkillRelationship]
-    getSkillRelationshipsByUserId: [SkillRelationship]
+    getSkillRelationships(userId: ID!): [SkillRelationship]
   }
 
   type Mutation {

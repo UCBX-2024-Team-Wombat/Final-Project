@@ -21,8 +21,8 @@ const QUERY_ME = gql`
 `;
 
 const QUERY_SKILLRELATIONSHIPS = gql`
-query GetSkillRelationships {
-  getSkillRelationships {
+query GetSkillRelationships ($userId: ID!) {
+  getSkillRelationships (userId: $userId) {
     yearsOfExperience
     areasOfExpertise
     skill {
