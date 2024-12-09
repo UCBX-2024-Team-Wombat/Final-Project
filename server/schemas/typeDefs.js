@@ -4,6 +4,16 @@ const typeDefs = `
     username: String
     email: String
     password: String
+    gender: String
+    description: String
+    meetingPreference: String
+    #location: Location
+    availableSkills: [Skill]
+    desiredSkills: [Skill]
+    city: String
+    county: String
+    stateOrProvince: String
+    country: String
   }
 
   type Auth {
@@ -17,10 +27,9 @@ const typeDefs = `
     description: String
   }
 
-
-
   type Query {
-    user(id: ID!): User
+    allUsers: [User]
+    user(userId: ID!): User
     me: User
   }
 
