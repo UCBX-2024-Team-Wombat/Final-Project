@@ -7,7 +7,7 @@ const resolvers = {
       return await User.find();
     },
     user: async (parent, { userId }) => {
-      const user = await User.findById(userId).populate('availableSkills').populate('desiredSkills');  //Add populate for location later
+      const user = await User.findById(userId);  //Add populate for location later
       return user;
     },
     me: async (parent, args, context) => {
@@ -24,12 +24,17 @@ const resolvers = {
       //this will grab a skill by it's id
       return await Skill.findById(id);
     },
-    getSkillRelationships: async (parent, { userId }) => {
+    getSkillRelationships: async (parent, { userId, offered, desired }) => {
       //populate taken from module 21, activity 5 /schemas/resolvers.js
-      const skillRelationships = await SkillRelationship.find({ user: userId }).populate('skill').populate('user');
+      const searchFilter = { user: userId};
+
+      if(offered) searchFilter.offered = offered;
+      if(desired) searchFilter.desired = desired;
+
+      const skillRelationships = await SkillRelationship.find(searchFilter).populate('skill').populate('user');
       //this will return an array of the skillRelationships objects 
       return skillRelationships;
-    },
+    }
   },
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
@@ -70,9 +75,18 @@ const resolvers = {
       const skill = await Skill.findByIdAndDelete(id);
       return skill;
     },
-    addSkillRelationship: async (parent, { skillId, yearsOfExperience, areasOfExpertise, userId }) => {
+    addSkillRelationship: async (parent, { input }) => {
       //creates a skill relationship and adds the skill, years of experience and areas of experience
-      const skillRelationship = await SkillRelationship.create({ skill: skillId, yearsOfExperience, areasOfExpertise, user: userId });
+      const skillRelationshipObject = {
+        skill: input.skillId,
+        user: input.userId,
+        yearsOfExperience: input.yearsOfExperience,
+        offered: input.offered,
+        offeredText: input.offeredText,
+        desired: input.desired,
+        desiredText: input.desiredText
+      };
+      const skillRelationship = await SkillRelationship.create(skillRelationshipObject);
       return skillRelationship;
     },
   },
