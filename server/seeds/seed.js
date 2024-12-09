@@ -17,7 +17,7 @@ const collectionsToReset = [
   },
   {
     modelName: "SkillRelationship",
-    collectionName: "skillRelationships",
+    collectionName: "skillrelationships",
   },
 ];
 
@@ -40,41 +40,6 @@ async function dropCollection({ modelName, collectionName }) {
   }
 }
 
-async function seedCollection({ modelName }, records) {
-  try {
-    await models[modelName].db.db.insertMany(records);
-  } catch (err) {
-    throw err;
-  }
-}
-
-function mapSkills(user, field, map) {
-  const skillRelationshipSeeds = user[field];
-  const objectArray = [];
-
-  for (const seed of skillRelationshipSeeds) {
-    const skillRelationship = {};
-
-    // Add skill
-    const skillId = map[seed.seedId];
-    console.log("skillId", skillId);
-    skillRelationship.skill = skillId;
-
-    // Add user
-    skillRelationship.user = user._id;
-
-    // Add experience and expertise if applicable
-    if (seed.yearsOfExperience)
-      skillRelationship.yearsOfExperience = seed.yearsOfExperience;
-    if (seed.areasOfExpertise)
-      skillRelationship.areasOfExpertise = seed.areasOfExpertise;
-
-    objectArray.push(skillRelationship);
-  }
-
-  user[field] = objectArray;
-}
-
 db.once("open", async () => {
   // Drop all existing collections
   for (const collection of collectionsToReset) {
@@ -90,16 +55,17 @@ db.once("open", async () => {
     );
     const insertedSkills = await Skill.insertMany(skills);
 
+    // Create map of skill names to skill Ids
     const skillNameToIdMap = insertedSkills.reduce(
       (obj, skill) => Object.assign(obj, { [skill.name]: skill._id }),
       {}
     );
 
+    // Create map of skill seed Ids (from seedSkills.json) to skill Ids (via skillNameToIdMap)
     seedSkills.map((skill) => {
       skillsMap[skill.seedId] = skillNameToIdMap[skill.name];
     });
 
-    console.log("skillsMap", skillsMap);
   } catch (err) {
     throw err;
   }
@@ -109,17 +75,15 @@ db.once("open", async () => {
   try {
     const users = await User.insertMany(seedUsers);
 
+    // Create email to Id map
     users.map((user) => {
       emailToUserIdMap[user.email] = user._id;
     });
-
-    console.log("emailToUserIdMap", emailToUserIdMap);
   } catch (err) {
     throw err;
   }
 
   // Seed skill relationships
-
   try {
     const relationshipsToInsert = [];
 
@@ -128,23 +92,23 @@ db.once("open", async () => {
       const insertObj = {
         offered: seed.offered,
         offeredText: seed.offeredText,
-        seeking: seed.seeking,
-        seekingText: seed.seekingText,
+        desired: seed.desired,
+        desiredText: seed.desiredText,
         yearsOfExperience: seed.yearsOfExperience
       };
 
-      // Set user
+      // Get and set user Id from email
       const userId = emailToUserIdMap[seed.userEmail];
       insertObj.user = userId;
 
-      // Set skill
+      // Get and set skill Id from seedId
       const skillId = skillsMap[seed.skillSeedId]
       insertObj.skill = skillId;
       
       relationshipsToInsert.push(insertObj);
     }
 
-    const relationships = await SkillRelationship.insertMany(relationshipsToInsert);
+    await SkillRelationship.insertMany(relationshipsToInsert);
 
   } catch (err) {
     throw err;
