@@ -8,7 +8,6 @@ const skillRelationshipSchema = Schema({
     },
     yearsOfExperience: {
         type: String,
-        required: true,
     },
     areasOfExpertise: {
         type: String,
