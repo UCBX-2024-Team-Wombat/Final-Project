@@ -7,9 +7,6 @@ const typeDefs = `
     gender: String
     description: String
     meetingPreference: String
-    #location: Location
-    availableSkills: [Skill]
-    desiredSkills: [Skill]
     city: String
     county: String
     stateOrProvince: String
@@ -27,10 +24,23 @@ const typeDefs = `
     description: String
   }
 
+  input SkillRelationshipInput {
+    skillId: ID!
+    userId: ID!
+    yearsOfExperience: String
+    offered: Boolean
+    offeredText: String
+    desired: Boolean
+    desiredText: String
+  }
+
   type SkillRelationship {
     skill: Skill
     yearsOfExperience: String
-    areasOfExpertise: String
+    offered: Boolean
+    offeredText: String
+    desired: Boolean
+    desiredText: String
     user: User
   }
 
@@ -40,7 +50,7 @@ const typeDefs = `
     me: User
     skills: [Skill]
     skill(id: ID!): Skill
-    getSkillRelationships(userId: ID!): [SkillRelationship]
+    getSkillRelationships(userId: ID!, offered: Boolean, desired: Boolean): [SkillRelationship]
   }
 
   type Mutation {
@@ -49,7 +59,7 @@ const typeDefs = `
     addSkill(name: String!, description: String): Skill
     modifySkill(id: ID!, name: String, description: String): Skill
     deleteSkill(id: ID!): Skill
-    addSkillRelationship(skillId: ID!, yearsOfExperience: String, areasOfExpertise: String, userId: ID!): SkillRelationship
+    addSkillRelationship(input: SkillRelationshipInput): SkillRelationship
   }
 `;
 
