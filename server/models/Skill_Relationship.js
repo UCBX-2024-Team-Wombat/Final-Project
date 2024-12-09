@@ -9,9 +9,10 @@ const skillRelationshipSchema = Schema({
     yearsOfExperience: {
         type: String,
     },
-    areasOfExpertise: {
-        type: String,
-    },
+    offered: Boolean,
+    offeredText: String,
+    desired: Boolean,
+    desiredText: String,
     user: { type: Schema.Types.ObjectId, ref: 'User'}
 });
 

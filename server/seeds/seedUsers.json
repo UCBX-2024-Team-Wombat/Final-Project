@@ -2,6 +2,28 @@
     {
         "username": "janeTest",
         "email": "jane@test.com",
+        "password": "abc123",
+        "availableSkills": [],
+        "desiredSkills": []
+    },
+    {
+        "username": "Jamil",
+        "email": "jamil@test.com",
+        "password": "abc123"
+    },
+    {
+        "username": "Bradyn",
+        "email": "bradyn@test.com",
+        "password": "abc123"
+    },
+    {
+        "username": "Yasemin",
+        "email": "yasemin@test.com",
+        "password": "abc123"
+    },
+    {
+        "username": "Steven",
+        "email": "steven@test.com",
         "password": "abc123"
     }
 ]
