@@ -10,6 +10,10 @@ const typeDefs = `
     #location: Location
     availableSkills: [Skill]
     desiredSkills: [Skill]
+    city: String
+    county: String
+    stateOrProvince: String
+    country: String
   }
 
   type Auth {
@@ -23,9 +27,8 @@ const typeDefs = `
     description: String
   }
 
-
-
   type Query {
+    allUsers: [User]
     user(userId: ID!): User
     me: User
   }
