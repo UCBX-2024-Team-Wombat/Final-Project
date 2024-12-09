@@ -27,15 +27,29 @@ const typeDefs = `
     description: String
   }
 
+  type SkillRelationship {
+    skill: Skill
+    yearsOfExperience: String
+    areasOfExpertise: String
+    user: User
+  }
+
   type Query {
     allUsers: [User]
     user(userId: ID!): User
     me: User
+    skills: [Skill]
+    skill(id: ID!): Skill
+    getSkillRelationships(userId: ID!): [SkillRelationship]
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    addSkill(name: String!, description: String): Skill
+    modifySkill(id: ID!, name: String, description: String): Skill
+    deleteSkill(id: ID!): Skill
+    addSkillRelationship(skillId: ID!, yearsOfExperience: String, areasOfExpertise: String, userId: ID!): SkillRelationship
   }
 `;
 

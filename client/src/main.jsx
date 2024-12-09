@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Error from "./pages/Error";
 import SearchPage from "./pages/SearchPage/SearchPage.jsx"
+import Profile from "./pages/Profile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: "/search",
         element: <SearchPage />,
+      },
+      {
+        path: "/profile",
+        element: <Profile />,
       }
     ],
   },
