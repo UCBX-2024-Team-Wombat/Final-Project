@@ -20,6 +20,22 @@ const userSchema = new Schema({
     required: true,
     minlength: 5,
   },
+  gender: {
+    type: String
+  },
+  description: {
+    type: String
+  },
+  meetingPreference: {
+    type: String
+  },
+  // location: {type: Schema.Types.ObjectId, ref: 'Location'},
+  availableSkills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
+  desiredSkills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
+  city: String,
+  county: String,
+  stateOrProvince: String,
+  country: String
 });
 
 // set up pre-save middleware to create password
