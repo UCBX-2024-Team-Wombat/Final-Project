@@ -59,6 +59,13 @@ const resolvers = {
 
       return { token, user };
     },
+
+    modifyUser: async (parent, {userId, password}) => {
+      console.log(userId, password)
+      const modifyUser = await User.findOneAndUpdate( {_id: userId}, { password });
+      console.log(modifyUser);
+      return modifyUser;
+    },
     //help from module 21, activity 17
     addSkill: async (parent, { name, description}) => {
       //creates a skill with the name and description

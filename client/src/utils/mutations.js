@@ -22,4 +22,12 @@ const ADD_USER = gql`
   }
 `;
 
-export { LOGIN, ADD_USER };
+const MODIFY_USER = gql`
+  mutation modifyUser($userId: ID!, $password: String) {
+    modifyUser(userId: $userId, password: $password) {
+        password
+    }
+  }
+`
+
+export { LOGIN, ADD_USER, MODIFY_USER };
