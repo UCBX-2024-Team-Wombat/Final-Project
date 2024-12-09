@@ -1,34 +1,35 @@
 const mongoose = require("mongoose");
 const { Schema } = require("mongoose");
 
-const locationSchema = new Schema({
-    city: {
-        name: { 
-            type: String,
-            required: true 
-        },
-        county: { 
-            type: String  // Subdocument for City
-        },
-      },
-      state: {
-        name: {
-            type: String 
-        },
-        abbreviation: {
-             type: String //  for additional field
-             }, 
-      },
-      country: {
-        name: { 
-            type: String, 
-            required: true
-        },
-        code: {
-             type: String //Like: 'US'
-            }, 
-      },
-});
+const stateSchema = new Schema({
+    name: { 
+        type: String, 
+        required: true 
+    },
+  });
+  
+  const citySchema = new Schema({
+    name: { 
+        type: String, 
+        required: true },
+    county: { 
+        type: String, 
+        required: true 
+    },
+    states: [stateSchema],
+  });
+  
+  const countrySchema = new Schema({
+    name: { 
+        type: String, 
+        required: true 
+    },
+    cities: [citySchema],
+  });
+  
+  const locationSchema = new Schema({
+    country: countrySchema,
+  });
 
 const Location = mongoose.model("Location", locationSchema);
 
