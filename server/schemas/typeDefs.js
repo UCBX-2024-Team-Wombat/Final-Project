@@ -1,4 +1,22 @@
 const typeDefs = `
+type State {
+    name: String!
+  }
+
+  type City {
+    name: String!
+    county: String!
+    states: [State]
+  }
+
+  type Country {
+    name: String!
+    cities: [City]
+  }
+
+  type Location {
+    country: Country!
+  }
   type User {
     _id: ID
     username: String
@@ -7,7 +25,7 @@ const typeDefs = `
     gender: String
     description: String
     meetingPreference: String
-    #location: Location
+    location: Location
     availableSkills: [Skill]
     desiredSkills: [Skill]
   }
