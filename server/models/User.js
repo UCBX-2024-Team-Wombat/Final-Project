@@ -26,12 +26,12 @@ const userSchema = new Schema({
   description: {
     type: String
   },
-  meetingpreference: {
+  meetingPreference: {
     type: String
   },
-  location: [locationSchema],
-  availableSkills: [skillSchema],
-  desiredSkills: [skillSchema],
+  // location: {type: Schema.Types.ObjectId, ref: 'Location'},
+  availableSkills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
+  desiredSkills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
 });
 
 // set up pre-save middleware to create password

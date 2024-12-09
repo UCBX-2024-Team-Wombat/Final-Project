@@ -4,6 +4,12 @@ const typeDefs = `
     username: String
     email: String
     password: String
+    gender: String
+    description: String
+    meetingPreference: String
+    #location: Location
+    availableSkills: [Skill]
+    desiredSkills: [Skill]
   }
 
   type Auth {
