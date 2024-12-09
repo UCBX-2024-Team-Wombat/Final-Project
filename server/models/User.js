@@ -29,9 +29,6 @@ const userSchema = new Schema({
   meetingPreference: {
     type: String
   },
-  // location: {type: Schema.Types.ObjectId, ref: 'Location'},
-  availableSkills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
-  desiredSkills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
   city: String,
   county: String,
   stateOrProvince: String,
