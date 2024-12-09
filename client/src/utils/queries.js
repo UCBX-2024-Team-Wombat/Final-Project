@@ -6,6 +6,11 @@ const QUERY_USER = gql`
       _id
       username
       email
+      gender
+      description
+      meetingPreference
+      availableSkills
+      desiredSkills
     }
   }
 `;
@@ -16,6 +21,11 @@ const QUERY_ME = gql`
       _id
       username
       email
+      gender
+      description
+      meetingPreference
+      availableSkills
+      desiredSkills
     }
   }
 `;
