@@ -24,10 +24,10 @@ const typeDefs = `
     username: String
     email: String
     password: String
-    city: City!
-    county: County!
-    state: State!
-    country: Country!
+    city: City
+    county: County
+    state: State
+    country: Country
   }
   
   type Auth {
