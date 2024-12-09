@@ -32,6 +32,10 @@ const userSchema = new Schema({
   // location: {type: Schema.Types.ObjectId, ref: 'Location'},
   availableSkills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
   desiredSkills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
+  city: String,
+  county: String,
+  stateOrProvince: String,
+  country: String
 });
 
 // set up pre-save middleware to create password

@@ -3,6 +3,9 @@ const { signToken, AuthenticationError } = require("../utils/auth.js");
 
 const resolvers = {
   Query: {
+    allUsers: async (parent) => {
+      return await User.find();
+    },
     user: async (parent, { userId }) => {
       const user = await User.findById(userId).populate('availableSkills').populate('desiredSkills');  //Add populate for location later
       return user;
