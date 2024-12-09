@@ -1,9 +1,6 @@
 import React from 'react';
-import { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
-import Auth from "../utils/auth";
-import { QUERY_ME, QUERY_SKILLRELATIONSHIPS } from '../utils/queries';
-import ProfileSkills from '../components/ProfileSkills/ProfileSkills';
+import { useQuery } from "@apollo/client";
+import { QUERY_ME } from '../utils/queries';
 
 //create a base myProfile page (form section)
 // 2 buttons for functionality (current skills, desired skills)
@@ -20,25 +17,25 @@ const Profile = () => {
     console.log(userData);
     // console.log("Skills: ", foundSkillData);
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUserData({
-          ...userData,
-          [name]: value,
-        });
-      };
-      const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-          await updateUserProfile({
-            variables: { ...userData },
-          });
-          alert('Profile updated!');
-        } catch (err) {
-          console.error(err);
-          alert('Error cannot update profile.');
-        }
-      };
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setUserData({
+    //       ...userData,
+    //       [name]: value,
+    //     });
+    //   };
+    //   const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //       await updateUserProfile({
+    //         variables: { ...userData },
+    //       });
+    //       alert('Profile updated!');
+    //     } catch (err) {
+    //       console.error(err);
+    //       alert('Error cannot update profile.');
+    //     }
+    //   };
 
 
     if (loading) {
@@ -47,15 +44,14 @@ const Profile = () => {
     return (
         <div className = "myProfile">
             <h1>My Profile</h1>
-            <ProfileSkills id={userData._id}/>
-            <form onSubmit={handleSubmit}>
+            <form>
         <div>
-          <label>Name:</label>
+          <label>Username:</label>
           <input
             type="text"
             name="name"
             value={userData.name}
-            onChange={handleChange}
+            // onChange={handleChange}
           />
         </div>
         <br></br>
@@ -65,7 +61,7 @@ const Profile = () => {
             type="email"
             name="email"
             value={userData.email}
-            onChange={handleChange}
+            // onChange={handleChange}
           />
         </div>
         <br></br>

@@ -17,13 +17,13 @@ const resolvers = {
       //this will grab all the skills from the database
       return await Skill.find();
     },
-    skill: async (parent, args, {id}) => {
+    skill: async (parent, {id}) => {
       //this will grab a skill by it's id
       return await Skill.findById(id);
     },
-    getSkillRelationships: async (parent, args, { userId }) => {
+    getSkillRelationships: async (parent, { userId }) => {
       //populate taken from module 21, activity 5 /schemas/resolvers.js
-      const skillRelationships = await SkillRelationship.find({ userId }).populate('skill').populate('user');
+      const skillRelationships = await SkillRelationship.find({ user: userId }).populate('skill').populate('user');
       //this will return an array of the skillRelationships objects 
       return skillRelationships;
     },
@@ -59,7 +59,7 @@ const resolvers = {
     },
     modifySkill: async (parent, { id, name, description}) => {
       //finds a skill by id and updates the name and description 
-      const skill = await Skill.findByIdAndUpdate({ id, name, description });
+      const skill = await Skill.findByIdAndUpdate( id, { name, description }, {returnDocument: 'after'});
       return skill;
     },
     deleteSkill: async (parent, { id }) => {
@@ -67,9 +67,9 @@ const resolvers = {
       const skill = await Skill.findByIdAndDelete(id);
       return skill;
     },
-    addSkillRelationship: async (parent, { skill, yearsOfExperience, areasOfExpertise, userId }) => {
+    addSkillRelationship: async (parent, { skillId, yearsOfExperience, areasOfExpertise, userId }) => {
       //creates a skill relationship and adds the skill, years of experience and areas of experience
-      const skillRelationship = await SkillRelationship.create({ skill, yearsOfExperience, areasOfExpertise, userId });
+      const skillRelationship = await SkillRelationship.create({ skill: skillId, yearsOfExperience, areasOfExpertise, user: userId });
       return skillRelationship;
     },
   },
