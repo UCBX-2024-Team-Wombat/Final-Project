@@ -1,0 +1,147 @@
+[
+    {
+        "userEmail": "jamil@test.com",
+        "skillSeedId": 1,
+        "yearsOfExperience": "2.5",
+        "offered": true
+    },
+    {
+        "userEmail": "jamil@test.com",
+        "skillSeedId": 5,
+        "yearsOfExperience": "0.5",
+        "offered": true
+    },
+    {
+        "userEmail": "jamil@test.com",
+        "skillSeedId": 6,
+        "yearsOfExperience": "5",
+        "offered": true
+    },
+    {
+        "userEmail": "jamil@test.com",
+        "skillSeedId": 7,
+        "yearsOfExperience": "0.5",
+        "offered": true
+    },
+    {
+        "userEmail": "jamil@test.com",
+        "skillSeedId": 2,
+        "yearsOfExperience": "6",
+        "offered": true,
+        "offeredText": "I've been studying Spanish for about six years and can help you get to an intermediate level",
+        "seeking": true,
+        "seekingText": "Hablo al nivel intermedio, y necesito alguien con quien puedo practicar"
+    },
+    {
+        "userEmail": "jamil@test.com",
+        "skillSeedId": 8,
+        "yearsOfExperience": "1",
+        "seeking": true,
+        "seekingText": "I want to expand my understanding of git to be able to better handle and resolve edge cases"
+    },
+    {
+        "userEmail": "bradyn@test.com",
+        "skillSeedId": 9,
+        "offered": true
+    },
+    {
+        "userEmail": "bradyn@test.com",
+        "skillSeedId": 10,
+        "offered": true
+    },
+    {
+        "userEmail": "bradyn@test.com",
+        "skillSeedId": 11,
+        "offered": true
+    },
+    {
+        "userEmail": "bradyn@test.com",
+        "skillSeedId": 12,
+        "offered": true
+    },
+    {
+        "userEmail": "bradyn@test.com",
+        "skillSeedId": 13,
+        "seeking": true
+    },
+    {
+        "userEmail": "bradyn@test.com",
+        "skillSeedId": 7,
+        "seeking": true
+    },
+    {
+        "userEmail": "yasemin@test.com",
+        "skillSeedId": 14,
+        "offered": true
+    },
+    {
+        "userEmail": "yasemin@test.com",
+        "skillSeedId": 15,
+        "offered": true
+    },
+    {
+        "userEmail": "yasemin@test.com",
+        "skillSeedId": 16,
+        "offered": true
+    },
+    {
+        "userEmail": "yasemin@test.com",
+        "skillSeedId": 17,
+        "offered": true
+    },
+    {
+        "userEmail": "yasemin@test.com",
+        "skillSeedId": 18,
+        "offered": true
+    },
+    {
+        "userEmail": "yasemin@test.com",
+        "skillSeedId": 19,
+        "seeking": true
+    },
+    {
+        "userEmail": "yasemin@test.com",
+        "skillSeedId": 20,
+        "seeking": true
+    },
+    {
+        "userEmail": "yasemin@test.com",
+        "skillSeedId": 5,
+        "seeking": true
+    },
+    {
+        "userEmail": "steven@test.com",
+        "skillSeedId": 21,
+        "offered": true
+    },
+    {
+        "userEmail": "steven@test.com",
+        "skillSeedId": 22,
+        "offered": true
+    },
+    {
+        "userEmail": "steven@test.com",
+        "skillSeedId": 23,
+        "offered": true
+    },
+    {
+        "userEmail": "steven@test.com",
+        "skillSeedId": 24,
+        "offered": true
+    },
+    {
+        "userEmail": "steven@test.com",
+        "skillSeedId": 5,
+        "seeking": true
+    },
+    {
+        "userEmail": "steven@test.com",
+        "skillSeedId": 2,
+        "seeking": true
+    },
+    {
+        "userEmail": "steven@test.com",
+        "skillSeedId": 25,
+        "seeking": true
+    }
+]

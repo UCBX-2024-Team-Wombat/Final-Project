@@ -6,13 +6,17 @@ const skillRelationshipSchema = Schema({
         type: Schema.Types.ObjectId, 
         ref: 'Skill',
     },
-    yearsOfExpereince: {
+    yearsOfExperience: {
         type: Number,
-        required: true,
+        required: false,
     },
     areasOfExpertise: {
         type: String,
     },
+    offered: Boolean,
+    offeredText: String,
+    seeking: Boolean,
+    seekingText: String,
     user: [{ type: Schema.Types.ObjectId, ref: 'User'}]
 });
 

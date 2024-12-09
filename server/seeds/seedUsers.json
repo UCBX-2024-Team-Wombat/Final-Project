@@ -9,64 +9,21 @@
     {
         "username": "Jamil",
         "email": "jamil@test.com",
-        "password": "abc123",
-        "availableSkills": [
-            1,
-            5,
-            6,
-            7
-        ],
-        "desiredSkills": [
-            2,
-            8
-        ]
+        "password": "abc123"
     },
     {
         "username": "Bradyn",
         "email": "bradyn@test.com",
-        "password": "abc123",
-        "availableSkills": [
-            9,
-            10,
-            11,
-            12
-        ],
-        "desiredSkills": [
-            13,
-            7
-        ]
+        "password": "abc123"
     },
     {
         "username": "Yasemin",
         "email": "yasemin@test.com",
-        "password": "abc123",
-        "availableSkills": [
-            14,
-            15,
-            16,
-            17,
-            18
-        ],
-        "desiredSkills": [
-            19,
-            20,
-            5
-        ]
+        "password": "abc123"
     },
     {
         "username": "Steven",
         "email": "steven@test.com",
-        "password": "abc123",
-        "availableSkills": [
-            21,
-            22,
-            23,
-            24
-        ],
-        "desiredSkills": [
-            5,
-            2,
-            25
-        ]
+        "password": "abc123"
     }
 ]
