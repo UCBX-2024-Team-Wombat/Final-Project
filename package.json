@@ -19,6 +19,8 @@
     "concurrently": "^5.1.0"
   },
   "dependencies": {
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1"
   }
 }
