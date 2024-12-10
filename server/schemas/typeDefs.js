@@ -1,4 +1,18 @@
 const typeDefs = `
+
+  input UserInput {
+    username: String
+    email: String
+    password: String
+    gender: String
+    description: String
+    meetingPreference: String
+    city: String
+    county: String
+    stateOrProvince: String
+    country: String
+  }
+
   type User {
     _id: ID
     username: String
@@ -56,6 +70,7 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
+    modifyUser(userId: ID!, userInput: UserInput!): User
     addSkill(name: String!, description: String): Skill
     modifySkill(id: ID!, name: String, description: String): Skill
     deleteSkill(id: ID!): Skill
