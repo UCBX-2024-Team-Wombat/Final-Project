@@ -45,17 +45,20 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-userSchema.pre("updateOne", {document: true, query: false}, async function (next) {
+userSchema.pre("updateOne", async function (next) {
   console.log("running update"); 
-  console.log(this);
-  console.log(this.isModified("password"));
-  //const docToUpdate = await this.model.findOne(this.getQuery());
- // console.log("docToUpdate",docToUpdate);
-   if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, saltRounds);
-   }
-
+  // console.log('this', this);
+  console.log('this._update', this._update);
+  if(this._update.password) {
+    this._update.password = await bcrypt.hash(this._update.password, saltRounds);
+  }
   next();
+  // console.log('this.isModified("password")', this.isModified("password"));
+  //  if (this.isModified('password')) {
+  //   this.password = await bcrypt.hash(this.password, saltRounds);
+  //  }
+
+  // next();
 });
 
 // Apply password middleware to insertMany (for seeding purposes)
