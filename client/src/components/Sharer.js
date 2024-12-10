@@ -4,6 +4,7 @@ const Sharer = ({user}) => {
     const {
         username,
         city,
+        stateOrProvince,
         country,
         gender,
         meetingPreferences,
@@ -19,8 +20,17 @@ const Sharer = ({user}) => {
          <strong> Gender:</strong> {gender},
          </p>
          <p>
-         <strong> Gender:</strong> {gender},
+         <strong> Meeting Preference:</strong> {meetingPreference},
          </p>
+         <p>
+         <strong> Provided Skills:</strong> {skills.offered.map(skill => skill.skillName).join(", ")},
+         </p>
+         <p>
+         <strong> Desired Skills:</strong> {skills.desired.map(skill => skill.skillName).join(", ")},
+         </p>
+         <button onClick={() => alert(`Viewing ${username}'s profile`)}>
+        View Profile
+      </button>
         </div>
     )
 }
