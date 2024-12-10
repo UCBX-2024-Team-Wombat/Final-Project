@@ -22,4 +22,13 @@ const ADD_USER = gql`
   }
 `;
 
-export { LOGIN, ADD_USER };
+const MODIFY_USER = gql`
+  mutation modifyUser($userId: ID!, $userInput: UserInput!) {
+    modifyUser(userId: $userId, userInput: $userInput) {
+      username
+      email
+    }
+  }
+`
+
+export { LOGIN, ADD_USER, MODIFY_USER };
