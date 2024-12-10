@@ -7,7 +7,7 @@ const Sharer = ({user}) => {
         stateOrProvince,
         country,
         gender,
-        meetingPreferences,
+        meetingPreference,
         skill,
     } = user;
     return (
@@ -25,7 +25,7 @@ const Sharer = ({user}) => {
          <p>
         <h3> Skills:</h3>
         <ul>
-            {user.skills.map((skill) => (
+            {user.skills?.map((skill) => (
                 <li key={skill.id}>
                     {skill.skill.name} - {skill.ofered ? 'Ofered' : 'Desired'}
                 </li>
