@@ -37,9 +37,23 @@ const userSchema = new Schema({
 
 // set up pre-save middleware to create password
 userSchema.pre("save", async function (next) {
+  console.log("running save")
   if (this.isNew || this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, saltRounds);
   }
+
+  next();
+});
+
+userSchema.pre("updateOne", {document: true, query: false}, async function (next) {
+  console.log("running update"); 
+  console.log(this);
+  console.log(this.isModified("password"));
+  //const docToUpdate = await this.model.findOne(this.getQuery());
+ // console.log("docToUpdate",docToUpdate);
+   if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, saltRounds);
+   }
 
   next();
 });

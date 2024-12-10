@@ -9,93 +9,104 @@ import { MODIFY_USER } from '../utils/mutations';
 
 const Profile = () => {
     const [newUserData, setUserData] = useState()
+    const [passwordMissMatch, setPasswordMissMatch] = useState(false);
     const { loading, data } = useQuery(QUERY_ME);
     // const { loading2, data2 } = useQuery(QUERY_SKILLRELATIONSHIPS);
-    const [modifyUser] = useMutation(MODIFY_USER)
-
+    const [modifyUser] = useMutation(MODIFY_USER);
+    //var passwordMissMatch = false;
     const userData = data?.me || {};
 
     // const foundSkillData = data2 || {};
 
-    console.log(userData);
+    //console.log(userData);
     // console.log("Skills: ", foundSkillData);
 
     const handleChange = (e) => {
+        console.log(e.target);
         const { name, value } = e.target;
+        console.log(name, value)
         setUserData({
-          ...userData,
-          [name]: value,
+            ...newUserData,
+            [name]: value,
         });
-      };
-      const handleSubmit = async (e) => {
+        console.log(newUserData);
+    };
+    const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-        const payload = {
-            password: newUserData.password,
-            userId: userData._id 
-        }
-        console.log(payload);
-        //TODO: if passwords don't match, send alert (if else statement)
-          await modifyUser({
-            variables: { ...payload },
-          });
-          alert('Profile updated!');
+            console.log(newUserData);
+            if (newUserData.password1 != newUserData.password2) {
+                setPasswordMissMatch(true)
+                return;
+            } else {
+                setPasswordMissMatch(false)
+            }
+            const payload = {
+                password: newUserData.password2,
+                userId: userData._id
+            }
+            console.log(payload);
+            await modifyUser({
+                variables: { ...payload },
+            });
+            alert('Profile updated!');
         } catch (err) {
-          console.error(err);
-          alert('Error cannot update profile.');
+            console.error(err);
+            alert('Error cannot update profile.');
         }
-       };
+    };
 
 
     if (loading) {
         return <h2>Loading...</h2>
     }
     return (
-        <div className = "myProfile">
+        <div className="myProfile">
             <h1>My Profile</h1>
             <form>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            name="name"
-            value={userData.name}
-            // onChange={handleChange}
-          />
-        </div>
-        <br></br>
-        <div>
-          <label>Email:</label>
-          <input
-            type="email"
-            name="email"
-            value={userData.email}
-            // onChange={handleChange}
-          />
-        </div>
-        <br></br>
-        <div>
-          <label>New Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={userData.password}
-            // onChange={handleChange}
-          />
-        </div>
-        <br></br>
-        <div>
-          <label>Confirm Password:</label>
-          <input
-            type="password"
-            name="password"
-            value={userData.password}
-            onChange={handleChange}
-          />
-        </div>
-        <br></br>
-        <button type="submit" onClick = {handleSubmit}>Update Profile</button>
-      </form>
+                <div>
+                    <label>Username:</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={userData.username}
+                    // onChange={handleChange}
+                    />
+                </div>
+                <br></br>
+                <div>
+                    <label>Email:</label>
+                    <input
+                        type="email"
+                        name="email"
+                        value={userData.email}
+                    // onChange={handleChange}
+                    />
+                </div>
+                <br></br>
+                <div>
+                    <label>New Password:</label>
+                    <input
+                        type="password"
+                        name="password1"
+                        onChange={handleChange}
+                    />
+                </div>
+                <br></br>
+                <div>
+                    <label>Confirm Password:</label>
+                    <input
+                        type="password"
+                        name="password2"
+                        onChange={handleChange}
+                    />
+                </div>
+                <div className="text-danger" hidden={!passwordMissMatch}>
+                    Passwords do not match
+                </div>
+                <br></br>
+                <button type="submit" onClick={handleSubmit}>Update Profile</button>
+            </form>
         </div>
     )
 }

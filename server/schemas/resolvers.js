@@ -62,7 +62,8 @@ const resolvers = {
 
     modifyUser: async (parent, {userId, password}) => {
       console.log(userId, password)
-      const modifyUser = await User.findOneAndUpdate( {_id: userId}, { password });
+      const user = await User.findById(userId)
+      const modifyUser = await user.updateOne( { password } );
       console.log(modifyUser);
       return modifyUser;
     },
