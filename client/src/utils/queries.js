@@ -9,11 +9,13 @@ const QUERY_USER = gql`
       gender
       description
       meetingPreference
-      availableSkills
-      desiredSkills
+      
     }
   }
 `;
+//add these back in when incorporated in user.js
+//availableSkills
+//desiredSkills
 
 const QUERY_ME = gql`
   query me {
@@ -24,11 +26,12 @@ const QUERY_ME = gql`
       gender
       description
       meetingPreference
-      availableSkills
-      desiredSkills
     }
   }
 `;
+//add these back in when incorporated in user.js
+// availableSkills
+// desiredSkills
 
 const QUERY_SKILLRELATIONSHIPS = gql`
 query GetSkillRelationships ($userId: ID!) {
