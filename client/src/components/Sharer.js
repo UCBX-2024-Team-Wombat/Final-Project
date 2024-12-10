@@ -12,23 +12,29 @@ const Sharer = ({user}) => {
     } = user;
     return (
         <div style= {{ border: "1px solid #ccc", padding: "10px", margin: "10px"}}>
-           <h3>{username}</h3>
+           <h3>{user.username}</h3>
            <p>
-            <strong> location:</strong> {city}, {stateOrProvince}, {country}
+            <strong> Location:</strong> {user.city}, {user.stateOrProvince}, {user.country}
          </p> 
          <p>
-         <strong> Gender:</strong> {gender},
+         <strong> Gender:</strong> {user.gender},
          </p>
          <p>
-         <strong> Meeting Preference:</strong> {meetingPreference},
+         <strong> Meeting Preference:</strong> {user.meetingPreference},
          </p>
          <p>
-         <strong> Provided Skills:</strong> {skills.offered.map(skill => skill.skillName).join(", ")},
+        <h3> Skills:</h3>
+        <ul>
+            {user.skills.map((skill) => (
+                <li key={skill.id}>
+                    {skill.skill.name} - {skill.ofered ? 'Ofered' : 'Desired'}
+                </li>
+            )
+        )
+        }
+        </ul>
          </p>
-         <p>
-         <strong> Desired Skills:</strong> {skills.desired.map(skill => skill.skillName).join(", ")},
-         </p>
-         <button onClick={() => alert(`Viewing ${username}'s profile`)}>
+         <button onClick={() => alert(`Viewing ${user.username}'s profile`)}>
         View Profile
       </button>
         </div>
