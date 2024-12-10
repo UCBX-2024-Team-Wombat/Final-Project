@@ -53,6 +53,11 @@ Convert array of objects into single object
   - https://stackoverflow.com/a/44325124/8032508
 - Use: `server/seeds/seed.js`
 
+Handling dynamic content,  when rendering lists of elements.
+- Source:
+  - https://www.geeksforgeeks.org/reactjs-keys/
+- Use: `client/src/Sharer.js`
+
 Resolve issue with detecting change in & hashing password on update
 - Sources: 
   - https://stackoverflow.com/a/70000238/8032508
