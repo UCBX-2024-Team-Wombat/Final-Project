@@ -7,7 +7,7 @@ const resolvers = {
       return await User.find();
     },
     user: async (parent, { userId }) => {
-      const user = await User.findById(userId);  //Add populate for location later
+      const user = await User.findById(userId); //Add populate for location later
       return user;
     },
     me: async (parent, args, context) => {
@@ -20,21 +20,23 @@ const resolvers = {
       //this will grab all the skills from the database
       return await Skill.find();
     },
-    skill: async (parent, {id}) => {
+    skill: async (parent, { id }) => {
       //this will grab a skill by it's id
       return await Skill.findById(id);
     },
     getSkillRelationships: async (parent, { userId, offered, desired }) => {
       //populate taken from module 21, activity 5 /schemas/resolvers.js
-      const searchFilter = { user: userId};
+      const searchFilter = { user: userId };
 
-      if(offered) searchFilter.offered = offered;
-      if(desired) searchFilter.desired = desired;
+      if (offered) searchFilter.offered = offered;
+      if (desired) searchFilter.desired = desired;
 
-      const skillRelationships = await SkillRelationship.find(searchFilter).populate('skill').populate('user');
-      //this will return an array of the skillRelationships objects 
+      const skillRelationships = await SkillRelationship.find(searchFilter)
+        .populate("skill")
+        .populate("user");
+      //this will return an array of the skillRelationships objects
       return skillRelationships;
-    }
+    },
   },
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
@@ -60,23 +62,24 @@ const resolvers = {
       return { token, user };
     },
 
-    modifyUser: async (parent, {userId, password}) => {
-      console.log(userId, password)
-      const foundUser = await User.findById(userId)
-      console.log('user', foundUser);
-      const modifyUser = await foundUser.updateOne( { password} );
-      console.log('modified user', modifyUser);
-      return modifyUser;
+    modifyUser: async (parent, { userId, userInput }) => {
+      await User.findOneAndUpdate({ _id: userId }, userInput, {
+        returnDocument: "after",
+      });
     },
     //help from module 21, activity 17
-    addSkill: async (parent, { name, description}) => {
+    addSkill: async (parent, { name, description }) => {
       //creates a skill with the name and description
-      const skill = await Skill.create({ name, description});
+      const skill = await Skill.create({ name, description });
       return skill;
     },
-    modifySkill: async (parent, { id, name, description}) => {
-      //finds a skill by id and updates the name and description 
-      const skill = await Skill.findByIdAndUpdate( id, { name, description }, {returnDocument: 'after'});
+    modifySkill: async (parent, { id, name, description }) => {
+      //finds a skill by id and updates the name and description
+      const skill = await Skill.findByIdAndUpdate(
+        id,
+        { name, description },
+        { returnDocument: "after" }
+      );
       return skill;
     },
     deleteSkill: async (parent, { id }) => {
@@ -93,9 +96,11 @@ const resolvers = {
         offered: input.offered,
         offeredText: input.offeredText,
         desired: input.desired,
-        desiredText: input.desiredText
+        desiredText: input.desiredText,
       };
-      const skillRelationship = await SkillRelationship.create(skillRelationshipObject);
+      const skillRelationship = await SkillRelationship.create(
+        skillRelationshipObject
+      );
       return skillRelationship;
     },
   },
