@@ -63,6 +63,7 @@ const typeDefs = `
     user(userId: ID!): User
     me: User
     skills: [Skill]
+    skillsByName(searchString: String!): [Skill]
     skill(id: ID!): Skill
     getSkillRelationships(userId: ID!, offered: Boolean, desired: Boolean): [SkillRelationship]
   }

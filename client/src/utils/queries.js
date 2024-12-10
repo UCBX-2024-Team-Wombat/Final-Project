@@ -9,7 +9,6 @@ const QUERY_USER = gql`
       gender
       description
       meetingPreference
-      
     }
   }
 `;
@@ -34,22 +33,32 @@ const QUERY_ME = gql`
 // desiredSkills
 
 const QUERY_SKILLRELATIONSHIPS = gql`
-query GetSkillRelationships ($userId: ID!) {
-  getSkillRelationships (userId: $userId) {
-    yearsOfExperience
-    areasOfExpertise
-    skill {
-      name
-      description
-    }
-    user {
-      _id
-      username
-      email
-      password
+  query GetSkillRelationships($userId: ID!) {
+    getSkillRelationships(userId: $userId) {
+      yearsOfExperience
+      areasOfExpertise
+      skill {
+        name
+        description
+      }
+      user {
+        _id
+        username
+        email
+        password
+      }
     }
   }
-}
 `;
 
-export { QUERY_USER, QUERY_ME, QUERY_SKILLRELATIONSHIPS };
+const QUERY_SKILLS_BY_NAME = gql`
+  query skillsByName($searchString: String!) {
+    skillsByName(searchString: $searchString) {
+      name
+      description
+      _id
+    }
+  }
+`;
+
+export { QUERY_USER, QUERY_ME, QUERY_SKILLRELATIONSHIPS, QUERY_SKILLS_BY_NAME };

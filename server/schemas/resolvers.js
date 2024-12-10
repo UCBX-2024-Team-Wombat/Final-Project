@@ -20,6 +20,16 @@ const resolvers = {
       //this will grab all the skills from the database
       return await Skill.find();
     },
+    skillsByName: async (parent, { searchString }) => {
+      console.log("searchString", searchString);
+
+      return await Skill.find({
+        $text: {
+          $search: searchString,
+          // $caseSensitive: false,
+        },
+      });
+    },
     skill: async (parent, { id }) => {
       //this will grab a skill by it's id
       return await Skill.findById(id);
