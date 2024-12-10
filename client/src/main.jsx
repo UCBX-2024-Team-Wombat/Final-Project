@@ -8,8 +8,8 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Error from "./pages/Error";
-import SearchPage from "./pages/SearchPage/SearchPage.jsx"
-import Profile from "./pages/Profile.jsx";
+import SearchPage from "./pages/SearchPage/SearchPage.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
-      }
+      },
     ],
   },
 ]);
