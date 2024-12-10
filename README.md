@@ -22,7 +22,6 @@ Welcome to the Skill Share Hub. This application allows a user to exchange skill
 - [Usage](#usage)
 - [CodeReferences](#codereferences)
 - [LinkToRender](#linktorender)
-- [GithubRepo](#githubRepo)
 
 ## Installation
 - "@apollo/server": npm i @apollo/server
@@ -58,3 +57,6 @@ Resolve issue with detecting change in & hashing password on update
 - Sources: 
   - https://stackoverflow.com/a/70000238/8032508
 - Use: `User.js`
+
+## LinkToRender
+- https://skillhub-uvg0.onrender.com/ 
