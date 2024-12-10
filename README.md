@@ -1,7 +1,7 @@
 # Skill Share Hub
 
 ## Description 
-Welcome to the Skill Share Hub. This application allows a user to exchange skills with another. For example, a user who wants to learn how to play the piano can offer one of their skills (riding a bike) in exchange. The goal of this application is to promote mutual learning, community interacrtion and skill growth without having to pay for it. 
+Welcome to the Skill Share Hub. This application allows a user to exchange skills with another. For example, a user who wants to learn how to play the piano can offer one of their skills (riding a bike) in exchange. The goal of this application is to promote mutual learning, community interaction and skill growth without having to pay for it. 
 
 ## User Story
 - As a user who wants to learn new skills,
