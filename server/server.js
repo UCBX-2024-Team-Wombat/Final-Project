@@ -5,6 +5,8 @@ const path = require("path");
 const { authMiddleware } = require("./utils/auth.js");
 const { typeDefs, resolvers } = require("./schemas/index.js");
 const db = require("./config/connection.js");
+const { Server } = require('socket.io'); // for chat app.
+const http = require('http');//for chat app
 
 const PORT = process.env.PORT || 3001;
 const app = express();
