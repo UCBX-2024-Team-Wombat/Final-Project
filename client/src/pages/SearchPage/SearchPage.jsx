@@ -29,8 +29,9 @@ const SearchPage = () => {
   }
 
   const genderSelfDescribe = (<div>
-    <label>Please describe your gender</label>
+    <label className='form-label'>Please describe your gender</label>
     <input
+      className='form-control'
       name='genderDescribe'
       value={filters.genderDescribe}
       onChange={handleChange} />
