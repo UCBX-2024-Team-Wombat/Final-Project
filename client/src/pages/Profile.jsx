@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import { MODIFY_USER } from "../utils/mutations";
@@ -87,6 +87,19 @@ const Profile = () => {
         }
     };
 
+    const handleUpdateSettings = async (e) => {
+        e.preventDefault();
+        try {
+
+        console.log(newUserData);
+        //send newUserData to backend to save it
+        alert("Settings updated!");
+           
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     if (loading) {
         return <h2>Loading...</h2>;
     }
@@ -138,15 +151,16 @@ const Profile = () => {
                         type="text"
                         name="city"
                         value={userData.city}
-                    // onChange={handleChange}
+                        onChange={handleChange}
                     />
                 </div>
                 <br></br>
                 <div>
                     <label>State:</label>
                     <select
-                        id="city"
-                        name="city"
+                        id="state"
+                        name="state"
+                        onChange={handleChange}
                     > {stateDisplay()}
                     </select>
                 </div>
@@ -156,6 +170,7 @@ const Profile = () => {
                     <select
                         id="gender"
                         name="gender"
+                        onChange={handleChange}
                     > {genderOptions()}
                     </select>
                 </div>
@@ -165,11 +180,12 @@ const Profile = () => {
                     <select
                         id="meeting"
                         name="meeting"
+                        onChange={handleChange}
                     > {meetingPreferences()}
                     </select>
                 </div>
                 <br></br>
-                <button type="submit" onClick={handleSubmit}>
+                <button type="submit" onClick={handleUpdateSettings}>
                     Update Settings
                 </button>
             </form>
