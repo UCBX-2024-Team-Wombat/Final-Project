@@ -47,6 +47,14 @@ const resolvers = {
     }
   },
   Mutation: {
+    sendMessage: async (_, { receiverId, message }, { user }) => {
+      if (!user) throw new Error('Authentication required');
+      const chatMessage = await ChatMessage.create({
+        sender: user._id,
+        receiver: receiverId,
+        message,
+        timestamp: new Date(),
+      });
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
