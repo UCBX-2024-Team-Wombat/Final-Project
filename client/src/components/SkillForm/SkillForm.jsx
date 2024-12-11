@@ -1,8 +1,16 @@
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 
-const NewSkillForm = ({ skillData, offered, desired }) => {
-  const [formState, setFormState] = useState({ offered, desired });
+const SkillForm = ({
+  skillData,
+  offered,
+  desired,
+  submitButtonLabel,
+  submitButtonFunction,
+}) => {
+  const [formState, setFormState] = useState({
+    ...skillData,
+  });
 
   function handleSubmit(event) {
     event.preventDefault();
@@ -10,17 +18,10 @@ const NewSkillForm = ({ skillData, offered, desired }) => {
 
   function handleChange(event) {
     setFormState({ ...formState, [event.target.name]: event.target.value });
-    cleanFormState();
   }
 
   function showFormState() {
     console.log(formState);
-  }
-
-  function cleanFormState() {
-    if (formState.offered != "Yes" && formState.offeredText != undefined) {
-      setFormState({ ...formState, offeredText: undefined });
-    }
   }
 
   const offeredDisplay = (
@@ -31,7 +32,7 @@ const NewSkillForm = ({ skillData, offered, desired }) => {
         </Form.Label>
         <Form.Control
           as="textarea"
-          rows="3"
+          rows="5"
           required
           name="offeredText"
           value={formState.offeredText}
@@ -48,7 +49,7 @@ const NewSkillForm = ({ skillData, offered, desired }) => {
       </Form.Label>
       <Form.Control
         as="textarea"
-        rows="3"
+        rows="5"
         required
         name="desiredText"
         value={formState.desiredText}
@@ -81,7 +82,12 @@ const NewSkillForm = ({ skillData, offered, desired }) => {
           {offered ? offeredDisplay : <></>}
           {desired ? desiredDisplay : <></>}
 
-          <button className="btn btn-primary">Add Skill</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => submitButtonFunction(formState)}
+          >
+            {submitButtonLabel}
+          </button>
         </Form>
       ) : (
         <></>
@@ -90,4 +96,4 @@ const NewSkillForm = ({ skillData, offered, desired }) => {
   );
 };
 
-export default NewSkillForm;
+export default SkillForm;
