@@ -87,26 +87,6 @@ const Profile = () => {
                 </div>
                 <br></br>
                 <div>
-                    <label>City:</label>
-                    <input
-                        type="text"
-                        name="city"
-                        value={userData.city}
-                    // onChange={handleChange}
-                    />
-                </div>
-                <br></br>
-                <div>
-                    <label>State:</label>
-                    <select
-                        id="city"
-                        name="city"
-                        // value={userData.city}
-                    // onChange={handleChange}
-                    />
-                </div>
-                <br></br>
-                <div>
                     <label>New Password:</label>
                     <input type="password" name="password1" onChange={handleChange} />
                 </div>
@@ -126,11 +106,41 @@ const Profile = () => {
             <br></br>
             <form>
                 <div>
-                    <label>Username:</label>
+                    <label>City:</label>
+                    <input
+                        type="text"
+                        name="city"
+                        value={userData.city}
+                    // onChange={handleChange}
+                    />
+                </div>
+                <br></br>
+                <div>
+                    <label>State:</label>
+                    <select
+                        id="city"
+                        name="city"
+                        //value
+                    // onChange={handleChange}
+                    />
+                </div>
+                <br></br>
+                <div>
+                    <label>Gender:</label>
                     <input
                         type="text"
                         name="name"
-                        value={userData.username}
+                        //value
+                    // onChange={handleChange}
+                    />
+                </div>
+                <br></br>
+                <div>
+                    <label>Meeting Preference:</label>
+                    <input
+                        type="text"
+                        name="name"
+                        //value
                     // onChange={handleChange}
                     />
                 </div>
