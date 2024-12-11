@@ -10,7 +10,12 @@ Applying Password Hashing on insertMany hook
 - Use: `server/models/User.js`
 
 Convert array of objects into single object
-
 - Source:
   - https://stackoverflow.com/a/44325124/8032508
 - Use: `server/seeds/seed.js`
+
+WebSocket functionality setup 
+- Source: 
+  - https://socket.io/get-started/chat
+  - https://socket.io/docs/v4/server-options/
+- Use: `server/server.js
