@@ -18,4 +18,5 @@ WebSocket functionality setup
 - Source: 
   - https://socket.io/get-started/chat
   - https://socket.io/docs/v4/server-options/
+  - https://socket.io/docs/v4/rooms/
 - Use: `server/server.js
