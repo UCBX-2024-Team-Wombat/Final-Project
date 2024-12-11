@@ -2,6 +2,7 @@ import React, { useMemo, useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_ME } from "../utils/queries";
 import { MODIFY_USER } from "../utils/mutations";
+import { US_STATES, MEETING_PREFERENCE, GENDER_OPTIONS } from "../utils/standardValues"
 
 //create a base myProfile page (form section)
 // 2 buttons for functionality (current skills, desired skills)
@@ -20,6 +21,33 @@ const Profile = () => {
 
     //console.log(userData);
     // console.log("Skills: ", foundSkillData);
+
+    //for loop for all the states and their abbreviation
+    const stateDisplay = () => {
+        const states = []
+        for (let i = 0; i < 50; i++) {
+            states.push(<option value={US_STATES[i].abbreviation}>{US_STATES[i].name}</option>)
+          }
+          return states;
+    }
+
+     //for loop for all the gender options
+     const genderOptions = () => {
+        const gender = []
+        for (let i = 0; i < 5; i++) {
+            gender.push(<option value={GENDER_OPTIONS[i]}>{GENDER_OPTIONS[i]}</option>)
+          }
+          return gender;
+    }
+
+     //for loop for meeting preferences
+     const meetingPreferences = () => {
+        const meeting = []
+        for (let i = 0; i < 3; i++) {
+            meeting.push(<option value={MEETING_PREFERENCE[i]}>{MEETING_PREFERENCE[i]}</option>)
+          }
+          return meeting;
+    }
 
     const handleChange = (e) => {
         console.log(e.target);
@@ -63,9 +91,9 @@ const Profile = () => {
         return <h2>Loading...</h2>;
     }
     return (
-        <div className="myProfile">
+        <div className="myProfile" style={{ display: 'flex' }}>
+            <form style={{ flex: '1'}}>
             <h1>My Profile</h1>
-            <form>
                 <div>
                     <label>Username:</label>
                     <input
@@ -103,8 +131,7 @@ const Profile = () => {
                     Update Profile
                 </button>
             </form>
-            <br></br>
-            <form>
+            <form style={{ flex: '1', marginTop: '55px' }}>
                 <div>
                     <label>City:</label>
                     <input
@@ -120,29 +147,26 @@ const Profile = () => {
                     <select
                         id="city"
                         name="city"
-                        //value
-                    // onChange={handleChange}
-                    />
+                    > {stateDisplay()}
+                    </select>
                 </div>
                 <br></br>
                 <div>
                     <label>Gender:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        //value
-                    // onChange={handleChange}
-                    />
+                    <select
+                        id="gender"
+                        name="gender"
+                    > {genderOptions()}
+                    </select>
                 </div>
                 <br></br>
                 <div>
                     <label>Meeting Preference:</label>
-                    <input
-                        type="text"
-                        name="name"
-                        //value
-                    // onChange={handleChange}
-                    />
+                    <select
+                        id="meeting"
+                        name="meeting"
+                    > {meetingPreferences()}
+                    </select>
                 </div>
                 <br></br>
                 <button type="submit" onClick={handleSubmit}>
