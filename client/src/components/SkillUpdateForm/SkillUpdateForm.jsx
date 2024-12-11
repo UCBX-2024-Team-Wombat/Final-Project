@@ -1,15 +1,15 @@
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 
-const SkillForm = ({
-  skillData,
+const SkillUpdateForm = ({
+  skillRelationshipData,
   offered,
   desired,
   submitButtonLabel,
   submitButtonFunction,
 }) => {
   const [formState, setFormState] = useState({
-    ...skillData,
+    ...skillRelationshipData,
   });
 
   function handleSubmit(event) {
@@ -18,10 +18,6 @@ const SkillForm = ({
 
   function handleChange(event) {
     setFormState({ ...formState, [event.target.name]: event.target.value });
-  }
-
-  function showFormState() {
-    console.log(formState);
   }
 
   const offeredDisplay = (
@@ -60,11 +56,8 @@ const SkillForm = ({
 
   return (
     <>
-      <button className="btn btn-primary" onClick={showFormState}>
-        Show Form State
-      </button>
-      <div>{skillData.name}</div>
-      <div>{skillData.description}</div>
+      <div>{skillRelationshipData.name}</div>
+      <div>{skillRelationshipData.description}</div>
       {offered || desired ? (
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3" controlId="yearsOfExperience">
@@ -96,4 +89,4 @@ const SkillForm = ({
   );
 };
 
-export default SkillForm;
+export default SkillUpdateForm;
