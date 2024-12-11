@@ -13,6 +13,14 @@ const typeDefs = `
     country: String
   }
 
+  input UserFilterInput {
+    gender: String
+    meetingPreference: String
+    city: String
+    stateOrProvice: String
+    country: String
+  }
+
   type User {
     _id: ID
     username: String
@@ -68,6 +76,7 @@ const typeDefs = `
     skillsByName(searchString: String!): [Skill]
     skill(id: ID!): Skill
     getSkillRelationshipsByUserId(userId: ID!): [SkillRelationship]
+    getSkillRelationshipsBySearchCriteria(skillIds: [ID]!, userFilterInput: UserFilterInput): [SkillRelationship]
   }
 
   type Mutation {

@@ -56,6 +56,39 @@ const QUERY_SKILL_RELATIONSHIPS_BY_USER_ID = gql`
   }
 `;
 
+const QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA = gql`
+  query getSkillRelationshipsBySearchCriteria(
+    $skillIds: [ID]!
+    $userFilterInput: UserFilterInput
+  ) {
+    getSkillRelationshipsBySearchCriteria(
+      userId: $userId
+      userFilterInput: $userFilterInput
+    ) {
+      _id
+      yearsOfExperience
+      offered
+      offeredText
+      desired
+      desiredText
+      skill {
+        _id
+        name
+        description
+      }
+      user {
+        _id
+        username
+        gender
+        meetingPreference
+        city
+        stateOrProvice
+        country
+      }
+    }
+  }
+`;
+
 const QUERY_SKILLS_BY_NAME = gql`
   query skillsByName($searchString: String!) {
     skillsByName(searchString: $searchString) {
@@ -71,4 +104,5 @@ export {
   QUERY_ME,
   QUERY_SKILL_RELATIONSHIPS_BY_USER_ID,
   QUERY_SKILLS_BY_NAME,
+  QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA,
 };

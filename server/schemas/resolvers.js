@@ -42,6 +42,17 @@ const resolvers = {
       //this will return an array of the skillRelationships objects
       return skillRelationships;
     },
+    getSkillRelationshipsBySearchCriteria: async (
+      parent,
+      { skillIds, userFilterInput }
+    ) => {
+      const skillRelationships = await SkillRelationship.find({
+        skill: { $in: skillIds },
+      })
+        .populate("skill")
+        .populate("user");
+      return skillRelationships;
+    },
   },
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
