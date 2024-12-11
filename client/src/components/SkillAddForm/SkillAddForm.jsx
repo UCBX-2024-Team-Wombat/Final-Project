@@ -15,7 +15,7 @@ TO DO:
 - Add "Add a Skill" to the "want to learn" section, or remove it from the "I offer" section
 - Figure out search page stuff
   - Add skill rendering (SkillDisplayList) to search page
-  - Add 
+  - Add skills to Sharer
 
 */
 
