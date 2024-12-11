@@ -26,4 +26,5 @@ MangoDB logic operations
 -Source
   - https://www.mongodb.com/docs/manual/reference/operator/query-logical/
   - https://socket.io/docs/v4/mongo-adapter/#emitter 
+  - https://socket.io/docs/v4/adapter/#emitter-cheatsheet
 - Use: server/schemas/resolver.js
