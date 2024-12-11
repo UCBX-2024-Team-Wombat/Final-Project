@@ -144,6 +144,10 @@ const Profile = () => {
                     // onChange={handleChange}
                     />
                 </div>
+                <br></br>
+                <button type="submit" onClick={handleSubmit}>
+                    Update Settings
+                </button>
             </form>
         </div>
     );
