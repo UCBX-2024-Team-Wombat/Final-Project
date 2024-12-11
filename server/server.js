@@ -19,6 +19,33 @@ const apolloServer = new ApolloServer({
 const httpServer = http.createServer(app);
 const io = new Server(httpServer);
 
+// Socket.IO logic
+// Socket.IO library enables real-time, 
+// bidirectional communication between web clients and servers.
+io.on('connection', (socket) => {
+  console.log('A user connected:', socket.id);
+
+  // think user as a provote room 
+  socket.on('joinUser', (room) => {
+    socket.join(userId);
+    console.log(`User ${socket.id} joined privite room: ${userId}`);
+  });
+
+  socket.on('sendMessage', ({ receiverId, message }) => {
+    const chatMessage = { 
+      senderId: socket.userId, 
+      receiverId, 
+      message, 
+      timestamp: new Date() 
+    };
+    io.to(receiverId).emit('newMessage', chatMessage); // Emit to the receiver
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+});
+
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
@@ -57,4 +84,10 @@ const startApolloServer = async () => {
 };
 
 // Call the async function to start the server
+
 startApolloServer();
+
+// bi dene bakalim confliction a sebep oluyo mu olmadi cozum bakariz 
+// httpServer.listen(PORT, () => {
+//   console.log(`Server is running on http://localhost:${PORT}`);
+// });
