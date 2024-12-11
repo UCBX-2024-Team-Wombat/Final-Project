@@ -34,14 +34,9 @@ const resolvers = {
       //this will grab a skill by it's id
       return await Skill.findById(id);
     },
-    getSkillRelationships: async (parent, { userId, offered, desired }) => {
+    getSkillRelationshipsByUserId: async (parent, { userId }) => {
       //populate taken from module 21, activity 5 /schemas/resolvers.js
-      const searchFilter = { user: userId };
-
-      if (offered) searchFilter.offered = offered;
-      if (desired) searchFilter.desired = desired;
-
-      const skillRelationships = await SkillRelationship.find(searchFilter)
+      const skillRelationships = await SkillRelationship.find({ user: userId })
         .populate("skill")
         .populate("user");
       //this will return an array of the skillRelationships objects

@@ -1,7 +1,10 @@
 import React, { useMemo, useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_ME, QUERY_SKILLRELATIONSHIPS } from "../../utils/queries.js";
+import {
+  QUERY_ME,
+  QUERY_SKILL_RELATIONSHIPS_BY_USER_ID,
+} from "../../utils/queries.js";
 import {
   MODIFY_USER,
   MODIFY_SKILL_RELATIONSHIP,
@@ -46,11 +49,12 @@ const Profile = () => {
     loading: loadingRelationships,
     data: relationshipsData,
     refetch: refetchSkillRelationships,
-  } = useQuery(QUERY_SKILLRELATIONSHIPS, {
+  } = useQuery(QUERY_SKILL_RELATIONSHIPS_BY_USER_ID, {
     variables: { userId: AuthService.getProfile().data._id },
   });
 
-  const skillRelationships = relationshipsData?.getSkillRelationships || [];
+  const skillRelationships =
+    relationshipsData?.getSkillRelationshipsByUserId || [];
 
   function openOfferedModal(payload) {
     setSkillRelationshipPayload({ ...payload, modalType: "offered" });

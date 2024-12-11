@@ -32,9 +32,9 @@ const QUERY_ME = gql`
 // availableSkills
 // desiredSkills
 
-const QUERY_SKILLRELATIONSHIPS = gql`
-  query GetSkillRelationships($userId: ID!) {
-    getSkillRelationships(userId: $userId) {
+const QUERY_SKILL_RELATIONSHIPS_BY_USER_ID = gql`
+  query getSkillRelationshipsByUserId($userId: ID!) {
+    getSkillRelationshipsByUserId(userId: $userId) {
       _id
       yearsOfExperience
       offered
@@ -66,4 +66,9 @@ const QUERY_SKILLS_BY_NAME = gql`
   }
 `;
 
-export { QUERY_USER, QUERY_ME, QUERY_SKILLRELATIONSHIPS, QUERY_SKILLS_BY_NAME };
+export {
+  QUERY_USER,
+  QUERY_ME,
+  QUERY_SKILL_RELATIONSHIPS_BY_USER_ID,
+  QUERY_SKILLS_BY_NAME,
+};

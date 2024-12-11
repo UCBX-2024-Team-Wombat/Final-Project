@@ -67,7 +67,7 @@ const typeDefs = `
     skills: [Skill]
     skillsByName(searchString: String!): [Skill]
     skill(id: ID!): Skill
-    getSkillRelationships(userId: ID!, offered: Boolean, desired: Boolean): [SkillRelationship]
+    getSkillRelationshipsByUserId(userId: ID!): [SkillRelationship]
   }
 
   type Mutation {
