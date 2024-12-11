@@ -19,4 +19,11 @@ WebSocket functionality setup
   - https://socket.io/get-started/chat
   - https://socket.io/docs/v4/server-options/
   - https://socket.io/docs/v4/rooms/
+  - https://socket.io/docs/v4/mongo-adapter/
 - Use: `server/server.js
+
+MangoDB logic operations
+-Source
+  - https://www.mongodb.com/docs/manual/reference/operator/query-logical/
+  - https://socket.io/docs/v4/mongo-adapter/#emitter 
+- Use: server/schemas/resolver.js
