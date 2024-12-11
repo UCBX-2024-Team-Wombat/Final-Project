@@ -45,9 +45,24 @@ const MODIFY_SKILL_RELATIONSHIP = gql`
   }
 `;
 
+const ADD_SKILL_RELATIONSHIP = gql`
+  mutation addSkillRelationship($input: SkillRelationshipInput!) {
+    addSkillRelationship(input: $input) {
+      _id
+      skill {
+        _id
+        name
+        description
+      }
+      yearsOfExperience
+    }
+  }
+`;
+
 export {
   LOGIN,
   ADD_USER,
   MODIFY_USER,
-  MODIFY_SKILL_RELATIONSHIP as UPDATE_SKILL_RELATIONSHIP,
+  MODIFY_SKILL_RELATIONSHIP,
+  ADD_SKILL_RELATIONSHIP,
 };
