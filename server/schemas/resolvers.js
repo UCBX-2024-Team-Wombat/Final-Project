@@ -1,8 +1,18 @@
 const { User, Skill, SkillRelationship } = require("../models/index.js");
 const { signToken, AuthenticationError } = require("../utils/auth.js");
+const ChatMessage = require('../models/ChatMessage');
+const { populate } = require("../models/User.js");
 
 const resolvers = {
+ 
   Query: {
+    getMessagesBetweenUsers: async(_,{senderId,receiverId}) => {
+      return ChatMessage.find({
+        $or: [
+          {sender:senderId, receiver: receiverId} //condition captures all messages exchanged between the two users, irrespective of the sender's or receiver's role in each message.
+        ]
+      }).populate('sender'),populate('receiver')
+    },
     allUsers: async (parent) => {
       return await User.find();
     },
