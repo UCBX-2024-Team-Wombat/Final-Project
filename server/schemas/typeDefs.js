@@ -69,6 +69,7 @@ const typeDefs = `
     modifySkill(id: ID!, name: String, description: String): Skill
     deleteSkill(id: ID!): Skill
     addSkillRelationship(input: SkillRelationshipInput): SkillRelationship
+    sendMessage(receiverId: ID!, message: String!): ChatMessage
   }
 `;
 
