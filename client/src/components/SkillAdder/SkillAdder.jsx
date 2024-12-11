@@ -2,7 +2,7 @@ import AuthService from "../../utils/auth.js";
 import TypeableDropdown from "../TypeableDropdown/TypeableDropdown.jsx";
 import { QUERY_SKILLS_BY_NAME } from "../../utils/queries";
 import { useState } from "react";
-import NewSkillForm from "../NewSkillForm/NewSkillForm.jsx";
+import SkillForm from "../SkillForm/SkillForm.jsx";
 
 const SkillAdder = ({ offered, desired }) => {
   const [selectedSkill, setSelectedSkill] = useState();
@@ -23,11 +23,7 @@ const SkillAdder = ({ offered, desired }) => {
       />
       {selectedSkill ? (
         <div className="border border-secondary rounded p-3">
-          <NewSkillForm
-            skillData={selectedSkill}
-            offered={false}
-            desired={true}
-          />
+          <SkillForm skillData={selectedSkill} offered={false} desired={true} />
         </div>
       ) : (
         ""
