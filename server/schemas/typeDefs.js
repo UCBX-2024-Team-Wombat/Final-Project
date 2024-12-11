@@ -23,6 +23,14 @@ const typeDefs = `
     name: String
     description: String
   }
+  type ChatMessage {
+  id: ID!
+  sender: User!
+  receiver: User!
+  message: String!
+  timestamp: String!
+}
+
 
   input SkillRelationshipInput {
     skillId: ID!
