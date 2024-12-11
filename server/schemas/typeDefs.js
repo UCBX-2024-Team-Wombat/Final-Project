@@ -59,7 +59,7 @@ const typeDefs = `
     skills: [Skill]
     skill(id: ID!): Skill
     getSkillRelationships(userId: ID!, offered: Boolean, desired: Boolean): [SkillRelationship]
-     getMessagesBetweenUsers(senderId: ID!, receiverId: ID!): [ChatMessage]
+    getMessagesBetweenUsers(senderId: ID!, receiverId: ID!): [ChatMessage]
   }
 
   type Mutation {
@@ -69,7 +69,7 @@ const typeDefs = `
     modifySkill(id: ID!, name: String, description: String): Skill
     deleteSkill(id: ID!): Skill
     addSkillRelationship(input: SkillRelationshipInput): SkillRelationship
-    sendMessage(receiverId: ID!, message: String!): ChatMessage
+    sendMessage(receiverId: ID!, message: String!): ChatMessage    #allow one user to send a message to another user in a one-to-one chat system.
   }
 `;
 
