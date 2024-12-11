@@ -1,7 +1,17 @@
 import React, { useMemo, useState } from "react";
+import Modal from "react-bootstrap/Modal";
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_ME } from "../utils/queries";
-import { MODIFY_USER } from "../utils/mutations";
+import { QUERY_ME, QUERY_SKILLRELATIONSHIPS } from "../../utils/queries.js";
+import {
+  MODIFY_USER,
+  UPDATE_SKILL_RELATIONSHIP as MODIFY_SKILL_RELATIONSHIP,
+} from "../../utils/mutations.js";
+import SkillAdder from "../../components/SkillAdder/SkillAdder";
+import SkillDisplayList from "../../components/SkillDisplayList/SkillDisplayList.jsx";
+import AuthService from "../../utils/auth.js";
+import { useGlobalContext } from "../../utils/GlobalState.jsx";
+import ProfileStyleRouter from "./ProfileStyleRouter.js";
+import SkillForm from "../../components/SkillForm/SkillForm.jsx";
 
 //create a base myProfile page (form section)
 // 2 buttons for functionality (current skills, desired skills)
@@ -20,6 +30,84 @@ const Profile = () => {
 
   //console.log(userData);
   // console.log("Skills: ", foundSkillData);
+
+  // ==============================
+  const [state, dispatch] = useGlobalContext();
+  const [showModal, setShowModal] = useState(false);
+  const [skillRelationshipPayload, setSkillRelationshipPayload] = useState({});
+  const [updateSkill] = useMutation(MODIFY_SKILL_RELATIONSHIP);
+
+  const styleRouter = new ProfileStyleRouter(state);
+
+  const {
+    loading: loadingRelationships,
+    data: relationshipsData,
+    refetch: refetchSkillRelationships,
+  } = useQuery(QUERY_SKILLRELATIONSHIPS, {
+    variables: { userId: AuthService.getProfile().data._id },
+  });
+
+  const skillRelationships = relationshipsData?.getSkillRelationships || [];
+
+  function openOfferedModal(payload) {
+    setSkillRelationshipPayload({ ...payload, modalType: "offered" });
+    setShowModal(true);
+  }
+
+  function openDesiredModal(payload) {
+    setSkillRelationshipPayload({ ...payload, modalType: "desired" });
+    setShowModal(true);
+  }
+
+  function formatFormStateForUpdate(formState) {
+    const skillRelationshipInput = formState;
+
+    skillRelationshipInput.userId = skillRelationshipInput.user._id;
+    skillRelationshipInput.skillId = skillRelationshipInput.skill._id;
+
+    delete skillRelationshipInput.user;
+    delete skillRelationshipInput.skill;
+    delete skillRelationshipInput.modalType;
+    delete skillRelationshipInput.__typename;
+    delete skillRelationshipInput._id;
+
+    return skillRelationshipInput;
+  }
+
+  function updateRelationship(formState) {
+    hideModal();
+    console.log("formState", formState);
+    updateSkill({
+      variables: {
+        skillRelationshipId: formState._id,
+        skillRelationshipInput: formatFormStateForUpdate(formState),
+      },
+    });
+    refetchSkillRelationships();
+  }
+
+  function hideModal() {
+    setShowModal(false);
+  }
+
+  const offeredSkills = () => {
+    if (skillRelationships.length > 0) {
+      return skillRelationships.filter(
+        (relationship) => relationship.offered == true
+      );
+    }
+    return [];
+  };
+
+  const desiredSkills = () => {
+    if (skillRelationships.length > 0) {
+      return skillRelationships.filter(
+        (relationship) => relationship.desired == true
+      );
+    }
+    return [];
+  };
+  // ==============================
 
   const handleChange = (e) => {
     console.log(e.target);
@@ -64,6 +152,22 @@ const Profile = () => {
   }
   return (
     <div className="myProfile">
+      {/* =============================== */}
+      <Modal show={showModal} onHide={hideModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>{skillRelationshipPayload?.skill?.name}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <SkillForm
+            skillData={skillRelationshipPayload}
+            offered={skillRelationshipPayload.modalType == "offered"}
+            desired={skillRelationshipPayload.modalType == "desired"}
+            submitButtonLabel="Update"
+            submitButtonFunction={updateRelationship}
+          />
+        </Modal.Body>
+      </Modal>
+      {/* =============================== */}
       <h1>My Profile</h1>
       <form>
         <div>
@@ -103,6 +207,32 @@ const Profile = () => {
           Update Profile
         </button>
       </form>
+      {offeredSkills().length > 0 ? (
+        <>
+          <div className={styleRouter.header}>Skills I Offer</div>
+          <SkillDisplayList
+            skillRelationshipList={offeredSkills()}
+            openModalFunction={openOfferedModal}
+          />
+        </>
+      ) : (
+        <></>
+      )}
+      {desiredSkills().length > 0 ? (
+        <>
+          <div className={styleRouter.header}>Skills I Want To Learn</div>
+          <SkillDisplayList
+            skillRelationshipList={desiredSkills()}
+            openModalFunction={openDesiredModal}
+          />
+        </>
+      ) : (
+        <></>
+      )}
+      <div>Add a skill you can offer</div>
+      <SkillAdder offered={true} />
+      <div>Add a skill you want to learn</div>
+      <SkillAdder desired={true} />
     </div>
   );
 };
