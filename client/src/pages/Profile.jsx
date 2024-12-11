@@ -93,6 +93,7 @@ const Profile = () => {
 
         console.log(newUserData);
         //send newUserData to backend to save it
+        
         alert("Settings updated!");
            
         } catch (err) {
