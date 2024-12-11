@@ -19,10 +19,7 @@ const TypeableDropdown = ({
   const queryTimerWaitTime = 1000;
 
   function updateQueryString(event) {
-    console.log("event.target.value", event.target.value);
-
     setQueryString(event.target.value);
-    console.log("query string", queryString);
   }
 
   function handleItemClicked(data) {
