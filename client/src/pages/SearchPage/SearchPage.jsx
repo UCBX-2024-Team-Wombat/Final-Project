@@ -4,15 +4,34 @@ import TypeableDropdown from "../../components/TypeableDropdown/TypeableDropdown
 import { QUERY_SKILLS_BY_NAME } from "../../utils/queries.js";
 import { useQuery } from "@apollo/client";
 
+// Import standardValues.js
+import {
+  GENDER_OPTIONS,
+  US_STATES,
+  MEETING_PREFERENCE,
+} from "../../utils/standardValues.js";
+
 const SearchPage = () => {
-  const [name, setName] = useState("");
+  const [filters, setFilters] = useState({
+    city: "",
+    state: "",
+    county: "",
+    gender: "",
+    meetingPreference: "",
+  });
   const [selectedSkills, setSelectedSkills] = useState({});
 
-  const handleNameChange = (event) => {
-    setName(event.target.value);
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    console.log("name:", name);
+    console.log("value:", value);
+    setFilters({
+      ...filters,
+      [name]: value,
+    });
   };
 
-  const handleSearchSubmit = (event) => {
+  function handleSearchSubmit(event) {
     event.preventDefault();
     console.log("searching");
 
@@ -22,7 +41,19 @@ const SearchPage = () => {
 
     runSearchQuery({ variables: arguements });
     // Need to add logic to handle the search
-  };
+  }
+
+  const genderSelfDescribe = (
+    <div>
+      <label className="form-label">Please describe your gender</label>
+      <input
+        className="form-control"
+        name="genderDescribe"
+        value={filters.genderDescribe}
+        onChange={handleChange}
+      />
+    </div>
+  );
 
   // ================================================
 
@@ -78,15 +109,71 @@ const SearchPage = () => {
       <form onSubmit={handleUpdateFilter}>
         <div>
           <label>
-            Name:
+            City:
             <input
               type="text"
-              placeholder="Name Search"
-              value={name}
-              onChange={handleNameChange}
+              placeholder="City"
+              name="city"
+              value={filters.city}
+              onChange={handleChange}
             />
           </label>
         </div>
+        <div>
+          <label>State:</label>
+          <select name="state" value={filters.state} onChange={handleChange}>
+            <option value="" disabled>
+              Select a state
+            </option>
+            {US_STATES.map((state) => (
+              <option key={state.name} value={state.name}>
+                {state.name}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Meeting preference:</label>
+          <select
+            name="meetingPreference"
+            value={filters.meetingPreference}
+            onChange={handleChange}
+          >
+            <option value="" disabled>
+              Select your meeting preference
+            </option>
+            {MEETING_PREFERENCE.map((meeting) => (
+              <option key={meeting} value={meeting}>
+                {meeting}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div>
+          <label>Gender:</label>
+          <select name="gender" value={filters.gender} onChange={handleChange}>
+            <option value="" disabled>
+              What is your gender
+            </option>
+            {GENDER_OPTIONS.map((gender) => (
+              <option key={gender} value={gender}>
+                {gender}
+              </option>
+            ))}
+          </select>
+        </div>
+        {filters.gender == "Self Describe" ? genderSelfDescribe : <></>}
+        {/* <div>
+          <label>
+            Skills:
+            <input
+              type="text"
+              placeholder="Skill Search"
+              value={skills}
+              onChange={handleSkillsChange}
+            />
+          </label>
+        </div> */}
         <button type="submit">Search</button>
       </form>
       {/* ============================== */}
