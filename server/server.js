@@ -15,6 +15,11 @@ const apolloServer = new ApolloServer({
   resolvers,
 });
 
+// Create an HTTP server and attach Socket.IO
+const httpServer = http.createServer(app);
+const io = new Server(httpServer);
+
+
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
   // Wait for start up of Apollo Server
