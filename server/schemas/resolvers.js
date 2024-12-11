@@ -92,6 +92,17 @@ const resolvers = {
       );
       return skill;
     },
+    modifySkillRelationship: async (
+      parent,
+      { skillRelationshipId, skillRelationshipInput }
+    ) => {
+      const skillRelationship = await SkillRelationship.findByIdAndUpdate(
+        skillRelationshipId,
+        { ...skillRelationshipInput },
+        { returnDocument: "after" }
+      );
+      return skillRelationship;
+    },
     deleteSkill: async (parent, { id }) => {
       //finds a skill by id and deletes it
       const skill = await Skill.findByIdAndDelete(id);

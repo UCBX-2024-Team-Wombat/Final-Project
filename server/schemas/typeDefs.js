@@ -39,6 +39,7 @@ const typeDefs = `
   }
 
   input SkillRelationshipInput {
+    skillRelationshipId: ID
     skillId: ID!
     userId: ID!
     yearsOfExperience: String
@@ -49,6 +50,7 @@ const typeDefs = `
   }
 
   type SkillRelationship {
+    _id: ID
     skill: Skill
     yearsOfExperience: String
     offered: Boolean
@@ -76,6 +78,7 @@ const typeDefs = `
     modifySkill(id: ID!, name: String, description: String): Skill
     deleteSkill(id: ID!): Skill
     addSkillRelationship(input: SkillRelationshipInput): SkillRelationship
+    modifySkillRelationship(skillRelationshipId: ID!, skillRelationshipInput: SkillRelationshipInput!): SkillRelationship
   }
 `;
 

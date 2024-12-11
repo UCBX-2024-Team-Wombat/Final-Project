@@ -29,6 +29,25 @@ const MODIFY_USER = gql`
       email
     }
   }
-`
+`;
 
-export { LOGIN, ADD_USER, MODIFY_USER };
+const MODIFY_SKILL_RELATIONSHIP = gql`
+  mutation modifySkillRelationship(
+    $skillRelationshipId: ID!
+    $skillRelationshipInput: SkillRelationshipInput!
+  ) {
+    modifySkillRelationship(
+      skillRelationshipId: $skillRelationshipId
+      skillRelationshipInput: $skillRelationshipInput
+    ) {
+      _id
+    }
+  }
+`;
+
+export {
+  LOGIN,
+  ADD_USER,
+  MODIFY_USER,
+  MODIFY_SKILL_RELATIONSHIP as UPDATE_SKILL_RELATIONSHIP,
+};
