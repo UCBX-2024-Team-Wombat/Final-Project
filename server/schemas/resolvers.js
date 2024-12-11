@@ -55,6 +55,13 @@ const resolvers = {
         message,
         timestamp: new Date(),
       });
+      // Emit to WebSocket (sender and receiver should both get the message)
+      io.to(user._id.toString()).emit('newMessage', chatMessage);
+      io.to(receiverId.toString()).emit('newMessage', chatMessage);
+
+      return chatMessage.populate('sender').populate('receiver');
+    },
+    
     addUser: async (parent, { username, email, password }) => {
       const user = await User.create({ username, email, password });
       const token = signToken(user);
