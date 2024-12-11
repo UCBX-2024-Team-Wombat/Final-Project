@@ -59,6 +59,7 @@ const typeDefs = `
     skills: [Skill]
     skill(id: ID!): Skill
     getSkillRelationships(userId: ID!, offered: Boolean, desired: Boolean): [SkillRelationship]
+     getMessagesBetweenUsers(senderId: ID!, receiverId: ID!): [ChatMessage]
   }
 
   type Mutation {
