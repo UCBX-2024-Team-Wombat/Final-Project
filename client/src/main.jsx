@@ -4,13 +4,13 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import App from "./App.jsx";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Error from "./pages/Error";
+import Home from "./pages/Home/Home.jsx";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
+import Error from "./pages/Error/Error.jsx";
 import SearchPage from "./pages/SearchPage/SearchPage.jsx";
-import Profile from "./pages/Profile.jsx";
-import SharerPage from "./pages/SharerPage.jsx";
+import Profile from "./pages/Profile/Profile.jsx";
+import Sharer from "./pages/Sharer/Sharer.jsx";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +40,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/sharer/:userId",
-        element: <SharerPage />,
+        element: <Sharer />,
       },
     ],
   },

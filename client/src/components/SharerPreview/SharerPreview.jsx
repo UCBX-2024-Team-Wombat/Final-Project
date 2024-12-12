@@ -1,9 +1,15 @@
-const Sharer = ({ payload }) => {
+import { useNavigate } from "react-router-dom";
+
+const SharerPreview = ({ payload }) => {
   const user = payload.user;
+  const navigate = useNavigate();
+
+  function viewProfile() {
+    navigate(`/sharer/${user._id}`);
+  }
 
   return (
     <>
-      <div>{JSON.stringify(payload)}</div>
       <div
         style={{ border: "1px solid #ccc", padding: "10px", margin: "10px" }}
       >
@@ -28,11 +34,9 @@ const Sharer = ({ payload }) => {
             ))}
           </ul>
         </p>
-        <button onClick={() => alert(`Viewing ${user.username}'s profile`)}>
-          View Profile
-        </button>
+        <button onClick={viewProfile}>View Profile</button>
       </div>
     </>
   );
 };
-export default Sharer;
+export default SharerPreview;

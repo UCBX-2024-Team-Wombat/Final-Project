@@ -1,4 +1,4 @@
-import Sharer from "../Sharer/Sharer.jsx";
+import SharerPreview from "../SharerPreview/SharerPreview.jsx";
 
 const SearchResultsDisplay = ({ searchPayload, showOffered, showDesired }) => {
   const filteredData = () => {
@@ -26,7 +26,7 @@ const SearchResultsDisplay = ({ searchPayload, showOffered, showDesired }) => {
         filteredData().map((data) => {
           return (
             <div key={JSON.stringify(data)}>
-              <Sharer payload={data} />;
+              <SharerPreview payload={data} />;
             </div>
           );
         })
