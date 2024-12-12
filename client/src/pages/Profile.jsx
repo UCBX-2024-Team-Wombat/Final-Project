@@ -319,76 +319,69 @@ const Profile = () => {
 
   return (
     <div className="container my-5">
-      {/* =============================== */}{" "}
-      {/* =====Update Skill Modal======== */}{" "}
-      {/* =============================== */}{" "}
+      {/* =============================== */}
+      {/* =====Update Skill Modal======== */}
+      {/* =============================== */}
       <Modal show={showUpdatModal} onHide={hideUpdateModal}>
-        {" "}
         <Modal.Header closeButton>
-          {" "}
-          <Modal.Title>
-            {skillRelationshipPayload?.skill?.name}
-          </Modal.Title>{" "}
-        </Modal.Header>{" "}
+          <Modal.Title>{skillRelationshipPayload?.skill?.name}</Modal.Title>
+        </Modal.Header>
         <Modal.Body>
-          {" "}
           <SkillUpdateForm
             skillRelationshipData={skillRelationshipPayload}
             offered={skillRelationshipPayload.modalType == "offered"}
             desired={skillRelationshipPayload.modalType == "desired"}
             submitButtonLabel="Update"
             submitButtonFunction={updateRelationship}
-          />{" "}
-        </Modal.Body>{" "}
+          />
+        </Modal.Body>
       </Modal>
-      {/* =============================== */}{" "}
-      {/* =======Add Skill Modal========= */}{" "}
-      {/* =============================== */}{" "}
+      {/* =============================== */}
+      {/* =======Add Skill Modal========= */}
+      {/* =============================== */}
       <Modal show={showAddModal} onHide={hideAddModal}>
-        {" "}
         <Modal.Header closeButton>
-          <Modal.Title>Add A New Skill</Modal.Title>{" "}
-        </Modal.Header>{" "}
+          <Modal.Title>Add A New Skill</Modal.Title>
+        </Modal.Header>
         <Modal.Body>
-          {" "}
-          <SkillAddForm submitButtonFunction={createSkillRelationship} />{" "}
-        </Modal.Body>{" "}
+          <SkillAddForm submitButtonFunction={createSkillRelationship} />
+        </Modal.Body>
       </Modal>
-      {/* =============================== */}{" "}
+      {/* =============================== */}
       <form style={{ flex: "1" }}>
-        <h1 className="text-left mb-4">My Profile</h1>{" "}
+        <h1 className="text-left mb-4">My Profile</h1>
         <div className="mb-3">
-          <label className="form-label">Username:</label>{" "}
+          <label className="form-label">Username:</label>
           <input
             type="text"
             className="form-control"
             name="username"
             value={newUserData.username || ""} // value={userData.username}
             onChange={handleChange}
-          />{" "}
-        </div>{" "}
+          />
+        </div>
         <div className="mb-3">
-          <label className="form-label">Email:</label>{" "}
+          <label className="form-label">Email:</label>
           <input
             type="email"
             className="form-control"
             name="email"
             value={newUserData.email || ""} // value={userData.email}
             onChange={handleChange}
-          />{" "}
-        </div>{" "}
+          />
+        </div>
         <div className="mb-3">
-          <label className="form-label">City:</label>{" "}
+          <label className="form-label">City:</label>
           <input
             type="text"
             className="form-control"
             name="city"
             value={userData.city}
             onChange={handleChange}
-          />{" "}
-        </div>{" "}
+          />
+        </div>
         <div className="mb-3">
-          <label className="form-label">State:</label>{" "}
+          <label className="form-label">State:</label>
           <select
             id="stateOrProvince"
             className="form-select"
@@ -397,11 +390,11 @@ const Profile = () => {
             placeholder={userData.stateOrProvince}
             onChange={handleChange}
           >
-            {stateDisplay()}{" "}
-          </select>{" "}
-        </div>{" "}
+            {stateDisplay()}
+          </select>
+        </div>
         <div className="mb-3">
-          <label className="form-label">Gender:</label>{" "}
+          <label className="form-label">Gender:</label>
           <select
             id="gender"
             className="form-select"
@@ -409,11 +402,11 @@ const Profile = () => {
             value={userData.gender}
             onChange={handleChange}
           >
-            {genderOptions()}{" "}
-          </select>{" "}
-        </div>{" "}
+            {genderOptions()}
+          </select>
+        </div>
         <div className="mb-3">
-          <label className="form-label">Meeting Preference:</label>{" "}
+          <label className="form-label">Meeting Preference:</label>
           <select
             id="meetingPreference"
             className="form-select"
@@ -421,83 +414,76 @@ const Profile = () => {
             value={userData.meetingPreference}
             onChange={handleChange}
           >
-            {meetingPreferences()}{" "}
-          </select>{" "}
-        </div>{" "}
+            {meetingPreferences()}
+          </select>
+        </div>
         <button type="submit" onClick={handleUpdateSettings}>
-          Update Settings{" "}
-        </button>{" "}
+          Update Settings
+        </button>
       </form>
-      <br></br> <br></br>{" "}
+      <br></br> <br></br>
       <form>
-        {" "}
         <div className="mb-3">
-          <label className="form-label">New Password:</label>{" "}
+          <label className="form-label">New Password:</label>
           <input
             type="password"
             className="form-control"
             name="password1"
             onChange={handleChange}
-          />{" "}
-        </div>{" "}
+          />
+        </div>
         <div className="mb-3">
-          <label className="form-label">Confirm Password:</label>{" "}
+          <label className="form-label">Confirm Password:</label>
           <input
             type="password"
             className="form-control"
             name="password2"
             onChange={handleChange}
-          />{" "}
-        </div>{" "}
+          />
+        </div>
         <div className="text-danger" hidden={!passwordMissMatch}>
-          Passwords do not match{" "}
-        </div>{" "}
+          Passwords do not match
+        </div>
         <button type="submit" onClick={handleSubmit}>
-          Update Profile{" "}
-        </button>{" "}
-      </form>{" "}
+          Update Profile
+        </button>
+      </form>
       {offeredSkills().length > 0 ? (
         <>
-          {" "}
           <div className="container">
-            {" "}
             <div className="row justify-content-between">
-              {" "}
               <div className="col">
-                {" "}
-                <div className={styleRouter.header}>Skills I Offer</div>{" "}
-              </div>{" "}
+                <div className={styleRouter.header}>Skills I Offer</div>
+              </div>
               <div className="col d-flex justify-content-end">
-                {" "}
                 <button
                   className="btn btn-primary"
                   onClick={() => openAddModal("offered")}
                 >
-                  Add A Skill{" "}
-                </button>{" "}
-              </div>{" "}
-            </div>{" "}
-          </div>{" "}
+                  Add A Skill
+                </button>
+              </div>
+            </div>
+          </div>
           <SkillDisplayList
             skillRelationshipList={offeredSkills()}
             openModalFunction={openOfferedModal}
-          />{" "}
+          />
         </>
       ) : (
         <></>
-      )}{" "}
+      )}
       {desiredSkills().length > 0 ? (
         <>
-          {" "}
-          <div className={styleRouter.header}>Skills I Want To Learn</div>{" "}
+          <div className={styleRouter.header}>Skills I Want To Learn</div>
           <SkillDisplayList
             skillRelationshipList={desiredSkills()}
             openModalFunction={openDesiredModal}
-          />{" "}
+          />
         </>
       ) : (
         <></>
-      )}{" "}
+      )}
     </div>
   );
 };
