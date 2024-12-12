@@ -366,7 +366,18 @@ const Profile = () => {
             type="email"
             className="form-control"
             name="email"
-            value={newUserData.email || ""} // value={userData.email}
+            value={newUserData.email}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label">About Me:</label>
+          <textarea
+            type="email"
+            className="form-control"
+            name="bio"
+            rows="3"
+            value={userData.bio}
             onChange={handleChange}
           />
         </div>
