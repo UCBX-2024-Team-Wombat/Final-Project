@@ -15,8 +15,8 @@ function Header() {
     <div className="search-bar ui segement fs-6">
       <Navbar className="primary-color-theme" expand="lg" fixed="top">
         <Container>
-          <Nav.Link key={"home"} href="/">
-            <Navbar.Brand>Project Title</Navbar.Brand>
+          <Nav.Link key={"home"} href="/search">
+            <Navbar.Brand>Skill Share Hub</Navbar.Brand>
           </Nav.Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse
