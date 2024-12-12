@@ -62,7 +62,7 @@ const QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA = gql`
     $userFilterInput: UserFilterInput
   ) {
     getSkillRelationshipsBySearchCriteria(
-      userId: $userId
+      skillIds: $skillIds
       userFilterInput: $userFilterInput
     ) {
       _id
@@ -82,7 +82,7 @@ const QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA = gql`
         gender
         meetingPreference
         city
-        stateOrProvice
+        stateOrProvince
         country
       }
     }

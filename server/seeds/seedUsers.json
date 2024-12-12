@@ -9,7 +9,12 @@
     {
         "username": "Jamil",
         "email": "jamil@test.com",
-        "password": "abc123"
+        "password": "abc123",
+        "city": "Berkeley",
+        "stateOrProvince": "California",
+        "country": "United States",
+        "gender": "Man",
+        "meetingPreference": "Online"
     },
     {
         "username": "Bradyn",

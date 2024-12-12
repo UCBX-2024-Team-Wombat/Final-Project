@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import SearchResultsDisplay from "../../components/SearchResultsDisplay/SearchResultsDisplay";
 import TypeableDropdown from "../../components/TypeableDropdown/TypeableDropdown";
-import { QUERY_SKILLS_BY_NAME } from "../../utils/queries.js";
-import { useQuery } from "@apollo/client";
+import {
+  QUERY_SKILLS_BY_NAME,
+  QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA,
+} from "../../utils/queries.js";
+import { useLazyQuery } from "@apollo/client";
 
 // Import standardValues.js
 import {
@@ -20,6 +23,12 @@ const SearchPage = () => {
     meetingPreference: "",
   });
   const [selectedSkills, setSelectedSkills] = useState({});
+  const [runSearchQuery, { loading: searchLoading, data: searchData }] =
+    useLazyQuery(QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA, {
+      variables: {
+        skillIds: selectedSkillIds(),
+      },
+    });
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -35,11 +44,7 @@ const SearchPage = () => {
     event.preventDefault();
     console.log("searching");
 
-    const arguements = {
-      skillIds: selectedSkillIds(),
-    };
-
-    runSearchQuery({ variables: arguements });
+    runSearchQuery();
     // Need to add logic to handle the search
   }
 
@@ -57,9 +62,9 @@ const SearchPage = () => {
 
   // ================================================
 
-  const [runSearchQuery] = useQuery(
-    QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA
-  );
+  // const [querySkills, { called, loading, data }] = useLazyQuery(query, {
+  //   variables: { searchString: queryString },
+  // });
 
   function handleUpdateFilter(event) {
     event.preventDefault();
@@ -71,9 +76,9 @@ const SearchPage = () => {
     setSelectedSkills({ ...selectedSkills, [skillData._id]: skillData });
   }
 
-  const selectedSkillIds = () => {
+  function selectedSkillIds() {
     return Object.keys(selectedSkills);
-  };
+  }
 
   const skillContainer = (skillData) => {
     return (
@@ -195,7 +200,7 @@ const SearchPage = () => {
         {selectedSkillIds().map((skillId) => {
           return skillContainer(selectedSkills[skillId]);
         })}
-        <SearchResultsDisplay searchPayload={{}} />
+        <SearchResultsDisplay searchPayload={searchData} showOffered={true} />
       </div>
       {/* ============================== */}
     </div>
