@@ -7,31 +7,31 @@ import { useQuery, useMutation } from "@apollo/client";
 import {
   QUERY_ME,
   QUERY_SKILL_RELATIONSHIPS_BY_USER_ID,
-} from "../utils/queries.js";
+} from "../../utils/queries.js";
 
 import {
   MODIFY_USER,
   MODIFY_SKILL_RELATIONSHIP,
   ADD_SKILL_RELATIONSHIP,
-} from "../utils/mutations.js";
+} from "../../utils/mutations.js";
 
-import SkillDisplayList from "../components/SkillDisplayList/SkillDisplayList.jsx";
+import SkillDisplayList from "../../components/SkillDisplayList/SkillDisplayList.jsx";
 
-import AuthService from "../utils/auth.js";
+import AuthService from "../../utils/auth.js";
 
-import { useGlobalContext } from "../utils/GlobalState.jsx";
+import { useGlobalContext } from "../../utils/GlobalState.jsx";
 
-import ProfileStyleRouter from "./Profile/ProfileStyleRouter.js";
+import ProfileStyleRouter from "./ProfileStyleRouter.js";
 
-import SkillUpdateForm from "../components/SkillUpdateForm/SkillUpdateForm.jsx";
+import SkillUpdateForm from "../../components/SkillUpdateForm/SkillUpdateForm.jsx";
 
-import SkillAddForm from "../components/SkillAddForm/SkillAddForm.jsx";
+import SkillAddForm from "../../components/SkillAddForm/SkillAddForm.jsx";
 
 import {
   US_STATES,
   MEETING_PREFERENCE,
   GENDER_OPTIONS,
-} from "../utils/standardValues";
+} from "../../utils/standardValues.js";
 
 //create a base myProfile page (form section)
 
