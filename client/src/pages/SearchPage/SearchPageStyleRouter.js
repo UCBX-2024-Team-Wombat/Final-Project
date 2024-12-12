@@ -1,4 +1,4 @@
-class ProfileStyleRouter {
+class SearchPageStyleRouter {
   constructor({ isMobile, isTablet, isDesktop }) {
     this.isMobile = isMobile;
     this.isTablet = isTablet;
@@ -10,6 +10,14 @@ class ProfileStyleRouter {
       return "fw-bold fs-3";
     } else {
       return "fw-bold fs-3";
+    }
+  }
+
+  get subHeader() {
+    if (this.isMobile) {
+      return "fw-bold fs-6";
+    } else {
+      return "fw-bold fs-5";
     }
   }
 
@@ -30,4 +38,4 @@ class ProfileStyleRouter {
   }
 }
 
-export default ProfileStyleRouter;
+export default SearchPageStyleRouter;

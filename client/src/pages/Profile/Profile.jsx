@@ -283,128 +283,138 @@ const Profile = () => {
         </Modal.Body>
       </Modal>
       {/* =============================== */}
-      <form style={{ flex: "1" }}>
-        <h1 className="text-left mb-4">My Profile</h1>
-        <div className="mb-3">
-          <label className="form-label">Username:</label>
-          <input
-            type="text"
-            className="form-control"
-            name="username"
-            value={newUserData.username}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Email:</label>
-          <input
-            type="email"
-            className="form-control"
-            name="email"
-            value={newUserData.email}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">About Me:</label>
-          <textarea
-            type="email"
-            className="form-control"
-            name="bio"
-            rows="3"
-            value={userData.bio}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">City:</label>
-          <input
-            type="text"
-            className="form-control"
-            name="city"
-            value={userData.city}
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">State:</label>
-          <select
-            id="stateOrProvince"
-            className="form-select"
-            name="stateOrProvince"
-            value={userData.stateOrProvince}
-            placeholder={userData.stateOrProvince}
-            onChange={handleChange}
-          >
-            {stateDisplay()}
-          </select>
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Gender:</label>
-          <select
-            id="gender"
-            className="form-select"
-            name="gender"
-            value={userData.gender}
-            onChange={handleChange}
-          >
-            {genderOptions()}
-          </select>
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Meeting Preference:</label>
-          <select
-            id="meetingPreference"
-            className="form-select"
-            name="meetingPreference"
-            value={userData.meetingPreference}
-            onChange={handleChange}
-          >
-            {meetingPreferences()}
-          </select>
-        </div>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={handleUpdateSettings}
-        >
-          Update Settings
-        </button>
-      </form>
-      <br></br> <br></br>
-      <form className="">
-        <div className="mb-3">
-          <label className="form-label">New Password:</label>
-          <input
-            type="password"
-            className="form-control"
-            name="password1"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Confirm Password:</label>
-          <input
-            type="password"
-            className="form-control"
-            name="password2"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="text-danger" hidden={!passwordMissMatch}>
-          Passwords do not match
-        </div>
-        <button
-          type="submit"
-          className="btn btn-primary"
-          onClick={handleSubmit}
-        >
-          Update Profile
-        </button>
-      </form>
+      <h1 className="text-left border-bottom pb-3 mb-2">My Profile</h1>
+      <div className={styleRouter.pageSection}>
+        <div className={styleRouter.pageSectionTitle}>My Info</div>
+        <form>
+          <div className="mb-3">
+            <label className="form-label fw-bold">Username</label>
+            <input
+              type="text"
+              className="form-control"
+              name="username"
+              value={newUserData.username}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label fw-bold">Email</label>
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              value={newUserData.email}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label fw-bold">About Me</label>
+            <textarea
+              type="email"
+              className="form-control"
+              name="bio"
+              rows="3"
+              value={userData.bio}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label fw-bold">City</label>
+            <input
+              type="text"
+              className="form-control"
+              name="city"
+              value={userData.city}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label fw-bold">State</label>
+            <select
+              id="stateOrProvince"
+              className="form-select"
+              name="stateOrProvince"
+              value={userData.stateOrProvince}
+              placeholder={userData.stateOrProvince}
+              onChange={handleChange}
+            >
+              {stateDisplay()}
+            </select>
+          </div>
+          <div className="mb-3">
+            <label className="form-label fw-bold">Gender</label>
+            <select
+              id="gender"
+              className="form-select"
+              name="gender"
+              value={userData.gender}
+              onChange={handleChange}
+            >
+              {genderOptions()}
+            </select>
+          </div>
+          <div className="mb-3">
+            <label className="form-label fw-bold">Meeting Preference</label>
+            <select
+              id="meetingPreference"
+              className="form-select"
+              name="meetingPreference"
+              value={userData.meetingPreference}
+              onChange={handleChange}
+            >
+              {meetingPreferences()}
+            </select>
+          </div>
+          <div className="border-bottom pb-3 mb-2">
+            <button
+              type="submit"
+              className="btn btn-success w-100"
+              onClick={handleUpdateSettings}
+            >
+              Update Settings
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div className={styleRouter.pageSection}>
+        <div className={styleRouter.pageSectionTitle}>Change Password</div>
+        <form>
+          <div className="mb-3">
+            <label className="form-label fw-bold">New Password</label>
+            <input
+              type="password"
+              className="form-control"
+              name="password1"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="mb-3">
+            <label className="form-label fw-bold">Confirm Password</label>
+            <input
+              type="password"
+              className="form-control"
+              name="password2"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="text-danger" hidden={!passwordMissMatch}>
+            Passwords do not match
+          </div>
+          <div className="border-bottom pb-3 mb-2">
+            <button
+              type="submit"
+              className="btn btn-success w-100"
+              onClick={handleSubmit}
+            >
+              Change Password
+            </button>
+          </div>
+        </form>
+      </div>
       <div>
         {offeredSkills().length > 0 ? (
-          <>
+          <div className={styleRouter.pageSection}>
             <div className="container">
               <div className="row justify-content-between">
                 <div className="col">
@@ -412,7 +422,7 @@ const Profile = () => {
                 </div>
                 <div className="col d-flex justify-content-end">
                   <button
-                    className="btn btn-primary"
+                    className="btn btn-info"
                     onClick={() => openAddModal("offered")}
                   >
                     Add A Skill
@@ -424,18 +434,34 @@ const Profile = () => {
               skillRelationshipList={offeredSkills()}
               openModalFunction={openOfferedModal}
             />
-          </>
+          </div>
         ) : (
           <></>
         )}
         {desiredSkills().length > 0 ? (
-          <>
-            <div className={styleRouter.header}>Skills I Want To Learn</div>
+          <div className={styleRouter.pageSection}>
+            <div className="container">
+              <div className="row justify-content-between">
+                <div className="col">
+                  <div className={styleRouter.header}>
+                    Skills I Want To Learn
+                  </div>
+                </div>
+                <div className="col d-flex justify-content-end">
+                  <button
+                    className="btn btn-info"
+                    onClick={() => openAddModal("desired")}
+                  >
+                    Add A Skill
+                  </button>
+                </div>
+              </div>
+            </div>
             <SkillDisplayList
               skillRelationshipList={desiredSkills()}
               openModalFunction={openDesiredModal}
             />
-          </>
+          </div>
         ) : (
           <></>
         )}

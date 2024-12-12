@@ -6,22 +6,20 @@ import {
   QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA,
 } from "../../utils/queries.js";
 import { useLazyQuery } from "@apollo/client";
-
-// Import standardValues.js
 import {
   GENDER_OPTIONS,
   US_STATES,
   MEETING_PREFERENCE,
 } from "../../utils/standardValues.js";
+import { useGlobalContext } from "../../utils/GlobalState.jsx";
+import SearchPageStyleRouter from "./SearchPageStyleRouter.js";
+import "./searchPage.css";
 
 const SearchPage = () => {
-  const [filters, setFilters] = useState({
-    city: "",
-    state: "",
-    county: "",
-    gender: "",
-    meetingPreference: "",
-  });
+  const [state, dispatch] = useGlobalContext();
+  const styleRouter = new SearchPageStyleRouter(state);
+
+  const [filters, setFilters] = useState({});
   const [selectedSkills, setSelectedSkills] = useState({});
   const [runSearchQuery, { loading: searchLoading, data: searchData }] =
     useLazyQuery(QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA, {
@@ -32,8 +30,6 @@ const SearchPage = () => {
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log("name:", name);
-    console.log("value:", value);
     setFilters({
       ...filters,
       [name]: value,
@@ -60,12 +56,6 @@ const SearchPage = () => {
     </div>
   );
 
-  // ================================================
-
-  // const [querySkills, { called, loading, data }] = useLazyQuery(query, {
-  //   variables: { searchString: queryString },
-  // });
-
   function handleUpdateFilter(event) {
     event.preventDefault();
     console.log("updating filter");
@@ -83,51 +73,53 @@ const SearchPage = () => {
   const skillContainer = (skillData) => {
     return (
       <>
-        <div className={"card mb-2"}>
-          {/* ADD A "REMOVE" BUTTON */}
-          <div key={JSON.stringify(skillData)}>
-            <div className="card-body">
-              <div className={`card-title ${"fw-bold"}`}>{skillData.name}</div>
-              {/* <div className={`card-text ${styleRouter.skillDescription}`}>
-                {relationship.skill.description}
-              </div> */}
-              {skillData.description ? (
-                <div className={"text-secondary"}>
-                  <div className="fw-bold">Description</div>
-                  <div>{skillData.description}</div>
-                </div>
-              ) : (
-                <></>
-              )}
-            </div>
-          </div>
-        </div>
+        {/* ADD A "REMOVE" BUTTON */}
+        <li key={JSON.stringify(skillData)}>{skillData.name}</li>
       </>
     );
   };
 
-  // ================================================
-
   return (
     <div>
-      <h1>Search for Skills</h1>
-      <form onSubmit={handleUpdateFilter}>
+      <div className="border-bottom mb-2">
+        <h1>Skill Search</h1>
         <div>
-          <label>
-            City:
-            <input
-              type="text"
-              placeholder="City"
-              name="city"
-              value={filters.city}
-              onChange={handleChange}
-            />
-          </label>
+          <p>
+            Here you can search for skills you'd like to learn. You can also
+            optionally add filters to your search to only show other skill
+            sharer's that match the criteria you're looking for
+          </p>
         </div>
-        <div>
-          <label>State:</label>
-          <select name="state" value={filters.state} onChange={handleChange}>
-            <option value="" disabled>
+      </div>
+      <div>
+        <div className={styleRouter.header}>Sharer Filters</div>
+        <p>
+          Use these fields to narrow your search based on skill sharer info. For
+          example, you can narrow your search to only show other sharer's in a
+          city near you, or sharer's who prefer to meet online.
+        </p>
+      </div>
+      <form onSubmit={handleUpdateFilter}>
+        <div className="mb-3">
+          <label className="form-label fw-bold">City</label>
+          <input
+            type="text"
+            placeholder="Enter the name of a city"
+            name="city"
+            className="form-control"
+            value={filters.city}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-3">
+          <label className="form-label fw-bold">State</label>
+          <select
+            id="state"
+            className="form-select"
+            name="state"
+            onChange={handleChange}
+          >
+            <option value="" selected>
               Select a state
             </option>
             {US_STATES.map((state) => (
@@ -137,15 +129,16 @@ const SearchPage = () => {
             ))}
           </select>
         </div>
-        <div>
-          <label>Meeting preference:</label>
+        <div className="mb-3">
+          <label className="form-label fw-bold">Meeting Preference</label>
           <select
+            id="meetingPreference"
+            className="form-select"
             name="meetingPreference"
-            value={filters.meetingPreference}
             onChange={handleChange}
           >
-            <option value="" disabled>
-              Select your meeting preference
+            <option value="" selected>
+              Select a meeting preference
             </option>
             {MEETING_PREFERENCE.map((meeting) => (
               <option key={meeting} value={meeting}>
@@ -154,11 +147,17 @@ const SearchPage = () => {
             ))}
           </select>
         </div>
-        <div>
-          <label>Gender:</label>
-          <select name="gender" value={filters.gender} onChange={handleChange}>
-            <option value="" disabled>
-              What is your gender
+
+        <div className="mb-3">
+          <label className="form-label fw-bold">Gender</label>
+          <select
+            id="gender"
+            className="form-select"
+            name="gender"
+            onChange={handleChange}
+          >
+            <option value="" selected>
+              Preferred skill sharer gender
             </option>
             {GENDER_OPTIONS.map((gender) => (
               <option key={gender} value={gender}>
@@ -167,39 +166,97 @@ const SearchPage = () => {
             ))}
           </select>
         </div>
-        {filters.gender == "Self Describe" ? genderSelfDescribe : <></>}
-        {/* <div>
-          <label>
-            Skills:
-            <input
-              type="text"
-              placeholder="Skill Search"
-              value={skills}
-              onChange={handleSkillsChange}
-            />
-          </label>
-        </div> */}
-        <button type="submit">Search</button>
+        <div className="border-bottom pb-3 mb-2">
+          <button type="submit" className="btn btn-success w-100">
+            Add Skill Sharer Filters
+          </button>
+        </div>
       </form>
       {/* ============================== */}
-      <div>
+      <div className="end-of-page-buffer">
+        <div>
+          <div className={styleRouter.header}>Skill Selection</div>
+          <p>
+            Enter the skill or skills you'd like to learn here. You can add
+            multiple skills to a search.
+          </p>
+          <p>
+            Start typing the name of a skill in the field below. A dropdown of
+            skills that match or partially match what you've typed will appear.
+            Click on one of these dropdown options to add it to your list of
+            searched skills.
+          </p>
+          <p>
+            Once you've added all the skills you'd like to search for, click the
+            "search" button and a list of Skill Sharer's that offer that skill
+            (and match your filter criteria, if any were provided) will appear
+            below.
+          </p>
+        </div>
         <TypeableDropdown
-          label="Select a skill"
-          placeholder="Begin typing the name of a skill here..."
+          label=""
+          placeholder="Begin typing here..."
           query={QUERY_SKILLS_BY_NAME}
           itemClickedFunction={searchSkillClickedHandler}
         />
-        <button
-          type="button"
-          className="btn btn-primary"
-          onClick={handleSearchSubmit}
-        >
-          Search
-        </button>
-        <div>Skills To Search For:</div>
-        {selectedSkillIds().map((skillId) => {
-          return skillContainer(selectedSkills[skillId]);
-        })}
+        {Object.keys(filters).length > 0 ? (
+          <div>
+            <div>Showing Skill Sharer's that match the following criteria:</div>
+            {filters.city ? (
+              <div>
+                <span className="fw-bold">City: </span>
+                <span>{filters.city}</span>
+              </div>
+            ) : (
+              <></>
+            )}
+            {filters.state ? (
+              <div>
+                <span className="fw-bold">State: </span>
+                <span>{filters.state}</span>
+              </div>
+            ) : (
+              <></>
+            )}
+            {filters.meetingPreference ? (
+              <div>
+                <span className="fw-bold">Meeting Preference: </span>
+                <span>{filters.meetingPreference}</span>
+              </div>
+            ) : (
+              <></>
+            )}
+            {filters.gender ? (
+              <div>
+                <span className="fw-bold">Gender: </span>
+                <span>{filters.gender}</span>
+              </div>
+            ) : (
+              <></>
+            )}
+          </div>
+        ) : (
+          <></>
+        )}
+
+        <div className="border-bottom pb-3 mb-2">
+          <button
+            type="button"
+            className="btn btn-success w-100"
+            onClick={handleSearchSubmit}
+          >
+            Search
+          </button>
+        </div>
+
+        <div className={styleRouter.subHeader}>Selected Skills:</div>
+        <div>
+          <ul>
+            {selectedSkillIds().map((skillId) => {
+              return skillContainer(selectedSkills[skillId]);
+            })}
+          </ul>
+        </div>
         <SearchResultsDisplay searchPayload={searchData} showOffered={true} />
       </div>
       {/* ============================== */}
