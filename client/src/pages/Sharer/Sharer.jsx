@@ -5,8 +5,13 @@ import {
 } from "../../utils/queries";
 import { useParams } from "react-router-dom";
 import SkillDisplayList from "../../components/SkillDisplayList/SkillDisplayList";
+import { useGlobalContext } from "../../utils/GlobalState";
+import SharerStyleRouter from "./SharerStyleRouter";
 
 const Sharer = () => {
+  const [state, dispatch] = useGlobalContext();
+  const styleRouter = new SharerStyleRouter(state);
+
   const params = useParams();
   const { loading, data } = useQuery(QUERY_USER, {
     variables: { userId: params.userId },
@@ -58,7 +63,7 @@ const Sharer = () => {
           <p>
             {skillRelationshipGroup("offered").length > 0 ? (
               <>
-                <div>Skill I Offer</div>
+                <div className={styleRouter.header}>Skill I Offer</div>
                 <SkillDisplayList
                   skillRelationshipList={skillRelationshipGroup("offered")}
                 />
@@ -68,7 +73,7 @@ const Sharer = () => {
             )}
             {skillRelationshipGroup("desired").length > 0 ? (
               <>
-                <div>Skill I Want To Learn</div>
+                <div className={styleRouter.header}>Skill I Want To Learn</div>
                 <SkillDisplayList
                   skillRelationshipList={skillRelationshipGroup("desired")}
                 />
