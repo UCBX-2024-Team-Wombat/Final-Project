@@ -1,64 +1,43 @@
 import { useEffect, useState, useMemo } from "react";
-
 import Modal from "react-bootstrap/Modal";
-
 import { useQuery, useMutation } from "@apollo/client";
-
 import {
   QUERY_ME,
   QUERY_SKILL_RELATIONSHIPS_BY_USER_ID,
 } from "../../utils/queries.js";
-
 import {
   MODIFY_USER,
   MODIFY_SKILL_RELATIONSHIP,
   ADD_SKILL_RELATIONSHIP,
 } from "../../utils/mutations.js";
-
 import SkillDisplayList from "../../components/SkillDisplayList/SkillDisplayList.jsx";
-
 import AuthService from "../../utils/auth.js";
-
 import { useGlobalContext } from "../../utils/GlobalState.jsx";
-
 import ProfileStyleRouter from "./ProfileStyleRouter.js";
-
 import SkillUpdateForm from "../../components/SkillUpdateForm/SkillUpdateForm.jsx";
-
 import SkillAddForm from "../../components/SkillAddForm/SkillAddForm.jsx";
-
 import {
   US_STATES,
   MEETING_PREFERENCE,
   GENDER_OPTIONS,
 } from "../../utils/standardValues.js";
 
-//create a base myProfile page (form section)
-
-// 2 buttons for functionality (current skills, desired skills)
-
-//autofill
-
 const Profile = () => {
   const [newUserData, setUserData] = useState();
-
   const [passwordMissMatch, setPasswordMissMatch] = useState(false);
+  const { loading, data } = useQuery(QUERY_ME);
+  const [modifyUser] = useMutation(MODIFY_USER);
 
-  const { loading, data } = useQuery(QUERY_ME); // const { loading2, data2 } = useQuery(QUERY_SKILLRELATIONSHIPS);
-
-  const [modifyUser] = useMutation(MODIFY_USER); //var passwordMissMatch = false; //const userData = data?.me || {};
-
-  const userData = useMemo(() => data?.me || {}, [data]); // const userData = data?.me || {}; //UseEffect function taken from Xpert learning to help with making username and email editable
+  const userData = useMemo(() => data?.me || {}, [data]);
 
   useEffect(() => {
     if (userData) {
       setUserData({
         username: userData.username,
-
-        email: userData.email, // Add other fields as necessary
+        email: userData.email,
       });
     }
-  }, [userData]); //for loop for all the states and their abbreviation
+  }, [userData]);
 
   const stateDisplay = () => {
     const states = [];
@@ -70,7 +49,7 @@ const Profile = () => {
     }
 
     return states;
-  }; //for loop for all the gender options
+  };
 
   const genderOptions = () => {
     const gender = [];
@@ -82,7 +61,7 @@ const Profile = () => {
     }
 
     return gender;
-  }; //for loop for meeting preferences
+  };
 
   const meetingPreferences = () => {
     const meeting = [];
@@ -94,27 +73,18 @@ const Profile = () => {
     }
 
     return meeting;
-  }; // const foundSkillData = data2 || {}; //console.log(userData); // console.log("Skills: ", foundSkillData); // ==============================
+  };
 
   const [state, dispatch] = useGlobalContext();
-
   const [showUpdatModal, setShowUpdateModal] = useState(false);
-
   const [showAddModal, setShowAddModal] = useState(false);
-
   const [skillRelationshipPayload, setSkillRelationshipPayload] = useState({});
-
   const [updateSkill] = useMutation(MODIFY_SKILL_RELATIONSHIP);
-
   const [addSkillRelationship] = useMutation(ADD_SKILL_RELATIONSHIP);
-
   const styleRouter = new ProfileStyleRouter(state);
-
   const {
     loading: loadingRelationships,
-
     data: relationshipsData,
-
     refetch: refetchSkillRelationships,
   } = useQuery(QUERY_SKILL_RELATIONSHIPS_BY_USER_ID, {
     variables: { userId: AuthService.getProfile().data._id },
@@ -125,13 +95,11 @@ const Profile = () => {
 
   function openOfferedModal(payload) {
     setSkillRelationshipPayload({ ...payload, modalType: "offered" });
-
     setShowUpdateModal(true);
   }
 
   function openDesiredModal(payload) {
     setSkillRelationshipPayload({ ...payload, modalType: "desired" });
-
     setShowUpdateModal(true);
   }
 
@@ -139,17 +107,12 @@ const Profile = () => {
     const skillRelationshipInput = formState;
 
     skillRelationshipInput.userId = skillRelationshipInput.user._id;
-
     skillRelationshipInput.skillId = skillRelationshipInput.skill._id;
 
     delete skillRelationshipInput.user;
-
     delete skillRelationshipInput.skill;
-
     delete skillRelationshipInput.modalType;
-
     delete skillRelationshipInput.__typename;
-
     delete skillRelationshipInput._id;
 
     return skillRelationshipInput;
@@ -157,8 +120,6 @@ const Profile = () => {
 
   function updateRelationship(formState) {
     hideUpdateModal();
-
-    console.log("formState", formState);
 
     updateSkill({
       variables: {
@@ -172,23 +133,15 @@ const Profile = () => {
   }
 
   function createSkillRelationship(payload) {
-    // console.log("payload", payload);
-
     hideAddModal();
 
     const {
       skillId,
-
       userId,
-
       yearsOfExperience,
-
       offered,
-
       offeredText,
-
       desired,
-
       desiredText,
     } = payload;
 
@@ -196,17 +149,11 @@ const Profile = () => {
       variables: {
         input: {
           skillId,
-
           userId,
-
           yearsOfExperience,
-
           offered,
-
           offeredText,
-
           desired,
-
           desiredText,
         },
       },
@@ -245,22 +192,15 @@ const Profile = () => {
     }
 
     return [];
-  }; // ==============================
+  };
 
   const handleChange = (e) => {
-    console.log(e.target);
-
     const { name, value } = e.target;
-
-    console.log(name, value);
 
     setUserData({
       ...newUserData,
-
       [name]: value,
     });
-
-    console.log(newUserData);
   };
 
   const handleSubmit = async (e) => {
@@ -271,7 +211,6 @@ const Profile = () => {
 
       if (newUserData.password1 != newUserData.password2) {
         setPasswordMissMatch(true);
-
         return;
       } else {
         setPasswordMissMatch(false);
@@ -284,7 +223,6 @@ const Profile = () => {
       await modifyUser({
         variables: {
           userId: userData._id,
-
           userInput: payload,
         },
       });
@@ -292,7 +230,6 @@ const Profile = () => {
       alert("Profile updated!");
     } catch (err) {
       console.error(err);
-
       alert("Error cannot update profile.");
     }
   };
@@ -301,8 +238,6 @@ const Profile = () => {
     e.preventDefault();
 
     try {
-      console.log(newUserData);
-
       await modifyUser({
         variables: { userId: userData._id, userInput: newUserData },
       });
@@ -356,7 +291,7 @@ const Profile = () => {
             type="text"
             className="form-control"
             name="username"
-            value={newUserData.username || ""} // value={userData.username}
+            value={newUserData.username}
             onChange={handleChange}
           />
         </div>
@@ -428,12 +363,16 @@ const Profile = () => {
             {meetingPreferences()}
           </select>
         </div>
-        <button type="submit" onClick={handleUpdateSettings}>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          onClick={handleUpdateSettings}
+        >
           Update Settings
         </button>
       </form>
       <br></br> <br></br>
-      <form>
+      <form className="">
         <div className="mb-3">
           <label className="form-label">New Password:</label>
           <input
@@ -455,46 +394,52 @@ const Profile = () => {
         <div className="text-danger" hidden={!passwordMissMatch}>
           Passwords do not match
         </div>
-        <button type="submit" onClick={handleSubmit}>
+        <button
+          type="submit"
+          className="btn btn-primary"
+          onClick={handleSubmit}
+        >
           Update Profile
         </button>
       </form>
-      {offeredSkills().length > 0 ? (
-        <>
-          <div className="container">
-            <div className="row justify-content-between">
-              <div className="col">
-                <div className={styleRouter.header}>Skills I Offer</div>
-              </div>
-              <div className="col d-flex justify-content-end">
-                <button
-                  className="btn btn-primary"
-                  onClick={() => openAddModal("offered")}
-                >
-                  Add A Skill
-                </button>
+      <div>
+        {offeredSkills().length > 0 ? (
+          <>
+            <div className="container">
+              <div className="row justify-content-between">
+                <div className="col">
+                  <div className={styleRouter.header}>Skills I Offer</div>
+                </div>
+                <div className="col d-flex justify-content-end">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => openAddModal("offered")}
+                  >
+                    Add A Skill
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-          <SkillDisplayList
-            skillRelationshipList={offeredSkills()}
-            openModalFunction={openOfferedModal}
-          />
-        </>
-      ) : (
-        <></>
-      )}
-      {desiredSkills().length > 0 ? (
-        <>
-          <div className={styleRouter.header}>Skills I Want To Learn</div>
-          <SkillDisplayList
-            skillRelationshipList={desiredSkills()}
-            openModalFunction={openDesiredModal}
-          />
-        </>
-      ) : (
-        <></>
-      )}
+            <SkillDisplayList
+              skillRelationshipList={offeredSkills()}
+              openModalFunction={openOfferedModal}
+            />
+          </>
+        ) : (
+          <></>
+        )}
+        {desiredSkills().length > 0 ? (
+          <>
+            <div className={styleRouter.header}>Skills I Want To Learn</div>
+            <SkillDisplayList
+              skillRelationshipList={desiredSkills()}
+              openModalFunction={openDesiredModal}
+            />
+          </>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 };
