@@ -7,7 +7,7 @@ const QUERY_USER = gql`
       username
       email
       gender
-      description
+      bio
       meetingPreference
       city
       stateOrProvince
@@ -27,7 +27,7 @@ const QUERY_ME = gql`
       gender
       city
       stateOrProvince
-      description
+      bio
       meetingPreference
     }
   }

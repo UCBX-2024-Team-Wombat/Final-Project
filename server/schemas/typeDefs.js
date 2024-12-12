@@ -5,7 +5,7 @@ const typeDefs = `
     email: String
     password: String
     gender: String
-    description: String
+    bio: String
     meetingPreference: String
     city: String
     county: String
@@ -27,7 +27,7 @@ const typeDefs = `
     email: String
     password: String
     gender: String
-    description: String
+    bio: String
     meetingPreference: String
     city: String
     county: String
