@@ -1,15 +1,20 @@
-const SkillDropdownItem = ({ skillData, onClick }) => {
+const DropdownItem = ({ itemData, onClick }) => {
   return (
     <>
       <div
-        className="dropdown-item"
-        key={skillData.name}
-        onClick={() => onClick(skillData)}
+        className={`dropdown-item text-wrap`}
+        key={itemData.name}
+        onClick={() => onClick(itemData)}
       >
-        {skillData.name}
+        <div className="fw-bold">{itemData.name}</div>
+        {itemData.description ? (
+          <div className="text-secondary">{itemData.description}</div>
+        ) : (
+          <></>
+        )}
       </div>
     </>
   );
 };
 
-export default SkillDropdownItem;
+export default DropdownItem;
