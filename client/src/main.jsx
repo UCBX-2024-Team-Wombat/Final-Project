@@ -10,6 +10,7 @@ import Signup from "./pages/Signup";
 import Error from "./pages/Error";
 import SearchPage from "./pages/SearchPage/SearchPage.jsx";
 import Profile from "./pages/Profile.jsx";
+import SharerPage from "./pages/SharerPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/sharer/:userId",
+        element: <SharerPage />,
       },
     ],
   },
