@@ -1,16 +1,27 @@
 import { gql } from "@apollo/client";
 
 const QUERY_USER = gql`
-  query user($username: String!) {
-    user(username: $username) {
+  query user($userId: ID!) {
+    user(userId: $userId) {
       _id
       username
       email
       gender
       description
       meetingPreference
-      availableSkills
-      desiredSkills
+    }
+  }
+`;
+
+const QUERY_ALL_USERS = gql`
+  query allUsers {
+    allUsers {
+      _id
+      username
+      email
+      gender
+      description
+      meetingPreference
     }
   }
 `;
@@ -24,8 +35,6 @@ const QUERY_ME = gql`
       gender
       description
       meetingPreference
-      availableSkills
-      desiredSkills
     }
   }
 `;
@@ -49,4 +58,4 @@ query GetSkillRelationships ($userId: ID!) {
 }
 `;
 
-export { QUERY_USER, QUERY_ME, QUERY_SKILLRELATIONSHIPS };
+export { QUERY_USER, QUERY_ME, QUERY_SKILLRELATIONSHIPS, QUERY_ALL_USERS };

@@ -10,6 +10,9 @@ import Signup from "./pages/Signup";
 import Error from "./pages/Error";
 import SearchPage from "./pages/SearchPage/SearchPage.jsx"
 import Profile from "./pages/Profile.jsx";
+import Chat from "./components/Chat.jsx"
+import PrivateChatPage from "./pages/PrivateChatPage.jsx";
+
 
 const router = createBrowserRouter([
   {
@@ -36,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
+      },
+      {
+        path: "/chat",
+        element: <PrivateChatPage/>,
       }
     ],
   },

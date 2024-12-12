@@ -28,3 +28,6 @@ MangoDB logic operations
   - https://socket.io/docs/v4/mongo-adapter/#emitter 
   - https://socket.io/docs/v4/adapter/#emitter-cheatsheet
 - Use: server/schemas/resolver.js
+
+ - https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close
+- Use: client/components/chat.jsx

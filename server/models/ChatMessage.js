@@ -1,5 +1,5 @@
-const mangoose = require('mangoose');
-const { Schema } = mangoose;
+const mongoose = require('mongoose');
+const { Schema } = mongoose;
 
 const chatMessageSchema = new Schema({
     sender: {
@@ -15,7 +15,10 @@ const chatMessageSchema = new Schema({
     message: {
         type: String,
         required: true,
-        isSeen: bolean
+        // isSeen: {
+        //     type: Boolean,
+        //     default: false
+        // }
     },
     timestamp: {
         type: Date,

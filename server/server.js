@@ -14,10 +14,10 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
 });
-
+const CHAT_PORT = process.env.PORT || 5000;
 // Create an HTTP server and attach Socket.IO
 const httpServer = http.createServer(app);
-const io = new Server(httpServer);
+const io = new Server();
 
 // Socket.IO logic
 // Socket.IO library enables real-time, 
@@ -88,6 +88,6 @@ const startApolloServer = async () => {
 startApolloServer();
 
 // bi dene bakalim confliction a sebep oluyo mu olmadi cozum bakariz 
-// httpServer.listen(PORT, () => {
-//   console.log(`Server is running on http://localhost:${PORT}`);
+// httpServer.listen(REST_PORT;, () => {
+//   console.log(`Rest Port is running on http://localhost:${REST_PORT}`);
 // });
