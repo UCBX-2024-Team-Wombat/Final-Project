@@ -3,6 +3,8 @@ import { useState } from "react";
 import { useLazyQuery } from "@apollo/client";
 import "./TypeableDropdown.css";
 import DropdownItem from "../DropdownItem/DropdownItem";
+import { useGlobalContext } from "../../utils/GlobalState";
+import TypeableDropdownStyleRouter from "./TypeableDropdownStyleRouter";
 
 const TypeableDropdown = ({
   label,
@@ -10,6 +12,8 @@ const TypeableDropdown = ({
   query, // Note: Query must use argument titled "searchString"
   itemClickedFunction,
 }) => {
+  const [state, dispatch] = useGlobalContext();
+  const styleRouter = new TypeableDropdownStyleRouter(state);
   const [queryString, setQueryString] = useState("");
   const [querySkills, { called, loading, data }] = useLazyQuery(query, {
     variables: { searchString: queryString },
@@ -36,11 +40,19 @@ const TypeableDropdown = ({
     }, queryTimerWaitTime);
   }
 
+  const customDropdown = (skill) => {
+    return (
+      <>
+        <DropdownItem onClick={handleItemClicked} itemData={skill} />
+      </>
+    );
+  };
+
   return (
     <>
       <Form>
         <Form.Group className="mb-3" controlId="dropdown">
-          <Form.Label>{label}</Form.Label>
+          {label.length > 0 ? <Form.Label>{label}</Form.Label> : <></>}
           <Form.Control
             type="text"
             placeholder={placeholder}
@@ -51,21 +63,23 @@ const TypeableDropdown = ({
         </Form.Group>
       </Form>
       <div
-        className={`dropdown-menu ${
+        className={`dropdown-menu ${styleRouter.customDropdownMenu} ${
           data && data.skillsByName.length > 0 ? "showDropdown" : ""
         }`}
       >
         <div>
           {data
-            ? data.skillsByName.map((skill) => {
-                return (
-                  <>
-                    <DropdownItem
-                      onClick={handleItemClicked}
-                      skillData={skill}
-                    />
-                  </>
-                );
+            ? data.skillsByName.map((skill, i, array) => {
+                if (array.length - 1 == i) {
+                  return customDropdown(skill);
+                } else {
+                  return (
+                    <>
+                      {customDropdown(skill)}
+                      <hr className="dropdown-divider" />
+                    </>
+                  );
+                }
               })
             : ""}
         </div>
