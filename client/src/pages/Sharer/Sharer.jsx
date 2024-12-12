@@ -30,6 +30,10 @@ const Sharer = () => {
     ? skillRelationshipQueryData.getSkillRelationshipsByUserId
     : [];
 
+  function openChat() {
+    console.log("opening chat");
+  }
+
   const skillRelationshipGroup = (group) => {
     const skills = [];
 
@@ -49,21 +53,46 @@ const Sharer = () => {
     <>
       {user ? (
         <div>
-          <h3>{user.username}</h3>
-          <p>
-            <strong> Location:</strong> {user.city}, {user.stateOrProvince},{" "}
-            {user.country}
-          </p>
-          <p>
-            <strong> Gender:</strong> {user.gender}
-          </p>
-          <p>
-            <strong> Meeting Preference:</strong> {user.meetingPreference}
-          </p>
+          <div className="row">
+            <div className="col">
+              <h3 className={styleRouter.header}>{user.username}</h3>
+            </div>
+            <div className="col d-flex justify-content-end">
+              <button type="button" className="btn btn-info" onClick={openChat}>
+                Let's chat!
+              </button>
+            </div>
+          </div>
+          <div className="mb-3">
+            <div className={styleRouter.fieldLabel}>About Me</div>
+            <div>{user.bio}</div>
+          </div>
+          <div className="mb-3">
+            <div>
+              <span className={styleRouter.fieldLabel}>Location: </span>
+              <span>
+                {user.city}, {user.stateOrProvince}, {user.country}
+              </span>
+            </div>
+          </div>
+          <div className="mb-3">
+            <div>
+              <span className={styleRouter.fieldLabel}>Gender: </span>
+              <span>{user.gender}</span>
+            </div>
+          </div>
+          <div className="mb-3">
+            <div>
+              <span className={styleRouter.fieldLabel}>
+                Meeting Preference:{" "}
+              </span>
+              <span>{user.meetingPreference}</span>
+            </div>
+          </div>
           <p>
             {skillRelationshipGroup("offered").length > 0 ? (
               <>
-                <div className={styleRouter.header}>Skill I Offer</div>
+                <div className={styleRouter.fieldLabel}>Skill I Offer</div>
                 <SkillDisplayList
                   skillRelationshipList={skillRelationshipGroup("offered")}
                 />
@@ -73,7 +102,9 @@ const Sharer = () => {
             )}
             {skillRelationshipGroup("desired").length > 0 ? (
               <>
-                <div className={styleRouter.header}>Skill I Want To Learn</div>
+                <div className={styleRouter.fieldLabel}>
+                  Skill I Want To Learn
+                </div>
                 <SkillDisplayList
                   skillRelationshipList={skillRelationshipGroup("desired")}
                 />
@@ -81,19 +112,6 @@ const Sharer = () => {
             ) : (
               <></>
             )}
-            {/* <h3> Skills:</h3>
-            
-            <ul>
-              {skillRelationshipData ? (
-                skillRelationshipData.map((skill) => (
-                  <li key={skill.id}>
-                    {skill.skill.name} - {skill.offered ? "Offered" : "Desired"}
-                  </li>
-                ))
-              ) : (
-                <></>
-              )}
-            </ul> */}
           </p>
         </div>
       ) : (

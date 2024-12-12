@@ -12,6 +12,13 @@ class SharerStyleRouter {
       return "fw-bold fs-3";
     }
   }
+  get fieldLabel() {
+    if (this.isMobile) {
+      return "fw-bold";
+    } else {
+      return "fw-bold fs-3";
+    }
+  }
 }
 
 export default SharerStyleRouter;
