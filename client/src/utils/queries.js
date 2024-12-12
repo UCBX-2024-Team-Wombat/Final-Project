@@ -24,6 +24,8 @@ const QUERY_ME = gql`
       username
       email
       gender
+      city
+      stateOrProvince
       description
       meetingPreference
     }

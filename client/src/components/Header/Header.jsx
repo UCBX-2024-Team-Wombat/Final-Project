@@ -35,6 +35,7 @@ function Header() {
                   <Nav.Link onClick={() => AuthService.logout()} href="/">
                     Sign Out
                   </Nav.Link>
+                  <Nav.Link href="/profile">My Profile</Nav.Link>
                 </>
               )}
             </Nav>
