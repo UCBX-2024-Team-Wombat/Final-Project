@@ -1,18 +1,19 @@
 import React from 'react';
 
-const Sharer = ({user}) => {
-    const {
-        username,
-        city,
-        stateOrProvince,
-        country,
-        gender,
-        meetingPreference,
-        skill,
-    } = user;
+const Sharer = ({userData}) => {
+    // const {
+    //     username,
+    //     city,
+    //     stateOrProvince,
+    //     country,
+    //     gender,
+    //     meetingPreference,
+    //     skill,
+    // } = user;
+    const {user} = userData;
     return (
         <div style= {{ border: "1px solid #ccc", padding: "10px", margin: "10px"}}>
-           <h3>{user.username}</h3>
+           <h3>{user?.username}</h3>
            <p>
             <strong> Location:</strong> {user.city}, {user.stateOrProvince}, {user.country}
          </p> 
