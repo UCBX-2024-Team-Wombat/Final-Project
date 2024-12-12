@@ -11,6 +11,7 @@
         "email": "jamil@test.com",
         "password": "abc123",
         "city": "Berkeley",
+        "bio": "Hi! My name is Jamil (pronounced like \"a meal\"). I'm a lifelong learner, Spanish enthusiast, and professional coder.",
         "stateOrProvince": "California",
         "country": "United States",
         "gender": "Man",
