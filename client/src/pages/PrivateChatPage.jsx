@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import ChatWindow from "../components/ChatWindow/Chat.jsx";
+import ChatWindow from "../components/ChatWindow/ChatWindow.jsx";
 import AuthService from "../utils/auth";
 import { QUERY_ALL_USERS, QUERY_ME } from "../utils/queries.js";
 import { useQuery } from "@apollo/client";
