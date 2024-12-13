@@ -7,14 +7,17 @@ import { useQuery } from '@apollo/client';
 const PrivateChatPage = () => {
   const [friend, setFriend] = useState({});
   const { loading, data } = useQuery(QUERY_ALL_USERS);
-  
+  console.log("All Users Querry: ", data);
+
   const userId = AuthService.getProfile().data._id;
-  
+  console.log("currentUserId: ", userId);
+
   const { loading: loadingUser, data: currentUser } = useQuery(QUERY_ME);
   const me = currentUser?.me || {};
+  console.log("Me: ", me);
 
   function selectRecipient(user){
-    console.log(user);
+    console.log("Friend to message",user);
     setFriend(user);
   }
 

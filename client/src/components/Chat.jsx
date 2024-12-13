@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { io } from 'socket.io-client';
-const socket = io('http://localhost:5000'); 
+const socket = io('http://localhost:3001'); 
 
 const Chat = ({ currentUser, recipientUser }) => {
   const [messages, setMessages] = useState([]);
@@ -10,6 +10,7 @@ const Chat = ({ currentUser, recipientUser }) => {
     socket.emit('joinUser', currentUser.id);
 
     socket.on('newMessage', (message) => {
+      console.log("Message: ", message);
       if (
         (message.sender.id === currentUser.id && message.receiver.id === recipientUser.id) ||
         (message.sender.id === recipientUser.id && message.receiver.id === currentUser.id)
@@ -26,6 +27,7 @@ const Chat = ({ currentUser, recipientUser }) => {
           receiverId: recipientUser.id,
           message: newMessage,
         };
+        console.log("Message Data: ", messageData);
         socket.emit('sendMessage', messageData);
         setMessages((prevMessages) => [
           ...prevMessages,

@@ -14,10 +14,16 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
 });
-const CHAT_PORT = process.env.PORT || 5000;
+//const CHAT_PORT = process.env.PORT || 5000;
 // Create an HTTP server and attach Socket.IO
-const httpServer = http.createServer(app);
-const io = new Server();
+//const httpServer = http.createServer(app);
+const io = new Server({
+  cors: {
+    origin: "http://localhost:3000"
+  }
+});
+
+io.listen(3001);
 
 // Socket.IO logic
 // Socket.IO library enables real-time, 
