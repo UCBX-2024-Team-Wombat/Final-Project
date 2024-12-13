@@ -16,7 +16,7 @@ function Header() {
       <Navbar className="primary-color-theme" expand="lg" fixed="top">
         <Container>
           <Nav.Link key={"home"} href="/">
-            <Navbar.Brand>Project Title</Navbar.Brand>
+            <Navbar.Brand>Skill Share Hub</Navbar.Brand>
           </Nav.Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse
@@ -25,6 +25,7 @@ function Header() {
           >
             <Nav className={styleRouter.nav}>
               <Nav.Link href="/">Home</Nav.Link>
+              <Nav.Link href="/search">Search</Nav.Link>
               {!AuthService.loggedIn() ? (
                 <>
                   <Nav.Link href="/login">Login</Nav.Link>

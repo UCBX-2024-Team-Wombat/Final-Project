@@ -7,7 +7,7 @@ const QUERY_USER = gql`
       username
       email
       gender
-      description
+      bio
       meetingPreference
       city
       stateOrProvince
@@ -27,7 +27,7 @@ const QUERY_ME = gql`
       gender
       city
       stateOrProvince
-      description
+      bio
       meetingPreference
     }
   }
@@ -36,23 +36,77 @@ const QUERY_ME = gql`
 // availableSkills
 // desiredSkills
 
-const QUERY_SKILLRELATIONSHIPS = gql`
-query GetSkillRelationships ($userId: ID!) {
-  getSkillRelationships (userId: $userId) {
-    yearsOfExperience
-    areasOfExpertise
-    skill {
-      name
-      description
-    }
-    user {
+const QUERY_SKILL_RELATIONSHIPS_BY_USER_ID = gql`
+  query getSkillRelationshipsByUserId($userId: ID!) {
+    getSkillRelationshipsByUserId(userId: $userId) {
       _id
-      username
-      email
-      password
+      yearsOfExperience
+      offered
+      offeredText
+      desired
+      desiredText
+      skill {
+        _id
+        name
+        description
+      }
+      user {
+        _id
+        username
+        email
+        password
+      }
     }
   }
-}
 `;
 
-export { QUERY_USER, QUERY_ME, QUERY_SKILLRELATIONSHIPS };
+const QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA = gql`
+  query getSkillRelationshipsBySearchCriteria(
+    $skillIds: [ID]!
+    $userFilterInput: UserFilterInput
+  ) {
+    getSkillRelationshipsBySearchCriteria(
+      skillIds: $skillIds
+      userFilterInput: $userFilterInput
+    ) {
+      _id
+      yearsOfExperience
+      offered
+      offeredText
+      desired
+      desiredText
+      skill {
+        _id
+        name
+        description
+      }
+      user {
+        _id
+        username
+        gender
+        meetingPreference
+        city
+        stateOrProvince
+        country
+      }
+    }
+  }
+`;
+
+const QUERY_SKILLS_BY_NAME = gql`
+  query skillsByName($searchString: String!) {
+    skillsByName(searchString: $searchString) {
+      name
+      description
+      _id
+    }
+  }
+`;
+
+export {
+  QUERY_USER,
+  QUERY_ME,
+  QUERY_SKILL_RELATIONSHIPS_BY_USER_ID,
+  QUERY_SKILLS_BY_NAME,
+  QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA,
+};

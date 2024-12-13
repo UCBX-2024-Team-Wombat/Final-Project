@@ -29,6 +29,40 @@ const MODIFY_USER = gql`
       email
     }
   }
-`
+`;
 
-export { LOGIN, ADD_USER, MODIFY_USER };
+const MODIFY_SKILL_RELATIONSHIP = gql`
+  mutation modifySkillRelationship(
+    $skillRelationshipId: ID!
+    $skillRelationshipInput: SkillRelationshipInput!
+  ) {
+    modifySkillRelationship(
+      skillRelationshipId: $skillRelationshipId
+      skillRelationshipInput: $skillRelationshipInput
+    ) {
+      _id
+    }
+  }
+`;
+
+const ADD_SKILL_RELATIONSHIP = gql`
+  mutation addSkillRelationship($input: SkillRelationshipInput!) {
+    addSkillRelationship(input: $input) {
+      _id
+      skill {
+        _id
+        name
+        description
+      }
+      yearsOfExperience
+    }
+  }
+`;
+
+export {
+  LOGIN,
+  ADD_USER,
+  MODIFY_USER,
+  MODIFY_SKILL_RELATIONSHIP,
+  ADD_SKILL_RELATIONSHIP,
+};
