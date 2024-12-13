@@ -1,23 +1,35 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { io } from "socket.io-client";
-import { QUERY_MESSAGES_BETWEEN_USERS } from "../utils/queries.js";
-import { ADD_MESSAGE } from "../utils/mutations.js";
+import { QUERY_MESSAGES_BETWEEN_USERS } from "../../utils/queries.js";
+import { ADD_MESSAGE } from "../../utils/mutations.js";
 import { useMutation, useQuery } from "@apollo/client";
+import { useGlobalContext } from "../../utils/GlobalState.jsx";
+import ChatWindowStyleRouter from "./ChatWindowStyleRouter.js";
+import "./chatWindow.css";
 
-const socket = io(); // 'http://localhost:3001'
+const socket = io();
 
-const Chat = ({ currentUser, recipientUser }) => {
+const ChatWindow = ({ currentUser, recipientUser }) => {
+  const [state, dispatch] = useGlobalContext();
+  const styleRouter = new ChatWindowStyleRouter(state);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const { loading, data } = useQuery(QUERY_MESSAGES_BETWEEN_USERS, {
     variables: {
       userIds: [currentUser._id, recipientUser._id],
     },
+    pollInterval: 500,
   });
 
   useEffect(() => {
     const messages = data?.getMessagesBetweenUsers || [];
+
+    // const chatScroller = React.useRef()
     setMessages(messages);
+    const chatScroller = document.getElementById("chat-scroller");
+    if (chatScroller) {
+      chatScroller.scrollTop = chatScroller.scrollHeight + 1000;
+    }
   }, [data]);
 
   const [createMessage] = useMutation(ADD_MESSAGE);
@@ -48,8 +60,6 @@ const Chat = ({ currentUser, recipientUser }) => {
       message: newMessage,
     };
 
-    console.log("Message Data: ", messageData);
-
     socket.emit("sendMessage", messageData);
 
     const payload = {
@@ -59,9 +69,6 @@ const Chat = ({ currentUser, recipientUser }) => {
       timestamp: new Date().toISOString(),
     };
 
-    console.log("payload", payload);
-
-    setMessages((prevMessages) => [...prevMessages, payload]);
     setNewMessage("");
     createMessage({
       variables: {
@@ -73,23 +80,19 @@ const Chat = ({ currentUser, recipientUser }) => {
 
   return (
     <div>
-      <div
-        style={{
-          border: "1px solid #ccc",
-          padding: "10px",
-          marginBottom: "10px",
-          maxHeight: "300px",
-          overflowY: "scroll",
-        }}
-      >
-        {messages.map((msg, index) => (
-          <div key={index}>
-            <strong>{msg.sender.username}:</strong> {msg.message}{" "}
-            <em>
-              ({new Date(parseInt(msg.timestamp)).toLocaleTimeString("en-US")})
-            </em>
-          </div>
-        ))}
+      <div>
+        <div className={styleRouter.messageWindow} id="chat-scroller">
+          {messages.map((msg, index) => (
+            <div key={index}>
+              <strong>{msg.sender.username}:</strong> {msg.message}{" "}
+              <em>
+                ({new Date(parseInt(msg.timestamp)).toLocaleTimeString("en-US")}
+                )
+              </em>
+            </div>
+          ))}
+          <div id="chat-anchor" className="chat-anchor"></div>
+        </div>
       </div>
       <input
         type="text"
@@ -103,4 +106,4 @@ const Chat = ({ currentUser, recipientUser }) => {
   );
 };
 
-export default Chat;
+export default ChatWindow;
