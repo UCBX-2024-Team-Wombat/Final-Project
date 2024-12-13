@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
 import { useLazyQuery } from "@apollo/client";
-import "./TypeableDropdown.css";
+import "./typeableDropdown.css";
 import DropdownItem from "../DropdownItem/DropdownItem";
 import { useGlobalContext } from "../../utils/GlobalState";
 import TypeableDropdownStyleRouter from "./TypeableDropdownStyleRouter";
