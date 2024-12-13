@@ -34,10 +34,10 @@ function Signup() {
 
   return (
     <>
-      <h2>Signup</h2>
+      <h2 className="text-center my-4">Signup</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="flex-row space-between my-2">
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="username" className="form-label">Username:</label>
           <input
             placeholder="yourUsername"
             name="username"
@@ -45,8 +45,8 @@ function Signup() {
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email:</label>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">Email:</label>
           <input
             placeholder="youremail@test.com"
             name="email"
@@ -55,8 +55,8 @@ function Signup() {
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
+        <div className="mb-3">
+          <label htmlFor="pwd" className="form-label">Password:</label>
           <input
             placeholder="******"
             name="password"
