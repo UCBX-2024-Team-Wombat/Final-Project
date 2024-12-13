@@ -2,7 +2,6 @@ const { User, Skill, SkillRelationship } = require("../models/index.js");
 const { signToken, AuthenticationError } = require("../utils/auth.js");
 const ChatMessage = require("../models/ChatMessage");
 const { populate } = require("../models/User.js");
-const { ioServer } = require("../server.js");
 
 const resolvers = {
   Query: {
@@ -35,8 +34,6 @@ const resolvers = {
       return await Skill.find();
     },
     skillsByName: async (parent, { searchString }) => {
-      console.log("searchString", searchString);
-
       return await Skill.find({
         $text: {
           $search: searchString,
@@ -125,9 +122,8 @@ const resolvers = {
   },
   Mutation: {
     sendMessage: async (_, { receiverId, message }, { user }) => {
-      console.log("loggy log ioServer", ioServer);
-
       if (!user) throw new Error("Authentication required");
+
       const chatMessage = await ChatMessage.create({
         sender: user._id,
         receiver: receiverId,
@@ -136,9 +132,6 @@ const resolvers = {
       });
 
       return chatMessage;
-      // Emit to WebSocket (sender and receiver should both get the message)
-      // ioServer.to(user._id.toString()).emit("newMessage", chatMessage);
-      // ioServer.to(receiverId.toString()).emit("newMessage", chatMessage);
     },
 
     addUser: async (parent, { username, email, password }) => {

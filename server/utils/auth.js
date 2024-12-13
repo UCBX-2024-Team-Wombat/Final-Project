@@ -13,9 +13,6 @@ const expiration =
     ? process.env.JWT_TOKEN_EXPIRATION
     : "1h";
 
-console.log("secret", secret);
-console.log("expiration", expiration);
-
 // Create standard authentication error using GraphQLError class
 const AuthenticationError = new GraphQLError("Could not authenticate user.", {
   extensions: {
