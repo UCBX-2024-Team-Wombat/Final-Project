@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Chat from "../components/Chat";
+import ChatWindow from "../components/ChatWindow/ChatWindow.jsx";
 import AuthService from "../utils/auth";
 import { QUERY_ALL_USERS, QUERY_ME } from "../utils/queries.js";
 import { useQuery } from "@apollo/client";
@@ -45,7 +45,7 @@ const PrivateChatPage = () => {
           <h1>
             {me.username} chatting with {friend.username}
           </h1>
-          <Chat currentUser={me} recipientUser={friend} />
+          <ChatWindow currentUser={me} recipientUser={friend} />
         </>
       ) : (
         <></>

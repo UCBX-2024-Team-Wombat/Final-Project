@@ -1,0 +1,4 @@
+.chat-window-mobile {
+  max-height: 300px;
+  overflow-y: auto;
+}
