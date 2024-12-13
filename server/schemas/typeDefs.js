@@ -45,14 +45,14 @@ const typeDefs = `
     name: String
     description: String
   }
+  
   type ChatMessage {
-  id: ID!
-  sender: User!
-  receiver: User!
-  message: String!
-  timestamp: String!
-}
-
+    _id: ID!
+    sender: User!
+    receiver: User!
+    message: String!
+    timestamp: String!
+  }
 
   input SkillRelationshipInput {
     skillRelationshipId: ID
@@ -97,7 +97,8 @@ const typeDefs = `
     deleteSkill(id: ID!): Skill
     addSkillRelationship(input: SkillRelationshipInput): SkillRelationship
     modifySkillRelationship(skillRelationshipId: ID!, skillRelationshipInput: SkillRelationshipInput!): SkillRelationship
-    sendMessage(receiverId: ID!, message: String!): ChatMessage    #allow one user to send a message to another user in a one-to-one chat system.
+    sendMessage(receiverId: ID!, message: String!): ChatMessage    
+    #allow one user to send a message to another user in a one-to-one chat system.
   }
 `;
 

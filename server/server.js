@@ -5,8 +5,9 @@ const path = require("path");
 const { authMiddleware } = require("./utils/auth.js");
 const { typeDefs, resolvers } = require("./schemas/index.js");
 const db = require("./config/connection.js");
-const { Server } = require('socket.io'); // for chat app.
-const http = require('http');//for chat app
+const { Server } = require("socket.io"); // for chat app.
+const http = require("http"); //for chat app
+const { createServer } = require("http");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -14,44 +15,41 @@ const apolloServer = new ApolloServer({
   typeDefs,
   resolvers,
 });
+
+const httpServer = createServer(app);
 //const CHAT_PORT = process.env.PORT || 5000;
 // Create an HTTP server and attach Socket.IO
-//const httpServer = http.createServer(app);
-const io = new Server({
-  cors: {
-    origin: "http://localhost:3000"
-  }
-});
+const ioServer = new Server(httpServer);
 
-io.listen(3001);
+httpServer.listen(4000);
+// ioServer.listen(4000);
 
 // Socket.IO logic
-// Socket.IO library enables real-time, 
+// Socket.IO library enables real-time,
 // bidirectional communication between web clients and servers.
-io.on('connection', (socket) => {
-  console.log('A user connected:', socket.id);
+ioServer.on("connection", (socket) => {
+  console.log("A user connected:", socket.id);
 
-  // think user as a provote room 
-  socket.on('joinUser', (room) => {
+  // think user as a provote room
+  socket.on("joinUser", (room) => {
     socket.join(userId);
     console.log(`User ${socket.id} joined privite room: ${userId}`);
   });
 
-  socket.on('sendMessage', ({ receiverId, message }) => {
-    const chatMessage = { 
-      senderId: socket.userId, 
-      receiverId, 
-      message, 
-      timestamp: new Date() 
+  socket.on("sendMessage", ({ receiverId, message }) => {
+    const chatMessage = {
+      senderId: socket.userId,
+      receiverId,
+      message,
+      timestamp: new Date(),
     };
-    io.to(receiverId).emit('newMessage', chatMessage); // Emit to the receiver
+    io.to(receiverId).emit("newMessage", chatMessage); // Emit to the receiver
   });
 
-  socket.on('disconnect', () => {
-    console.log('User disconnected:', socket.id);
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
   });
 });
-
 
 // Create a new instance of an Apollo server with the GraphQL schema
 const startApolloServer = async () => {
@@ -93,7 +91,8 @@ const startApolloServer = async () => {
 
 startApolloServer();
 
-// bi dene bakalim confliction a sebep oluyo mu olmadi cozum bakariz 
+// bi dene bakalim confliction a sebep oluyo mu olmadi cozum bakariz
 // httpServer.listen(REST_PORT;, () => {
 //   console.log(`Rest Port is running on http://localhost:${REST_PORT}`);
 // });
+module.exports = { ioServer };
