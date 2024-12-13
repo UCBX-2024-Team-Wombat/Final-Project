@@ -20,7 +20,8 @@
     {
         "username": "Bradyn",
         "email": "bradyn@test.com",
-        "password": "abc123"
+        "password": "abc123",
+        "gender": "woman"
     },
     {
         "username": "Yasemin",

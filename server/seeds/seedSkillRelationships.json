@@ -62,12 +62,18 @@
     {
         "userEmail": "bradyn@test.com",
         "skillSeedId": 13,
-        "seeking": true
+        "desired": true
     },
     {
         "userEmail": "bradyn@test.com",
         "skillSeedId": 7,
-        "seeking": true
+        "yearsOfExperience": "0.5",
+        "offered": true
+    },
+    {
+        "userEmail": "bradyn@test.com",
+        "skillSeedId": 7,
+        "desired": true
     },
     {
         "userEmail": "yasemin@test.com",
@@ -97,17 +103,17 @@
     {
         "userEmail": "yasemin@test.com",
         "skillSeedId": 19,
-        "seeking": true
+        "desired": true
     },
     {
         "userEmail": "yasemin@test.com",
         "skillSeedId": 20,
-        "seeking": true
+        "desired": true
     },
     {
         "userEmail": "yasemin@test.com",
         "skillSeedId": 5,
-        "seeking": true
+        "desired": true
     },
     {
         "userEmail": "steven@test.com",
@@ -132,16 +138,16 @@
     {
         "userEmail": "steven@test.com",
         "skillSeedId": 5,
-        "seeking": true
+        "desired": true
     },
     {
         "userEmail": "steven@test.com",
         "skillSeedId": 2,
-        "seeking": true
+        "desired": true
     },
     {
         "userEmail": "steven@test.com",
         "skillSeedId": 25,
-        "seeking": true
+        "desired": true
     }
 ]
