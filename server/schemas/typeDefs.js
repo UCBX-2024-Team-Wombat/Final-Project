@@ -85,7 +85,7 @@ const typeDefs = `
     skill(id: ID!): Skill
     getSkillRelationshipsByUserId(userId: ID!): [SkillRelationship]
     getSkillRelationshipsBySearchCriteria(skillIds: [ID]!, userFilterInput: UserFilterInput): [SkillRelationship]
-    getMessagesBetweenUsers(senderId: ID!, receiverId: ID!): [ChatMessage]
+    getMessagesBetweenUsers(userIds: [ID]!): [ChatMessage]
   }
 
   type Mutation {

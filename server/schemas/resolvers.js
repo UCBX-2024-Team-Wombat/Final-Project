@@ -6,11 +6,13 @@ const { ioServer } = require("../server.js");
 
 const resolvers = {
   Query: {
-    getMessagesBetweenUsers: async (_, { senderId, receiverId }) => {
+    getMessagesBetweenUsers: async (_, { userIds }) => {
+      //condition captures all messages exchanged between the two users, irrespective of the sender's or receiver's role in each message.
+
+      // if sender is in userIds and
+
       return await ChatMessage.find({
-        $or: [
-          { sender: senderId, receiver: receiverId }, //condition captures all messages exchanged between the two users, irrespective of the sender's or receiver's role in each message.
-        ],
+        $and: [{ sender: { $in: userIds } }, { receiver: { $in: userIds } }],
       })
         .populate("sender")
         .populate("receiver");

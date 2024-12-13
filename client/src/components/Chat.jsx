@@ -11,33 +11,14 @@ const Chat = ({ currentUser, recipientUser }) => {
   const [newMessage, setNewMessage] = useState("");
   const { loading, data } = useQuery(QUERY_MESSAGES_BETWEEN_USERS, {
     variables: {
-      senderId: currentUser._id,
-      receiverId: recipientUser._id,
+      userIds: [currentUser._id, recipientUser._id],
     },
   });
 
   useEffect(() => {
     const messages = data?.getMessagesBetweenUsers || [];
-
-    const formattedMessageData = [];
-
-    // if(messages.length > 0){
-    //   const formattedData = {
-    //     msg {
-    //       sender {
-
-    //       }
-    //     }
-    //   }
-    // }
-
-    // <strong>{msg.sender.username}:</strong> {msg.message}{" "}
-    // <em>({new Date(msg.timestamp).toLocaleTimeString()})</em>
-
     setMessages(messages);
   }, [data]);
-
-  const messageHistory = data || [];
 
   const [createMessage] = useMutation(ADD_MESSAGE);
 

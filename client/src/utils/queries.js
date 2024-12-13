@@ -114,8 +114,8 @@ const QUERY_SKILLS_BY_NAME = gql`
 `;
 
 const QUERY_MESSAGES_BETWEEN_USERS = gql`
-  query getMessagesBetweenUsers($senderId: ID!, $receiverId: ID!) {
-    getMessagesBetweenUsers(senderId: $senderId, receiverId: $receiverId) {
+  query getMessagesBetweenUsers($userIds: [ID]!) {
+    getMessagesBetweenUsers(userIds: $userIds) {
       _id
       sender {
         _id
