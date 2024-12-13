@@ -46,12 +46,67 @@ const resolvers = {
       parent,
       { skillIds, userFilterInput }
     ) => {
-      const skillRelationships = await SkillRelationship.find({
+      // Search on SkillRelationships by skill Ids
+      const skillRelationshipsBySkillIds = await SkillRelationship.find({
         skill: { $in: skillIds },
       })
         .populate("skill")
         .populate("user");
-      return skillRelationships;
+
+      // Create User filter object
+      const userSearchFilters = [];
+
+      for (const field of Object.keys(userFilterInput)) {
+        // Use case insensitivity
+        userSearchFilters.push({
+          [field]: {
+            $regex: `${userFilterInput[field]}`,
+            $options: "i",
+          },
+        });
+      }
+
+      // Return originally queried skill relationships if no user filters found
+      if (userSearchFilters.length == 0) {
+        return skillRelationshipsBySkillIds;
+      }
+
+      // else construct formatted user filter
+      let formattedUserFilter;
+
+      if (userSearchFilters.length == 1) {
+        formattedUserFilter = userSearchFilters[0];
+      } else {
+        formattedUserFilter = {
+          $and: [],
+        };
+
+        for (const filter of userSearchFilters) {
+          formattedUserFilter.$and.push(filter);
+        }
+      }
+
+      // Query users with filter
+      const qualifiedUsers = await User.find(formattedUserFilter);
+
+      // extract User Ids
+      const qualifiedUserIds = qualifiedUsers.map((user) =>
+        user._id.toString()
+      );
+
+      // Check if any queried Skill relationships are assoc. with a
+      // user that is within qualfied user group
+      const qualifiedSkillRelationships = [];
+
+      for (const skillRelationship of skillRelationshipsBySkillIds) {
+        // If match found, add to return list
+        if (qualifiedUserIds.includes(skillRelationship.user._id.toString())) {
+          qualifiedSkillRelationships.push(skillRelationship);
+        }
+      }
+
+      // Return filtered results
+      return qualifiedSkillRelationships;
     },
   },
   Mutation: {
