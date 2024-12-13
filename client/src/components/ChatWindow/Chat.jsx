@@ -78,6 +78,13 @@ const ChatWindow = ({ currentUser, recipientUser }) => {
     });
   };
 
+  function sendKeyChecker(event) {
+    if (event.code == "Enter") {
+      setNewMessage(event.target.value);
+      handleSendMessage();
+    }
+  }
+
   return (
     <div>
       <div>
@@ -94,14 +101,27 @@ const ChatWindow = ({ currentUser, recipientUser }) => {
           <div id="chat-anchor" className="chat-anchor"></div>
         </div>
       </div>
-      <input
-        type="text"
-        value={newMessage}
-        onChange={(e) => setNewMessage(e.target.value)}
-        placeholder="Type your message"
-        style={{ width: "80%", marginRight: "10px" }}
-      />
-      <button onClick={handleSendMessage}>Send</button>
+      <div className="row">
+        <div className="col-9">
+          <input
+            type="text"
+            value={newMessage}
+            onChange={(e) => setNewMessage(e.target.value)}
+            onKeyDown={(e) => sendKeyChecker(e)}
+            placeholder="Type your message"
+            className="form-control"
+          />
+        </div>
+        <div className="col">
+          <button
+            type="button"
+            className="btn btn-info"
+            onClick={handleSendMessage}
+          >
+            Send
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
