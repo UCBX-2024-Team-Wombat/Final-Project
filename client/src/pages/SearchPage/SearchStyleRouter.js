@@ -1,4 +1,4 @@
-class SearchPageStyleRouter {
+class SearchStyleRouter {
   constructor({ isMobile, isTablet, isDesktop }) {
     this.isMobile = isMobile;
     this.isTablet = isTablet;
@@ -38,4 +38,4 @@ class SearchPageStyleRouter {
   }
 }
 
-export default SearchPageStyleRouter;
+export default SearchStyleRouter;
