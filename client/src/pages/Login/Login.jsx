@@ -30,25 +30,31 @@ function Login() {
 
   return (
     <>
-      <h2>Login</h2>
+      <h2 className="text-center my-4">Login</h2>
       <form onSubmit={handleFormSubmit}>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="email">Email address:</label>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email address:
+          </label>
           <input
             placeholder="youremail@test.com"
             name="email"
             type="email"
             id="email"
+            className="form-control"
             onChange={handleChange}
           />
         </div>
-        <div className="flex-row space-between my-2">
-          <label htmlFor="pwd">Password:</label>
+        <div className="mb-3">
+          <label htmlFor="pwd" className="form-label">
+            Password:
+          </label>
           <input
             placeholder="******"
             name="password"
             type="password"
             id="pwd"
+            className="form-control"
             onChange={handleChange}
           />
         </div>
@@ -58,7 +64,9 @@ function Login() {
           </div>
         ) : null}
         <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+          <button type="submit" className="btn btn-success w-100">
+            Submit
+          </button>
         </div>
       </form>
     </>
