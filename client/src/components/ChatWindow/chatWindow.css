@@ -1,10 +1,4 @@
 .chat-window-mobile {
-  max-height: 100px;
+  max-height: 300px;
   overflow-y: auto;
-  /* position: relative; */
-}
-
-.chat-anchor {
-  /* position: relative; */
-  /* scroll-margin-bottom: -10; */
 }
