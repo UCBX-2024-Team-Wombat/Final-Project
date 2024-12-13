@@ -33,22 +33,28 @@ function Login() {
       <h2 className="text-center my-4">Login</h2>
       <form onSubmit={handleFormSubmit}>
         <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email address:</label>
+          <label htmlFor="email" className="form-label">
+            Email address:
+          </label>
           <input
             placeholder="youremail@test.com"
             name="email"
             type="email"
             id="email"
+            className="form-control"
             onChange={handleChange}
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="pwd" className="form-label">Password:</label>
+          <label htmlFor="pwd" className="form-label">
+            Password:
+          </label>
           <input
             placeholder="******"
             name="password"
             type="password"
             id="pwd"
+            className="form-control"
             onChange={handleChange}
           />
         </div>
@@ -58,7 +64,9 @@ function Login() {
           </div>
         ) : null}
         <div className="flex-row flex-end">
-          <button type="submit">Submit</button>
+          <button type="submit" className="btn btn-success w-100">
+            Submit
+          </button>
         </div>
       </form>
     </>
