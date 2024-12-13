@@ -10,7 +10,7 @@ import SkillDisplayList from "../../components/SkillDisplayList/SkillDisplayList
 import { useGlobalContext } from "../../utils/GlobalState";
 import SharerStyleRouter from "./SharerStyleRouter";
 import { useState } from "react";
-import ChatWindow from "../../components/ChatWindow/Chat";
+import ChatWindow from "../../components/ChatWindow/ChatWindow";
 import AuthService from "../../utils/auth";
 
 const Sharer = () => {

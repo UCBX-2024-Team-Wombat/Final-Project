@@ -11,8 +11,6 @@ import Error from "./pages/Error/Error.jsx";
 import Search from "./pages/SearchPage/Search.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import Sharer from "./pages/Sharer/Sharer.jsx";
-import ChatWindow from "./components/ChatWindow/Chat.jsx";
-import PrivateChatPage from "./pages/PrivateChatPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -39,10 +37,6 @@ const router = createBrowserRouter([
       {
         path: "/profile",
         element: <Profile />,
-      },
-      {
-        path: "/chat",
-        element: <PrivateChatPage />,
       },
       {
         path: "/sharer/:userId",
