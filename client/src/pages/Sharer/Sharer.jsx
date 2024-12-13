@@ -2,7 +2,6 @@ import { useQuery } from "@apollo/client";
 import {
   QUERY_USER,
   QUERY_SKILL_RELATIONSHIPS_BY_USER_ID,
-  QUERY_ME,
 } from "../../utils/queries";
 import Modal from "react-bootstrap/Modal";
 import { useParams } from "react-router-dom";
@@ -71,13 +70,6 @@ const Sharer = () => {
             </Modal.Header>
             <Modal.Body>
               <ChatWindow currentUser={me} recipientUser={user} />
-              {/* <SkillUpdateForm
-                skillRelationshipData={skillRelationshipPayload}
-                offered={skillRelationshipPayload.modalType == "offered"}
-                desired={skillRelationshipPayload.modalType == "desired"}
-                submitButtonLabel="Update"
-                submitButtonFunction={updateRelationship}
-              /> */}
             </Modal.Body>
           </Modal>
           <div className="row">
