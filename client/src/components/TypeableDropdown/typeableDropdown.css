@@ -1,0 +1,12 @@
+.showDropdown {
+  display: block !important;
+}
+
+.dropdown-menu {
+  margin-top: -15px;
+}
+
+.max-width-mobile {
+  max-width: 92%;
+  text-wrap-mode: wrap;
+}

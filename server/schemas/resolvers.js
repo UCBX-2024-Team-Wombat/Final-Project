@@ -17,7 +17,7 @@ const resolvers = {
       return await User.find();
     },
     user: async (parent, { userId }) => {
-      const user = await User.findById(userId);  //Add populate for location later
+      const user = await User.findById(userId); //Add populate for location later
       return user;
     },
     me: async (parent, args, context) => {
@@ -30,21 +30,94 @@ const resolvers = {
       //this will grab all the skills from the database
       return await Skill.find();
     },
-    skill: async (parent, {id}) => {
+    skillsByName: async (parent, { searchString }) => {
+      console.log("searchString", searchString);
+
+      return await Skill.find({
+        $text: {
+          $search: searchString,
+          // $caseSensitive: false,
+        },
+      });
+    },
+    skill: async (parent, { id }) => {
       //this will grab a skill by it's id
       return await Skill.findById(id);
     },
-    getSkillRelationships: async (parent, { userId, offered, desired }) => {
+    getSkillRelationshipsByUserId: async (parent, { userId }) => {
       //populate taken from module 21, activity 5 /schemas/resolvers.js
-      const searchFilter = { user: userId};
-
-      if(offered) searchFilter.offered = offered;
-      if(desired) searchFilter.desired = desired;
-
-      const skillRelationships = await SkillRelationship.find(searchFilter).populate('skill').populate('user');
-      //this will return an array of the skillRelationships objects 
+      const skillRelationships = await SkillRelationship.find({ user: userId })
+        .populate("skill")
+        .populate("user");
+      //this will return an array of the skillRelationships objects
       return skillRelationships;
-    }
+    },
+    getSkillRelationshipsBySearchCriteria: async (
+      parent,
+      { skillIds, userFilterInput }
+    ) => {
+      // Search on SkillRelationships by skill Ids
+      const skillRelationshipsBySkillIds = await SkillRelationship.find({
+        skill: { $in: skillIds },
+      })
+        .populate("skill")
+        .populate("user");
+
+      // Create User filter object
+      const userSearchFilters = [];
+
+      for (const field of Object.keys(userFilterInput)) {
+        // Use case insensitivity
+        userSearchFilters.push({
+          [field]: {
+            $regex: `${userFilterInput[field]}`,
+            $options: "i",
+          },
+        });
+      }
+
+      // Return originally queried skill relationships if no user filters found
+      if (userSearchFilters.length == 0) {
+        return skillRelationshipsBySkillIds;
+      }
+
+      // else construct formatted user filter
+      let formattedUserFilter;
+
+      if (userSearchFilters.length == 1) {
+        formattedUserFilter = userSearchFilters[0];
+      } else {
+        formattedUserFilter = {
+          $and: [],
+        };
+
+        for (const filter of userSearchFilters) {
+          formattedUserFilter.$and.push(filter);
+        }
+      }
+
+      // Query users with filter
+      const qualifiedUsers = await User.find(formattedUserFilter);
+
+      // extract User Ids
+      const qualifiedUserIds = qualifiedUsers.map((user) =>
+        user._id.toString()
+      );
+
+      // Check if any queried Skill relationships are assoc. with a
+      // user that is within qualfied user group
+      const qualifiedSkillRelationships = [];
+
+      for (const skillRelationship of skillRelationshipsBySkillIds) {
+        // If match found, add to return list
+        if (qualifiedUserIds.includes(skillRelationship.user._id.toString())) {
+          qualifiedSkillRelationships.push(skillRelationship);
+        }
+      }
+
+      // Return filtered results
+      return qualifiedSkillRelationships;
+    },
   },
   Mutation: {
     sendMessage: async (_, { receiverId, message }, { user }) => {
@@ -84,16 +157,37 @@ const resolvers = {
 
       return { token, user };
     },
+
+    modifyUser: async (parent, { userId, userInput }) => {
+      await User.findOneAndUpdate({ _id: userId }, userInput, {
+        returnDocument: "after",
+      });
+    },
     //help from module 21, activity 17
-    addSkill: async (parent, { name, description}) => {
+    addSkill: async (parent, { name, description }) => {
       //creates a skill with the name and description
-      const skill = await Skill.create({ name, description});
+      const skill = await Skill.create({ name, description });
       return skill;
     },
-    modifySkill: async (parent, { id, name, description}) => {
-      //finds a skill by id and updates the name and description 
-      const skill = await Skill.findByIdAndUpdate( id, { name, description }, {returnDocument: 'after'});
+    modifySkill: async (parent, { id, name, description }) => {
+      //finds a skill by id and updates the name and description
+      const skill = await Skill.findByIdAndUpdate(
+        id,
+        { name, description },
+        { returnDocument: "after" }
+      );
       return skill;
+    },
+    modifySkillRelationship: async (
+      parent,
+      { skillRelationshipId, skillRelationshipInput }
+    ) => {
+      const skillRelationship = await SkillRelationship.findByIdAndUpdate(
+        skillRelationshipId,
+        { ...skillRelationshipInput },
+        { returnDocument: "after" }
+      );
+      return skillRelationship;
     },
     deleteSkill: async (parent, { id }) => {
       //finds a skill by id and deletes it
@@ -109,9 +203,11 @@ const resolvers = {
         offered: input.offered,
         offeredText: input.offeredText,
         desired: input.desired,
-        desiredText: input.desiredText
+        desiredText: input.desiredText,
       };
-      const skillRelationship = await SkillRelationship.create(skillRelationshipObject);
+      const skillRelationship = await SkillRelationship.create(
+        skillRelationshipObject
+      );
       return skillRelationship;
     },
   },

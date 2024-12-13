@@ -21,18 +21,18 @@ const userSchema = new Schema({
     minlength: 5,
   },
   gender: {
-    type: String
+    type: String,
   },
-  description: {
-    type: String
+  bio: {
+    type: String,
   },
   meetingPreference: {
-    type: String
+    type: String,
   },
   city: String,
   county: String,
   stateOrProvince: String,
-  country: String
+  country: String,
 });
 
 // set up pre-save middleware to create password
@@ -42,6 +42,24 @@ userSchema.pre("save", async function (next) {
   }
 
   next();
+});
+
+userSchema.pre("findOneAndUpdate", async function (next) {
+  // Because of special circumstances for mongoose update middleware (see https://mongoosejs.com/docs/middleware.html#notes)
+  // 'this' cannot refer to the document being modified. Instead it refers to the query.
+  // While you can query the document within this hook, that document doesn't return a value for the isModified method.
+  // To get around this, we just check to see if "password" is part of the update payload. If it is, we hash it.
+  // This way, we don't have to rely on the isModified method (since we know this document's password is being updated)
+  // and we know that the password being set is a hashed version of the string the user entered.
+
+  if (this._update.password) {
+    // Check if update payload includes the password property
+    this._update.password = await bcrypt.hash(
+      this._update.password,
+      saltRounds
+    ); // Update that property to a hashed version
+  }
+  next(); // Continue with transaction
 });
 
 // Apply password middleware to insertMany (for seeding purposes)
