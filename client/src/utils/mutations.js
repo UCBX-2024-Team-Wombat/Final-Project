@@ -6,6 +6,7 @@ const LOGIN = gql`
       token
       user {
         _id
+        username
       }
     }
   }
@@ -59,10 +60,27 @@ const ADD_SKILL_RELATIONSHIP = gql`
   }
 `;
 
+const ADD_MESSAGE = gql`
+  mutation sendMessage($receiverId: ID!, $message: String!) {
+    sendMessage(receiverId: $receiverId, message: $message) {
+      _id
+      sender {
+        _id
+      }
+      receiver {
+        _id
+      }
+      message
+      timestamp
+    }
+  }
+`;
+
 export {
   LOGIN,
   ADD_USER,
   MODIFY_USER,
   MODIFY_SKILL_RELATIONSHIP,
   ADD_SKILL_RELATIONSHIP,
+  ADD_MESSAGE,
 };

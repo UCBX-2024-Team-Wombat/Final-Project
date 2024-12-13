@@ -1,5 +1,15 @@
 import { gql } from "@apollo/client";
 
+const QUERY_ALL_USERS = gql`
+  query allUsers {
+    allUsers {
+      _id
+      username
+      email
+    }
+  }
+`;
+
 const QUERY_USER = gql`
   query user($userId: ID!) {
     user(userId: $userId) {
@@ -103,10 +113,30 @@ const QUERY_SKILLS_BY_NAME = gql`
   }
 `;
 
+const QUERY_MESSAGES_BETWEEN_USERS = gql`
+  query getMessagesBetweenUsers($userIds: [ID]!) {
+    getMessagesBetweenUsers(userIds: $userIds) {
+      _id
+      sender {
+        _id
+        username
+      }
+      receiver {
+        _id
+        username
+      }
+      message
+      timestamp
+    }
+  }
+`;
+
 export {
+  QUERY_ALL_USERS,
   QUERY_USER,
   QUERY_ME,
   QUERY_SKILL_RELATIONSHIPS_BY_USER_ID,
   QUERY_SKILLS_BY_NAME,
   QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA,
+  QUERY_MESSAGES_BETWEEN_USERS,
 };

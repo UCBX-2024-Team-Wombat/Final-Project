@@ -203,7 +203,7 @@ const Profile = () => {
     });
   };
 
-  const handleSubmit = async (e) => {
+  const handlePasswordUpdate = async (e) => {
     e.preventDefault();
 
     try {
@@ -405,7 +405,7 @@ const Profile = () => {
             <button
               type="submit"
               className="btn btn-success w-100"
-              onClick={handleSubmit}
+              onClick={handlePasswordUpdate}
             >
               Change Password
             </button>
