@@ -2,21 +2,29 @@ import { useQuery } from "@apollo/client";
 import {
   QUERY_USER,
   QUERY_SKILL_RELATIONSHIPS_BY_USER_ID,
+  QUERY_ME,
 } from "../../utils/queries";
+import Modal from "react-bootstrap/Modal";
 import { useParams } from "react-router-dom";
 import SkillDisplayList from "../../components/SkillDisplayList/SkillDisplayList";
 import { useGlobalContext } from "../../utils/GlobalState";
 import SharerStyleRouter from "./SharerStyleRouter";
+import { useState } from "react";
+import ChatWindow from "../../components/ChatWindow/Chat";
+import AuthService from "../../utils/auth";
 
 const Sharer = () => {
   const [state, dispatch] = useGlobalContext();
   const styleRouter = new SharerStyleRouter(state);
 
+  const [chatModalVisibile, setChatModalVisible] = useState(false);
   const params = useParams();
   const { loading, data } = useQuery(QUERY_USER, {
     variables: { userId: params.userId },
   });
+  const me = AuthService.getProfile().data;
 
+  console.log("AuthService.getProfile()", AuthService.getProfile());
   const user = data ? data.user : {};
 
   const {
@@ -29,10 +37,6 @@ const Sharer = () => {
   const skillRelationshipData = skillRelationshipQueryData
     ? skillRelationshipQueryData.getSkillRelationshipsByUserId
     : [];
-
-  function openChat() {
-    console.log("opening chat");
-  }
 
   const skillRelationshipGroup = (group) => {
     const skills = [];
@@ -49,16 +53,43 @@ const Sharer = () => {
     return skills;
   };
 
+  function showChatModal() {
+    setChatModalVisible(true);
+  }
+
+  function hideChatModal() {
+    setChatModalVisible(false);
+  }
+
   return (
     <>
       {user ? (
         <div>
+          <Modal show={chatModalVisibile} onHide={hideChatModal}>
+            <Modal.Header closeButton>
+              <Modal.Title>Chat with {user.username}</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <ChatWindow currentUser={me} recipientUser={user} />
+              {/* <SkillUpdateForm
+                skillRelationshipData={skillRelationshipPayload}
+                offered={skillRelationshipPayload.modalType == "offered"}
+                desired={skillRelationshipPayload.modalType == "desired"}
+                submitButtonLabel="Update"
+                submitButtonFunction={updateRelationship}
+              /> */}
+            </Modal.Body>
+          </Modal>
           <div className="row">
             <div className="col">
               <h3 className={styleRouter.header}>{user.username}</h3>
             </div>
             <div className="col d-flex justify-content-end">
-              <button type="button" className="btn btn-info" onClick={openChat}>
+              <button
+                type="button"
+                className="btn btn-info"
+                onClick={showChatModal}
+              >
                 Let's chat!
               </button>
             </div>
