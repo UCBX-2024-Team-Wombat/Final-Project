@@ -68,6 +68,18 @@ const typeDefs = `
     user: User
   }
 
+  type Message {
+    sender: User
+    recipient: User
+    messageText: String
+    createdDateTime: String
+  }
+
+  type Conversation {
+    user: [User]
+    messages: [Message]
+  }
+
   type Query {
     allUsers: [User]
     user(userId: ID!): User
