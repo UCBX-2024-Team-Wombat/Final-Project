@@ -6,28 +6,28 @@ import { useGlobalContext } from "../../utils/GlobalState.jsx";
 import ChatWindowStyleRouter from "./ChatWindowStyleRouter.js";
 import "./chatWindow.css";
 
-const ChatWindow = ({ currentUser, recipientUser }) => {
+const ChatWindow = ({ recipientUserId, messagesArray }) => {
   const [state, dispatch] = useGlobalContext();
   const styleRouter = new ChatWindowStyleRouter(state);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const { loading, data, refetch } = useQuery(QUERY_MESSAGES_BETWEEN_USERS, {
-    variables: {
-      userIds: [currentUser._id, recipientUser._id],
-    },
-    pollInterval: 500,
-  });
+  // const { loading, data, refetch } = useQuery(QUERY_MESSAGES_BETWEEN_USERS, {
+  //   variables: {
+  //     userIds: [currentUser._id, recipientUser._id],
+  //   },
+  //   pollInterval: 500,
+  // });
 
   useEffect(() => {
-    const messages = data?.getMessagesBetweenUsers || [];
+    // const messages = data?.getMessagesBetweenUsers || [];
 
     setMessages(messages);
-    refetch();
+    // refetch();
     const chatScroller = document.getElementById("chat-scroller");
     if (chatScroller) {
       chatScroller.scrollTop = chatScroller.scrollHeight + 1000;
     }
-  }, [data]);
+  }, [messagesArray]);
 
   const [createMessage] = useMutation(ADD_MESSAGE);
 
@@ -35,7 +35,7 @@ const ChatWindow = ({ currentUser, recipientUser }) => {
     setNewMessage("");
     createMessage({
       variables: {
-        receiverId: recipientUser._id,
+        receiverId: recipientUserId,
         message: newMessage,
       },
     });
@@ -52,7 +52,7 @@ const ChatWindow = ({ currentUser, recipientUser }) => {
     <div>
       <div>
         <div className={styleRouter.messageWindow} id="chat-scroller">
-          {messages.map((msg, index) => (
+          {messagesArray.map((msg, index) => (
             <div key={index}>
               <strong>{msg.sender.username}:</strong> {msg.message}{" "}
               <em>

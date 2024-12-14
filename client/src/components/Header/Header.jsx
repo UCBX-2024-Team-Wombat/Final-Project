@@ -25,7 +25,6 @@ function Header() {
           >
             <Nav className={styleRouter.nav}>
               <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/search">Search</Nav.Link>
               {!AuthService.loggedIn() ? (
                 <>
                   <Nav.Link href="/search">Search</Nav.Link>
@@ -34,10 +33,12 @@ function Header() {
                 </>
               ) : (
                 <>
+                  <Nav.Link href="/search">Search</Nav.Link>
+                  <Nav.Link href="/inbox">Inbox</Nav.Link>
+                  <Nav.Link href="/profile">My Profile</Nav.Link>
                   <Nav.Link onClick={() => AuthService.logout()} href="/">
                     Sign Out
                   </Nav.Link>
-                  <Nav.Link href="/profile">My Profile</Nav.Link>
                 </>
               )}
             </Nav>
