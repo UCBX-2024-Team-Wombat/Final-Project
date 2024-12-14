@@ -227,6 +227,14 @@ const Profile = () => {
         },
       });
 
+      const resetPasswordForm = () => {
+        const pwform = document.getElementById('passwordForm')
+
+        pwform.reset()
+      }
+
+      resetPasswordForm();
+
       alert("Profile updated!");
     } catch (err) {
       console.error(err);
@@ -379,7 +387,7 @@ const Profile = () => {
 
       <div className={styleRouter.pageSection}>
         <div className={styleRouter.pageSectionTitle}>Change Password</div>
-        <form>
+        <form id="passwordForm">
           <div className="mb-3">
             <label className="form-label fw-bold">New Password</label>
             <input
