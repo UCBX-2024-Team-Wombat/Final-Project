@@ -4,7 +4,7 @@ import { QUERY_MESSAGES_BETWEEN_USERS } from '../utils/queries.js';
 import AuthService from '../utils/auth';
 
 const MessageHistory = () => {
-  const userId = AuthService.getProfile().data._id;
+    
   const { loading, data } = useQuery(QUERY_MESSAGES_BETWEEN_USERS, {
     variables: { userId: userId }
   });
