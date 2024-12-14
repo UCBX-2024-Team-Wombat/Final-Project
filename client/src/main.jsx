@@ -11,6 +11,7 @@ import Error from "./pages/Error/Error.jsx";
 import Search from "./pages/SearchPage/Search.jsx";
 import Profile from "./pages/Profile/Profile.jsx";
 import Sharer from "./pages/Sharer/Sharer.jsx";
+import MessageHistory from "./pages/MessageHistory.jsx";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,9 @@ const router = createBrowserRouter([
       {
         path: "/sharer/:userId",
         element: <Sharer />,
+      },
+      { path: "/messages",
+        element: <MessageHistory />,
       },
     ],
   },
