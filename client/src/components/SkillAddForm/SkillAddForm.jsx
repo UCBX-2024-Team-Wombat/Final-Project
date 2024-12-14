@@ -8,17 +8,6 @@ import { QUERY_SKILLS_BY_NAME } from "../../utils/queries";
 import { useGlobalContext } from "../../utils/GlobalState.jsx";
 import SkillAddFormStyleRouter from "./SkillAddFormStyleRouter.js";
 
-/*
-TO DO:
-- Figure out how to deal with "adding" a skill relationship when one already exists
-- Add some space to the bottom of the Profile page
-- Add "Add a Skill" to the "want to learn" section, or remove it from the "I offer" section
-- Figure out search page stuff
-  - Add skill rendering (SkillDisplayList) to search page
-  - Add skills to Sharer
-
-*/
-
 const SkillAddForm = ({ submitButtonFunction }) => {
   const [state, dispatch] = useGlobalContext();
   const styleRouter = new SkillAddFormStyleRouter(state);
