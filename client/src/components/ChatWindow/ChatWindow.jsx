@@ -1,44 +1,39 @@
 import { useState, useEffect } from "react";
-import { QUERY_MESSAGES_BETWEEN_USERS } from "../../utils/queries.js";
 import { ADD_MESSAGE } from "../../utils/mutations.js";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useGlobalContext } from "../../utils/GlobalState.jsx";
 import ChatWindowStyleRouter from "./ChatWindowStyleRouter.js";
 import "./chatWindow.css";
 
-const ChatWindow = ({ recipientUserId, messagesArray }) => {
+const ChatWindow = ({ recipientUserId, messagesArray, refetchFunction }) => {
   const [state, dispatch] = useGlobalContext();
   const styleRouter = new ChatWindowStyleRouter(state);
-  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  // const { loading, data, refetch } = useQuery(QUERY_MESSAGES_BETWEEN_USERS, {
-  //   variables: {
-  //     userIds: [currentUser._id, recipientUser._id],
-  //   },
-  //   pollInterval: 500,
-  // });
 
   useEffect(() => {
-    // const messages = data?.getMessagesBetweenUsers || [];
+    scrollToBottom();
+  }, [messagesArray]);
 
-    setMessages(messages);
-    // refetch();
+  function scrollToBottom() {
     const chatScroller = document.getElementById("chat-scroller");
     if (chatScroller) {
       chatScroller.scrollTop = chatScroller.scrollHeight + 1000;
     }
-  }, [messagesArray]);
+  }
 
   const [createMessage] = useMutation(ADD_MESSAGE);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     setNewMessage("");
-    createMessage({
+    await createMessage({
       variables: {
         receiverId: recipientUserId,
         message: newMessage,
       },
     });
+    if (refetchFunction) {
+      refetchFunction();
+    }
   };
 
   function sendKeyChecker(event) {
@@ -52,7 +47,7 @@ const ChatWindow = ({ recipientUserId, messagesArray }) => {
     <div>
       <div>
         <div className={styleRouter.messageWindow} id="chat-scroller">
-          {messagesArray.map((msg, index) => (
+          {messagesArray?.map((msg, index) => (
             <div key={index}>
               <strong>{msg.sender.username}:</strong> {msg.message}{" "}
               <em>

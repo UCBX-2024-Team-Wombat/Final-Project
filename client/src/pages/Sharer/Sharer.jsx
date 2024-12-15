@@ -3,28 +3,34 @@ import {
   QUERY_USER,
   QUERY_SKILL_RELATIONSHIPS_BY_USER_ID,
 } from "../../utils/queries";
+
+import { ADD_MESSAGE } from "../../utils/mutations.js";
 import Modal from "react-bootstrap/Modal";
 import { useParams } from "react-router-dom";
 import SkillDisplayList from "../../components/SkillDisplayList/SkillDisplayList";
 import { useGlobalContext } from "../../utils/GlobalState";
 import SharerStyleRouter from "./SharerStyleRouter";
-import { useState } from "react";
-import ChatWindow from "../../components/ChatWindow/ChatWindow";
+import { useState, useEffect } from "react";
+import { useMutation } from "@apollo/client";
 import AuthService from "../../utils/auth";
+import { extractConversationsArrayFromMessage } from "../../utils/dataParsers.js";
+import { Form, Button } from "react-bootstrap";
 
 const Sharer = () => {
-  const [state, dispatch] = useGlobalContext();
+  const [state] = useGlobalContext();
   const styleRouter = new SharerStyleRouter(state);
-
+  const [introMessage, setIntroMessage] = useState("");
+  const [messageSent, setMessageSent] = useState(false);
   const [chatModalVisibile, setChatModalVisible] = useState(false);
+  const [createMessage] = useMutation(ADD_MESSAGE);
+
   const params = useParams();
-  const { loading, data } = useQuery(QUERY_USER, {
+
+  const { data: sharerData } = useQuery(QUERY_USER, {
     variables: { userId: params.userId },
   });
   const me = AuthService.getProfile().data;
-
-  console.log("AuthService.getProfile()", AuthService.getProfile());
-  const user = data ? data.user : {};
+  const sharer = sharerData ? sharerData.user : {};
 
   const {
     loading: skillRelationshipsLoading,
@@ -60,21 +66,65 @@ const Sharer = () => {
     setChatModalVisible(false);
   }
 
+  function handleSubmitIntroMessage(event) {
+    event.preventDefault();
+    try {
+      createMessage({
+        variables: {
+          receiverId: sharer._id,
+          message: introMessage,
+        },
+      });
+      setMessageSent(true);
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
+
   return (
     <>
-      {user ? (
+      {sharer ? (
         <div>
           <Modal show={chatModalVisibile} onHide={hideChatModal}>
             <Modal.Header closeButton>
-              <Modal.Title>Chat with {user.username}</Modal.Title>
+              <Modal.Title>Introduce Yourself!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <ChatWindow currentUser={me} recipientUser={user} />
+              {!messageSent ? (
+                <div className="mb-3">
+                  Let {sharer.username} know that you're interested in trading
+                  skills! Be sure to let them know which skill or skills you'd
+                  like to learn, and what skills you offer that they might be
+                  interested in.
+                </div>
+              ) : (
+                <></>
+              )}
+              {!messageSent ? (
+                <Form onSubmit={handleSubmitIntroMessage}>
+                  <Form.Group className="mb-3">
+                    <Form.Control
+                      as="textarea"
+                      rows={4}
+                      onChange={(event) => setIntroMessage(event.target.value)}
+                    />
+                  </Form.Group>
+                  <Button className="btn-info w-100" type="submit">
+                    Send Introduction
+                  </Button>
+                </Form>
+              ) : (
+                <div>
+                  Your message has been sent! You can check your inbox to see
+                  when they reply, as well as to check in on any other
+                  conversations you have.
+                </div>
+              )}
             </Modal.Body>
           </Modal>
           <div className="row">
             <div className="col">
-              <h3 className={styleRouter.header}>{user.username}</h3>
+              <h3 className={styleRouter.header}>{sharer.username}</h3>
             </div>
             <div className="col d-flex justify-content-end">
               <button
@@ -88,20 +138,20 @@ const Sharer = () => {
           </div>
           <div className="mb-3">
             <div className={styleRouter.fieldLabel}>About Me</div>
-            <div>{user.bio}</div>
+            <div>{sharer.bio}</div>
           </div>
           <div className="mb-3">
             <div>
               <span className={styleRouter.fieldLabel}>Location: </span>
               <span>
-                {user.city}, {user.stateOrProvince}, {user.country}
+                {sharer.city}, {sharer.stateOrProvince}, {sharer.country}
               </span>
             </div>
           </div>
           <div className="mb-3">
             <div>
               <span className={styleRouter.fieldLabel}>Gender: </span>
-              <span>{user.gender}</span>
+              <span>{sharer.gender}</span>
             </div>
           </div>
           <div className="mb-3">
@@ -109,7 +159,7 @@ const Sharer = () => {
               <span className={styleRouter.fieldLabel}>
                 Meeting Preference:{" "}
               </span>
-              <span>{user.meetingPreference}</span>
+              <span>{sharer.meetingPreference}</span>
             </div>
           </div>
           <p>
