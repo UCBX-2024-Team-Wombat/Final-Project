@@ -5,19 +5,11 @@ class ProfileStyleRouter {
     this.isDesktop = isDesktop;
   }
 
-  get header() {
-    if (this.isMobile) {
-      return "fw-bold fs-3";
-    } else {
-      return "fw-bold fs-3";
-    }
-  }
-
   get pageSection() {
     if (this.isMobile) {
       return "border-bottom pb-4 mb-3";
     } else {
-      return "fw-bold fs-3";
+      return "border-bottom pb-4 mb-3" + (this.isDesktop ? " col" : "");
     }
   }
 
@@ -25,7 +17,7 @@ class ProfileStyleRouter {
     if (this.isMobile) {
       return "fw-bold fs-4 mb-2";
     } else {
-      return "fw-bold my-1";
+      return "fw-bold fs-4 my-1";
     }
   }
 }

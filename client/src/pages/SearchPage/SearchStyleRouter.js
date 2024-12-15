@@ -36,6 +36,13 @@ class SearchStyleRouter {
       return "fw-bold my-1";
     }
   }
+
+  get desktopColumn() {
+    if (this.isDesktop) {
+      return "col";
+    }
+    return "";
+  }
 }
 
 export default SearchStyleRouter;

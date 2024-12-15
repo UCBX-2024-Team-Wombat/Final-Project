@@ -1,0 +1,8 @@
+.main-image {
+  max-height: auto !important;
+  max-width: 600px !important;
+}
+
+.description-desktop {
+  max-width: 600px;
+}

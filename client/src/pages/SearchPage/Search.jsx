@@ -32,7 +32,6 @@ const Search = () => {
       },
     }
   );
-  // const scrollToElement = useRef()
 
   const searchResults = searchData
     ? searchData.getSkillRelationshipsBySearchCriteria
@@ -75,7 +74,6 @@ const Search = () => {
     document
       .getElementById("search-results")
       .scrollIntoView({ behavior: "smooth", block: "start" });
-    // Need to add logic to handle the search
   }
 
   function addSkillForSearch(skillData) {
@@ -133,20 +131,21 @@ const Search = () => {
       </div>
       {/* ============================== */}
       {/* Section: Skill Selection */}
-      <div>
-        <div>
+      <div className="row">
+        <div className={styleRouter.desktopColumn}>
           {/* Skill Selection Header */}
           <div>
-            <div className={styleRouter.header}>Skill Selection</div>
+            <div className={styleRouter.header}>How To Search</div>
             <p>
               Enter the skill or skills you'd like to learn here. You can add
               multiple skills to a search.
             </p>
             <p>
-              Start typing the name of a skill in the field below. A dropdown of
-              skills that match or partially match what you've typed will
-              appear. Click on one of these dropdown options to add it to your
-              list of searched skills.
+              Start typing the name of a skill in the field{" "}
+              {state.isDesktop ? "to the right" : "below"}. A dropdown of skills
+              that match or partially match what you've typed will appear. Click
+              on one of these dropdown options to add it to your list of
+              searched skills.
             </p>
             <p>
               Once you've added all the skills you'd like to search for, click
@@ -155,14 +154,40 @@ const Search = () => {
               below.
             </p>
           </div>
+        </div>
+        <div className={styleRouter.desktopColumn}>
           {/* Skill Selection Form */}
-          <div>
+          <div className={styleRouter.header}>Select & Filter</div>
+          <div className="mt-2">
             <TypeableDropdown
               label=""
               placeholder="Begin typing a skill name here..."
               query={QUERY_SKILLS_BY_NAME}
               itemClickedFunction={addSkillForSearch}
             />
+          </div>
+          <div className="border-bottom">
+            {selectedSkillIds().length > 0 ? (
+              <>
+                <div className="mb-2">
+                  <button
+                    type="button"
+                    className="btn btn-success w-100"
+                    onClick={handleSearchSubmit}
+                  >
+                    Search
+                  </button>
+                </div>
+                <div className={styleRouter.subHeader}>Selected Skills:</div>
+                <div>
+                  {selectedSkillIds().map((skillId) => {
+                    return skillContainer(selectedSkills[skillId]);
+                  })}
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
           {/* Section: Filter */}
           <div className="mb-3">
@@ -274,84 +299,56 @@ const Search = () => {
                         </div>
                       </div>
                     </form>
-                    <div>
-                      {Object.keys(filters).length > 0 ? (
-                        <div>
-                          <div className="mb-2">
-                            Your search will be filtered to only include Sharers
-                            that match the following criteria:
-                          </div>
-                          <div className="mx-3">
-                            {filters.city ? (
-                              <div>
-                                <span className="fw-bold">City: </span>
-                                <span>{filters.city}</span>
-                              </div>
-                            ) : (
-                              <></>
-                            )}
-                            {filters.state ? (
-                              <div>
-                                <span className="fw-bold">State: </span>
-                                <span>{filters.state}</span>
-                              </div>
-                            ) : (
-                              <></>
-                            )}
-                            {filters.meetingPreference ? (
-                              <div>
-                                <span className="fw-bold">
-                                  Meeting Preference:{" "}
-                                </span>
-                                <span>{filters.meetingPreference}</span>
-                              </div>
-                            ) : (
-                              <></>
-                            )}
-                            {filters.gender ? (
-                              <div>
-                                <span className="fw-bold">Gender: </span>
-                                <span>{filters.gender}</span>
-                              </div>
-                            ) : (
-                              <></>
-                            )}
-                          </div>
-                        </div>
-                      ) : (
-                        <></>
-                      )}
-                    </div>
                   </div>
                 </Accordion.Body>
               </Accordion.Item>
             </Accordion>
+            <div className="mt-3">
+              {Object.keys(filters).length > 0 ? (
+                <div className="mb-3">
+                  <div className={styleRouter.subHeader}>Selected Filters:</div>
+                  <div className="mx-3">
+                    {filters.city ? (
+                      <div>
+                        <span className="fw-bold">City: </span>
+                        <span>{filters.city}</span>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                    {filters.state ? (
+                      <div>
+                        <span className="fw-bold">State: </span>
+                        <span>{filters.state}</span>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                    {filters.meetingPreference ? (
+                      <div>
+                        <span className="fw-bold">Meeting Preference: </span>
+                        <span>{filters.meetingPreference}</span>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                    {filters.gender ? (
+                      <div>
+                        <span className="fw-bold">Gender: </span>
+                        <span>{filters.gender}</span>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <></>
+              )}
+            </div>
           </div>
         </div>
-        <div>
-          <div className="border-bottom">
-            {selectedSkillIds().length > 0 ? (
-              <>
-                <div className="mb-2">
-                  <button
-                    type="button"
-                    className="btn btn-success w-100"
-                    onClick={handleSearchSubmit}
-                  >
-                    Search
-                  </button>
-                </div>
-                <div className={styleRouter.subHeader}>Selected Skills:</div>
-                <div>
-                  {selectedSkillIds().map((skillId) => {
-                    return skillContainer(selectedSkills[skillId]);
-                  })}
-                </div>
-              </>
-            ) : (
-              <></>
-            )}
-          </div>
+        <div className={styleRouter.desktopColumn}>
           <div className="mt-2" id="search-results">
             <SearchResultsDisplay
               searchPayload={getUniqueUsersFromRelationships(searchResults)}
