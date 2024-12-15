@@ -1,5 +1,7 @@
 import Form from "react-bootstrap/Form";
 import { useState } from "react";
+import { DELETE_SKILL_RELATIONSHIP } from "../../utils/queries";
+import { useMutation } from "@apollo/client";
 
 const SkillUpdateForm = ({
   skillRelationshipData,
@@ -11,7 +13,7 @@ const SkillUpdateForm = ({
   const [formState, setFormState] = useState({
     ...skillRelationshipData,
   });
-
+  const [deleteSkillRelationship] = useMutation(DELETE_SKILL_RELATIONSHIP);
   function handleSubmit(event) {
     event.preventDefault();
   }
@@ -53,7 +55,19 @@ const SkillUpdateForm = ({
       />
     </Form.Group>
   );
-
+  const handleDelete = (event, relationshipId) => {
+    event.stopPropagation(); // Prevent openModalFunction from firing
+    event.preventDefault();  // Prevent default button behav.
+   
+    deleteSkillRelationship({
+      variables: { skillRelationshipId: relationshipId }
+    }).then(response => {
+      console.log('Skill relationship deleted:', response);
+      // Optionally, redirect or update UI here
+    }).catch(error => {
+      console.error('Error deleting skill relationship:', error);
+    });
+  };
   return (
     <>
       <div>{skillRelationshipData.name}</div>
@@ -75,12 +89,21 @@ const SkillUpdateForm = ({
           {offered ? offeredDisplay : <></>}
           {desired ? desiredDisplay : <></>}
 
-          <button
-            className="btn btn-primary"
-            onClick={() => submitButtonFunction(formState)}
-          >
-            {submitButtonLabel}
-          </button>
+          <div className="d-flex justify-content-between">
+            <button
+              className="btn btn-primary"
+              onClick={() => submitButtonFunction(formState)}
+            >
+              {submitButtonLabel}
+            </button>
+            <button
+              type="button" 
+              className="btn btn-danger"
+              onClick={(e) => handleDelete(e, skillRelationshipData._id)}
+            >
+              Delete
+            </button>
+          </div>
         </Form>
       ) : (
         <></>
