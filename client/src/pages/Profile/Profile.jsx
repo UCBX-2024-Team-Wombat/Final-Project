@@ -431,6 +431,20 @@ const Profile = () => {
           </Accordion>
         </div>
         <div className={styleRouter.pageSection}>
+        <div>
+          <div className="row border-bottom pb-3 justify-content-between mb-3">
+            <div className="col">
+              <h1>My Skills</h1>
+            </div>
+            <div className="col d-flex justify-content-end">
+              <button
+                className="btn btn-info"
+                onClick={() => openAddModal("offered")}
+              >
+                Add A Skill
+              </button>
+            </div>
+          </div>
           <div className={styleRouter.pageSectionTitle}>Skills I Offer</div>
           <div>
             {offeredSkills().length > 0 ? (
