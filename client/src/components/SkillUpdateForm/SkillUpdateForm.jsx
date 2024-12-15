@@ -13,7 +13,11 @@ const SkillUpdateForm = ({
   const [formState, setFormState] = useState({
     ...skillRelationshipData,
   });
-  const [deleteSkillRelationship] = useMutation(DELETE_SKILL_RELATIONSHIP);
+  const [deleteSkillRelationship] = useMutation(DELETE_SKILL_RELATIONSHIP, {
+    onCompleted: () => {
+      window.location.reload();
+    }
+  });
   function handleSubmit(event) {
     event.preventDefault();
   }
