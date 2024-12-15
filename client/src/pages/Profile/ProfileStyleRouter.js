@@ -17,7 +17,7 @@ class ProfileStyleRouter {
     if (this.isMobile) {
       return "fw-bold fs-4 mb-2";
     } else {
-      return "fw-bold fs-4 my-1";
+      return "fw-bold fs-4";
     }
   }
 }

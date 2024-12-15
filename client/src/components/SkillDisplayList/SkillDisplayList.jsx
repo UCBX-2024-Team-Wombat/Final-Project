@@ -15,9 +15,6 @@ const SkillDisplayList = ({ skillRelationshipList, openModalFunction }) => {
               <div className={`card-title ${styleRouter.skillTitle}`}>
                 {relationship.skill.name}
               </div>
-              {/* <div className={`card-text ${styleRouter.skillDescription}`}>
-                {relationship.skill.description}
-              </div> */}
               <div className={styleRouter.fieldLabel}>
                 <div>Years of Experience</div>
                 <div>{relationship.yearsOfExperience}</div>

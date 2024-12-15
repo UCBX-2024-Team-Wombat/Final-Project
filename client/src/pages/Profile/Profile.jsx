@@ -285,8 +285,12 @@ const Profile = () => {
       </Modal>
       {/* =============================== */}
       <div className="row">
-        <h1 className="text-left border-bottom pb-3 mb-2">My Profile</h1>
         <div className={styleRouter.pageSection}>
+          {styleRouter.isDesktop ? (
+            <h2 className="text-left border-bottom pb-3 mb-2">My Profile</h2>
+          ) : (
+            <h1 className="text-left border-bottom pb-3 mb-2">My Profile</h1>
+          )}
           <Accordion defaultActiveKey="">
             <Accordion.Item eventKey="0">
               <Accordion.Header className={styleRouter.header}>
@@ -430,46 +434,60 @@ const Profile = () => {
             </Accordion.Item>
           </Accordion>
         </div>
-        <div className={styleRouter.pageSection}>
-        <div>
-          <div className="row border-bottom pb-3 justify-content-between mb-3">
-            <div className="col">
-              <h1>My Skills</h1>
-            </div>
-            <div className="col d-flex justify-content-end">
-              <button
-                className="btn btn-info"
-                onClick={() => openAddModal("offered")}
-              >
-                Add A Skill
-              </button>
-            </div>
-          </div>
-          <div className={styleRouter.pageSectionTitle}>Skills I Offer</div>
+        <div className={styleRouter.isDesktop ? "col-8" : ""}>
           <div>
-            {offeredSkills().length > 0 ? (
-              <SkillDisplayList
-                skillRelationshipList={offeredSkills()}
-                openModalFunction={openOfferedModal}
-              />
-            ) : (
-              <div>Nothing yet! Click "Add Skill" to update this list.</div>
-            )}
+            <div
+              className={
+                styleRouter.pageSectionTitle + " row justify-content-between"
+              }
+            >
+              <div className="col">
+                {styleRouter.isDesktop ? (
+                  <h2 className="text-left border-bottom pb-3 mb-2">
+                    My Skills
+                  </h2>
+                ) : (
+                  <h1 className="text-left border-bottom pb-3 mb-2">
+                    My Skills
+                  </h1>
+                )}
+              </div>
+              <div className="col d-flex justify-content-end align-items-start">
+                <button className="btn btn-info" onClick={openAddModal}>
+                  Add A Skill
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-        <div className={styleRouter.pageSection}>
-          <div className={styleRouter.pageSectionTitle}>
-            Skills I Want To Learn
-          </div>
-          <div>
-            {desiredSkills().length > 0 ? (
-              <SkillDisplayList
-                skillRelationshipList={desiredSkills()}
-                openModalFunction={openDesiredModal}
-              />
-            ) : (
-              <div>Nothing yet! Click "Add Skill" to update this list.</div>
-            )}
+          <div className={styleRouter.isDesktop ? "row" : ""}>
+            <div className={styleRouter.pageSection}>
+              <div className={styleRouter.pageSectionTitle}>Skills I Offer</div>
+              <div>
+                {offeredSkills().length > 0 ? (
+                  <SkillDisplayList
+                    skillRelationshipList={offeredSkills()}
+                    openModalFunction={openOfferedModal}
+                  />
+                ) : (
+                  <div>Nothing yet! Click "Add Skill" to update this list.</div>
+                )}
+              </div>
+            </div>
+            <div className={styleRouter.pageSection}>
+              <div className={styleRouter.pageSectionTitle}>
+                Skills I Want To Learn
+              </div>
+              <div>
+                {desiredSkills().length > 0 ? (
+                  <SkillDisplayList
+                    skillRelationshipList={desiredSkills()}
+                    openModalFunction={openDesiredModal}
+                  />
+                ) : (
+                  <div>Nothing yet! Click "Add Skill" to update this list.</div>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
