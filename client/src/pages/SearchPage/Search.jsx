@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import SearchResultsDisplay from "../../components/SearchResultsDisplay/SearchResultsDisplay.jsx";
 import TypeableDropdown from "../../components/TypeableDropdown/TypeableDropdown.jsx";
 import {
@@ -53,16 +53,18 @@ const Search = () => {
   };
 
   function resetSharerFilters() {
+    setTemporaryFilters({});
     setFilters({});
   }
 
   function handleUpdateFilter(event) {
     event.preventDefault();
 
-    setTemporaryFilters({});
+    // setTemporaryFilters({});
     const filterForm = document.getElementById("filter-form");
     filterForm.reset();
     setFilters({ ...temporaryFilters });
+    setTemporaryFilters({});
   }
 
   function handleSearchSubmit(event) {
@@ -226,7 +228,7 @@ const Search = () => {
                         <select
                           id="state"
                           className="form-select"
-                          name="state"
+                          name="stateOrProvince"
                           onChange={handleFilterChange}
                         >
                           <option value="" selected>
@@ -316,10 +318,10 @@ const Search = () => {
                     ) : (
                       <></>
                     )}
-                    {filters.state ? (
+                    {filters.stateOrProvince ? (
                       <div>
                         <span className="fw-bold">State: </span>
-                        <span>{filters.state}</span>
+                        <span>{filters.stateOrProvince}</span>
                       </div>
                     ) : (
                       <></>
