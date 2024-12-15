@@ -7,9 +7,9 @@ class SkillDisplayListStyleRouter {
 
   get listWrapperBox() {
     if (this.isMobile) {
-      return "border border-secondary rounded p-3 m-2";
+      return "border border-secondary rounded p-3 mb-2";
     } else {
-      return "border border-secondary rounded p-3 m-2";
+      return "border border-secondary rounded p-3 mb-2 hover-behavior-desktop";
     }
   }
 
@@ -17,7 +17,7 @@ class SkillDisplayListStyleRouter {
     if (this.isMobile) {
       return "fw-bold fs-6";
     } else {
-      return "fw-bold fs-3";
+      return "fw-bold fs-6";
     }
   }
 
