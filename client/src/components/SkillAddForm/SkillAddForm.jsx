@@ -1,5 +1,7 @@
 import Form from "react-bootstrap/Form";
 import AuthService from "../../utils/auth.js";
+import Modal from 'react-bootstrap/Modal'; // modal alert
+import Button from 'react-bootstrap/Button'; //modal alert
 
 import { useState } from "react";
 // import SkillAdder from "../SkillAdder/SkillAdder";
@@ -18,30 +20,34 @@ const SkillAddForm = ({ submitButtonFunction }) => {
     yearsOfExperience: "0",
     userId: AuthService.getProfile().data._id,
     existingSkills: [] // need to store the names of existing skills
-  
+
   });
   // fetching the skills user already have
-  const { data: skillsData } = useQuery (QUERY_SKILL_RELATIONSHIPS_BY_USER_ID, {
-      variables: {userId:formState.userId}
+  const { data: skillsData } = useQuery(QUERY_SKILL_RELATIONSHIPS_BY_USER_ID, {
+    variables: { userId: formState.userId }
   });
+  // modal alert states
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
 
   useEffect(() => {
     if (skillsData && skillsData.getSkillRelationshipsByUserId) {
       //store in state (the names)
       const skillNames = skillsData.getSkillRelationshipsByUserId.map(skillRel => skillRel.skill.name)
       setFormState((prevState) => ({
-        ...prevState,existingSkills: skillNames
+        ...prevState, existingSkills: skillNames
       }));
     }
   }, [skillsData]);
 
   function skillClickedHandler(data) {
     if (formState.existingSkills.includes(data.name)) {
-      alert("You already have this skill.");
+      setModalMessage("You already have this skill.");
+      setShowModal(true);
       return;
     }
     setFormState({ ...formState, skill: data, skillId: data._id });
-    
+
   }
 
   function handleSubmit(event) {
@@ -224,6 +230,17 @@ const SkillAddForm = ({ submitButtonFunction }) => {
           Show Object
         </button>
       </Form>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Skill Selection</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalMessage}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };
