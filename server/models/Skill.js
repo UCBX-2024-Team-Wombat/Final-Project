@@ -6,6 +6,7 @@ const skillSchema = new Schema({
   name: {
     type: String,
     required: true,
+    text: true,
   },
   description: {
     type: String,
