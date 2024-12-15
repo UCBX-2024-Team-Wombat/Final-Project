@@ -130,6 +130,13 @@ const QUERY_MESSAGES_BETWEEN_USERS = gql`
     }
   }
 `;
+const DELETE_SKILL_RELATIONSHIP = gql`
+  mutation deleteSkillRelationship($skillRelationshipId: ID!) {
+    deleteSkillRelationship(skillRelationshipId: $skillRelationshipId) {
+      _id
+    }
+  }
+`;
 
 export {
   QUERY_ALL_USERS,
@@ -139,4 +146,6 @@ export {
   QUERY_SKILLS_BY_NAME,
   QUERY_SKILL_RELATIONSHIPS_BY_SEARCH_CRITERIA,
   QUERY_MESSAGES_BETWEEN_USERS,
+  DELETE_SKILL_RELATIONSHIP,
+
 };
