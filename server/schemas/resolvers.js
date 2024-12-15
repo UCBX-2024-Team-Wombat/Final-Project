@@ -10,11 +10,19 @@ const resolvers = {
 
       // if sender is in userIds and
 
-      return await ChatMessage.find({
-        $and: [{ sender: { $in: userIds } }, { receiver: { $in: userIds } }],
-      })
-        .populate("sender")
-        .populate("receiver");
+      if (userIds.length == 1) {
+        return await ChatMessage.find({
+          $or: [{ sender: userIds[0] }, { receiver: userIds[0] }],
+        })
+          .populate("sender")
+          .populate("receiver");
+      } else {
+        return await ChatMessage.find({
+          $and: [{ sender: { $in: userIds } }, { receiver: { $in: userIds } }],
+        })
+          .populate("sender")
+          .populate("receiver");
+      }
     },
     allUsers: async (parent) => {
       return await User.find();
