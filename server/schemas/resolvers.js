@@ -79,7 +79,7 @@ const resolvers = {
         // Use case insensitivity
         userSearchFilters.push({
           [field]: {
-            $regex: `${userFilterInput[field]}`,
+            $regex: `^${userFilterInput[field]}$`,
             $options: "i",
           },
         });
