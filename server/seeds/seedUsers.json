@@ -1,0 +1,59 @@
+[
+    {
+        "username": "janeTest",
+        "email": "jane@test.com",
+        "password": "abc123",
+        "city": "Berkeley",
+        "bio": "I'm just a test!",
+        "stateOrProvince": "California",
+        "country": "United States",
+        "gender": "Woman",
+        "meetingPreference": "Both",
+        "availableSkills": [],
+        "desiredSkills": []
+    },
+    {
+        "username": "Jamil",
+        "email": "jamil@test.com",
+        "password": "abc123",
+        "city": "Berkeley",
+        "bio": "Hi! My name is Jamil (pronounced like \"a meal\"). I'm a lifelong learner, Spanish enthusiast, and professional coder.",
+        "stateOrProvince": "California",
+        "country": "United States",
+        "gender": "Man",
+        "meetingPreference": "Online"
+    },
+    {
+        "username": "Bradyn",
+        "email": "bradyn@test.com",
+        "password": "abc123",
+        "city": "San Francisco",
+        "bio": "",
+        "stateOrProvince": "California",
+        "country": "United States",
+        "gender": "Woman",
+        "meetingPreference": "Both"
+    },
+    {
+        "username": "Yasemin",
+        "email": "yasemin@test.com",
+        "password": "abc123",
+        "city": "San Diego",
+        "bio": "I'm just a test!",
+        "stateOrProvince": "California",
+        "country": "United States",
+        "gender": "Woman",
+        "meetingPreference": "Both"
+    },
+    {
+        "username": "Steven",
+        "email": "steven@test.com",
+        "password": "abc123",
+        "city": "Berkeley",
+        "bio": "",
+        "stateOrProvince": "California",
+        "country": "United States",
+        "gender": "Man",
+        "meetingPreference": "Online"
+    }
+]

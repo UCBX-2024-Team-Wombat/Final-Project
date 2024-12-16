@@ -1,0 +1,30 @@
+{
+  "name": "final-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server --ignore client",
+    "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
+    "install": "cd server && npm i && cd ../client && npm i",
+    "seed": "cd server/seeds && node seed",
+    "build": "cd client && npm run build",
+    "fullbuild": "npm i && npm run install && npm run build && npm run seed"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^5.1.0"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.12.2",
+    "dotenv": "^16.4.5",
+    "nodemon": "^3.1.7",
+    "install": "^0.13.0",
+    "npm": "^10.9.2",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1"
+  }
+}

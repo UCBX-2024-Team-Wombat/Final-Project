@@ -1,0 +1,9 @@
+.customFieldLabel {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hover-behavior-desktop:hover {
+  background-color: rgb(234, 234, 255);
+  cursor: pointer;
+}
