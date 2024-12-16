@@ -1,5 +1,7 @@
 import Form from "react-bootstrap/Form";
 import AuthService from "../../utils/auth.js";
+import Modal from "react-bootstrap/Modal"; // modal alert
+import Button from "react-bootstrap/Button"; //modal alert
 
 import { useState } from "react";
 // import SkillAdder from "../SkillAdder/SkillAdder";
@@ -23,6 +25,9 @@ const SkillAddForm = ({ submitButtonFunction }) => {
   const { data: skillsData } = useQuery(QUERY_SKILL_RELATIONSHIPS_BY_USER_ID, {
     variables: { userId: formState.userId },
   });
+  // modal alert states
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     if (skillsData && skillsData.getSkillRelationshipsByUserId) {
@@ -39,7 +44,8 @@ const SkillAddForm = ({ submitButtonFunction }) => {
 
   function skillClickedHandler(data) {
     if (formState.existingSkills.includes(data.name)) {
-      alert("You already have this skill.");
+      setModalMessage("You already have this skill.");
+      setShowModal(true);
       return;
     }
     setFormState({ ...formState, skill: data, skillId: data._id });
@@ -225,6 +231,17 @@ const SkillAddForm = ({ submitButtonFunction }) => {
           Show Object
         </button> */}
       </Form>
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Skill Selection</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{modalMessage}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </>
   );
 };

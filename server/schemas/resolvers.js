@@ -217,6 +217,23 @@ const resolvers = {
       );
       return skillRelationship;
     },
+    deleteSkillRelationship: async (_, { skillRelationshipId }, context) => {
+      console.log("Trying to delete skillRelationship with ID:", skillRelationshipId);
+      // Ensure user is authenticated
+      if (!context.user) {
+          throw new Error("Not authenticated");
+      }
+      try {
+          const deletedRelationship = await SkillRelationship.findByIdAndDelete(skillRelationshipId);
+          if (!deletedRelationship) {
+              throw new Error("No skill relationship found with this ID.");
+          }
+          return deletedRelationship;
+      } catch (err) {
+          console.log(err);
+          throw new Error("Failed to delete skill relationship.");
+      }
+  }
   },
 };
 

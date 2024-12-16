@@ -99,6 +99,7 @@ const typeDefs = `
     modifySkillRelationship(skillRelationshipId: ID!, skillRelationshipInput: SkillRelationshipInput!): SkillRelationship
     sendMessage(receiverId: ID!, message: String!): ChatMessage    
     #allow one user to send a message to another user in a one-to-one chat system.
+    deleteSkillRelationship(skillRelationshipId: ID!): SkillRelationship
   }
 `;
 
