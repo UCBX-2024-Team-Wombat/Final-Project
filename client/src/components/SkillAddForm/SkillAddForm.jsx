@@ -8,7 +8,6 @@ import { useState } from "react";
 import TypeableDropdown from "../TypeableDropdown/TypeableDropdown.jsx";
 import { QUERY_SKILLS_BY_NAME } from "../../utils/queries";
 import { QUERY_SKILL_RELATIONSHIPS_BY_USER_ID } from "../../utils/queries";
-import { QUERY_SKILL_RELATIONSHIPS_BY_USER_ID } from "../../utils/queries";
 import { useGlobalContext } from "../../utils/GlobalState.jsx";
 import SkillAddFormStyleRouter from "./SkillAddFormStyleRouter.js";
 import { useQuery } from "@apollo/client"; //
