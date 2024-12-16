@@ -9,7 +9,7 @@ class ChatWindowStyleRouter {
     if (this.isMobile) {
       return "border rounded p-2 mb-3 chat-window-mobile";
     } else {
-      return "fs-6";
+      return "border rounded p-2 mb-3 chat-window-mobile";
     }
   }
 }

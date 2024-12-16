@@ -5,8 +5,10 @@ import { extractConversationsArrayFromMessage } from "../../utils/dataParsers.js
 import ChatWindow from "../../components/ChatWindow/ChatWindow.jsx";
 import { Modal } from "react-bootstrap";
 import { useState, useEffect } from "react";
+import { useGlobalContext } from "../../utils/GlobalState.jsx";
 
 const Inbox = () => {
+  const [state] = useGlobalContext();
   const [chatModalVisible, setChatModalVisible] = useState(false);
   const [currentConversation, setCurrentConversation] = useState({});
   const me = AuthService.getProfile().data;
@@ -87,25 +89,31 @@ const Inbox = () => {
           />
         </Modal.Body>
       </Modal>
-      {conversationsData ? <h1>My Conversations</h1> : <></>}
-      {conversationsData ? (
-        <ul className="list-group">
-          {conversationsArray.map((conversation) => {
-            return (
-              <li
-                className="list-group-item list-group-item-action"
-                key={JSON.stringify(conversation)}
-                onClick={() => openConversationWindow(conversation)}
-              >
-                <span className="fw-bold">User</span>:{" "}
-                {conversation.conversationPartner.username}
-              </li>
-            );
-          })}
-        </ul>
-      ) : (
-        <div>Loading messages...</div>
-      )}
+      <div className={state.isDesktop ? "d-flex justify-content-center" : ""}>
+        <div style={state.isDesktop ? { width: "500px" } : {}}>
+          <div>{conversationsData ? <h1>My Conversations</h1> : <></>}</div>
+          <div>
+            {conversationsData ? (
+              <ul className="list-group">
+                {conversationsArray.map((conversation) => {
+                  return (
+                    <li
+                      className="list-group-item list-group-item-action"
+                      key={JSON.stringify(conversation)}
+                      onClick={() => openConversationWindow(conversation)}
+                    >
+                      <span className="fw-bold">User</span>:{" "}
+                      {conversation.conversationPartner.username}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              <div>Loading messages...</div>
+            )}
+          </div>
+        </div>
+      </div>
     </>
   );
 };

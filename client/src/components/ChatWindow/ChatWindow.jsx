@@ -49,11 +49,22 @@ const ChatWindow = ({ recipientUserId, messagesArray, refetchFunction }) => {
         <div className={styleRouter.messageWindow} id="chat-scroller">
           {messagesArray?.map((msg, index) => (
             <div key={index}>
-              <strong>{msg.sender.username}:</strong> {msg.message}{" "}
-              <em>
-                ({new Date(parseInt(msg.timestamp)).toLocaleTimeString("en-US")}
-                )
-              </em>
+              <div
+                className={
+                  msg.sender._id != recipientUserId
+                    ? "border mb-2 p-1 px-3 bg-info bg-gradient rounded float-end my-message"
+                    : "border mb-2 p-1 px-3 bg-warning bg-gradient rounded float-start their-message"
+                }
+              >
+                <strong>{msg.sender.username}:</strong> {msg.message}{" "}
+                <em>
+                  (
+                  {new Date(parseInt(msg.timestamp)).toLocaleTimeString(
+                    "en-US"
+                  )}
+                  )
+                </em>
+              </div>
             </div>
           ))}
           <div id="chat-anchor" className="chat-anchor"></div>
