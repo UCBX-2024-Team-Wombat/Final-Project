@@ -1,44 +1,39 @@
 import { useState, useEffect } from "react";
-import { QUERY_MESSAGES_BETWEEN_USERS } from "../../utils/queries.js";
 import { ADD_MESSAGE } from "../../utils/mutations.js";
-import { useMutation, useQuery } from "@apollo/client";
+import { useMutation } from "@apollo/client";
 import { useGlobalContext } from "../../utils/GlobalState.jsx";
 import ChatWindowStyleRouter from "./ChatWindowStyleRouter.js";
 import "./chatWindow.css";
 
-const ChatWindow = ({ currentUser, recipientUser }) => {
+const ChatWindow = ({ recipientUserId, messagesArray, refetchFunction }) => {
   const [state, dispatch] = useGlobalContext();
   const styleRouter = new ChatWindowStyleRouter(state);
-  const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const { loading, data, refetch } = useQuery(QUERY_MESSAGES_BETWEEN_USERS, {
-    variables: {
-      userIds: [currentUser._id, recipientUser._id],
-    },
-    pollInterval: 500,
-  });
 
   useEffect(() => {
-    const messages = data?.getMessagesBetweenUsers || [];
+    scrollToBottom();
+  }, [messagesArray]);
 
-    setMessages(messages);
-    refetch();
+  function scrollToBottom() {
     const chatScroller = document.getElementById("chat-scroller");
     if (chatScroller) {
       chatScroller.scrollTop = chatScroller.scrollHeight + 1000;
     }
-  }, [data]);
+  }
 
   const [createMessage] = useMutation(ADD_MESSAGE);
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     setNewMessage("");
-    createMessage({
+    await createMessage({
       variables: {
-        receiverId: recipientUser._id,
+        receiverId: recipientUserId,
         message: newMessage,
       },
     });
+    if (refetchFunction) {
+      refetchFunction();
+    }
   };
 
   function sendKeyChecker(event) {
@@ -52,13 +47,24 @@ const ChatWindow = ({ currentUser, recipientUser }) => {
     <div>
       <div>
         <div className={styleRouter.messageWindow} id="chat-scroller">
-          {messages.map((msg, index) => (
+          {messagesArray?.map((msg, index) => (
             <div key={index}>
-              <strong>{msg.sender.username}:</strong> {msg.message}{" "}
-              <em>
-                ({new Date(parseInt(msg.timestamp)).toLocaleTimeString("en-US")}
-                )
-              </em>
+              <div
+                className={
+                  msg.sender._id != recipientUserId
+                    ? "border mb-2 p-1 px-3 bg-info bg-gradient rounded float-end my-message"
+                    : "border mb-2 p-1 px-3 bg-warning bg-gradient rounded float-start their-message"
+                }
+              >
+                <strong>{msg.sender.username}:</strong> {msg.message}{" "}
+                <em>
+                  (
+                  {new Date(parseInt(msg.timestamp)).toLocaleTimeString(
+                    "en-US"
+                  )}
+                  )
+                </em>
+              </div>
             </div>
           ))}
           <div id="chat-anchor" className="chat-anchor"></div>

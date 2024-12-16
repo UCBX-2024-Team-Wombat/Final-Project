@@ -44,7 +44,43 @@ function parseSkillRelationshipsByRelationshipType(relationshipsArray) {
   return parsedSkillRelationships;
 }
 
+function extractConversationsArrayFromMessage(currentUserId, messages) {
+  const partnerIdToConversationMap = {};
+
+  for (const message of messages) {
+    let conversationPartner;
+
+    if (message.sender._id != currentUserId) {
+      conversationPartner = message.sender;
+    } else if (message.receiver._id != currentUserId) {
+      conversationPartner = message.receiver;
+    }
+
+    if (
+      !Object.keys(partnerIdToConversationMap).includes(conversationPartner._id)
+    ) {
+      partnerIdToConversationMap[conversationPartner._id] = {
+        messages: [message],
+        conversationPartner: conversationPartner,
+      };
+    } else {
+      partnerIdToConversationMap[conversationPartner._id].messages.push(
+        message
+      );
+    }
+  }
+
+  const arrayOfConversations = Object.keys(partnerIdToConversationMap).map(
+    (partnerId) => {
+      return partnerIdToConversationMap[partnerId];
+    }
+  );
+
+  return arrayOfConversations;
+}
+
 export {
   getUniqueUsersFromRelationships,
   parseSkillRelationshipsByRelationshipType,
+  extractConversationsArrayFromMessage,
 };

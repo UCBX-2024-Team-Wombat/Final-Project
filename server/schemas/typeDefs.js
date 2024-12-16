@@ -17,7 +17,7 @@ const typeDefs = `
     gender: String
     meetingPreference: String
     city: String
-    stateOrProvice: String
+    stateOrProvince: String
     country: String
   }
 

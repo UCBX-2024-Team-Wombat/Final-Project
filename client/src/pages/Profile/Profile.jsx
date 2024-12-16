@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import Modal from "react-bootstrap/Modal";
+import Accordion from "react-bootstrap/Accordion";
 import { useQuery, useMutation } from "@apollo/client";
 import {
   QUERY_ME,
@@ -283,176 +284,211 @@ const Profile = () => {
         </Modal.Body>
       </Modal>
       {/* =============================== */}
-      <h1 className="text-left border-bottom pb-3 mb-2">My Profile</h1>
-      <div className={styleRouter.pageSection}>
-        <div className={styleRouter.pageSectionTitle}>My Info</div>
-        <form>
-          <div className="mb-3">
-            <label className="form-label fw-bold">Username</label>
-            <input
-              type="text"
-              className="form-control"
-              name="username"
-              value={newUserData.username}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label fw-bold">Email</label>
-            <input
-              type="email"
-              className="form-control"
-              name="email"
-              value={newUserData.email}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label fw-bold">About Me</label>
-            <textarea
-              type="email"
-              className="form-control"
-              name="bio"
-              rows="3"
-              value={userData.bio}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label fw-bold">City</label>
-            <input
-              type="text"
-              className="form-control"
-              name="city"
-              value={userData.city}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label fw-bold">State</label>
-            <select
-              id="stateOrProvince"
-              className="form-select"
-              name="stateOrProvince"
-              value={userData.stateOrProvince}
-              placeholder={userData.stateOrProvince}
-              onChange={handleChange}
-            >
-              {stateDisplay()}
-            </select>
-          </div>
-          <div className="mb-3">
-            <label className="form-label fw-bold">Gender</label>
-            <select
-              id="gender"
-              className="form-select"
-              name="gender"
-              value={userData.gender}
-              onChange={handleChange}
-            >
-              {genderOptions()}
-            </select>
-          </div>
-          <div className="mb-3">
-            <label className="form-label fw-bold">Meeting Preference</label>
-            <select
-              id="meetingPreference"
-              className="form-select"
-              name="meetingPreference"
-              value={userData.meetingPreference}
-              onChange={handleChange}
-            >
-              {meetingPreferences()}
-            </select>
-          </div>
-          <div className="border-bottom pb-3 mb-2">
-            <button
-              type="submit"
-              className="btn btn-success w-100"
-              onClick={handleUpdateSettings}
-            >
-              Update Settings
-            </button>
-          </div>
-        </form>
-      </div>
+      <div className="row">
+        <div className={styleRouter.pageSection}>
+          {styleRouter.isDesktop ? (
+            <h2 className="text-left border-bottom pb-3 mb-2">My Profile</h2>
+          ) : (
+            <h1 className="text-left border-bottom pb-3 mb-2">My Profile</h1>
+          )}
+          <Accordion defaultActiveKey="">
+            <Accordion.Item eventKey="0">
+              <Accordion.Header className={styleRouter.header}>
+                My Info
+              </Accordion.Header>
+              <Accordion.Body>
+                <form>
+                  <div className="mb-3">
+                    <label className="form-label fw-bold">Username</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="username"
+                      value={newUserData.username}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label fw-bold">Email</label>
+                    <input
+                      type="email"
+                      className="form-control"
+                      name="email"
+                      value={newUserData.email}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label fw-bold">About Me</label>
+                    <textarea
+                      type="email"
+                      className="form-control"
+                      name="bio"
+                      rows="3"
+                      value={userData.bio}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label fw-bold">City</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      name="city"
+                      value={userData.city}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label fw-bold">State</label>
+                    <select
+                      id="stateOrProvince"
+                      className="form-select"
+                      name="stateOrProvince"
+                      value={userData.stateOrProvince}
+                      placeholder={userData.stateOrProvince}
+                      onChange={handleChange}
+                    >
+                      {stateDisplay()}
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label fw-bold">Gender</label>
+                    <select
+                      id="gender"
+                      className="form-select"
+                      name="gender"
+                      value={userData.gender}
+                      onChange={handleChange}
+                    >
+                      {genderOptions()}
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label fw-bold">
+                      Meeting Preference
+                    </label>
+                    <select
+                      id="meetingPreference"
+                      className="form-select"
+                      name="meetingPreference"
+                      value={userData.meetingPreference}
+                      onChange={handleChange}
+                    >
+                      {meetingPreferences()}
+                    </select>
+                  </div>
+                  <div className="border-bottom pb-3 mb-2">
+                    <button
+                      type="submit"
+                      className="btn btn-success w-100"
+                      onClick={handleUpdateSettings}
+                    >
+                      Update My Info
+                    </button>
+                  </div>
+                </form>
+              </Accordion.Body>
+            </Accordion.Item>
 
-      <div className={styleRouter.pageSection}>
-        <div className={styleRouter.pageSectionTitle}>Change Password</div>
-        <form>
-          <div className="mb-3">
-            <label className="form-label fw-bold">New Password</label>
-            <input
-              type="password"
-              className="form-control"
-              name="password1"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="mb-3">
-            <label className="form-label fw-bold">Confirm Password</label>
-            <input
-              type="password"
-              className="form-control"
-              name="password2"
-              onChange={handleChange}
-            />
-          </div>
-          <div className="text-danger" hidden={!passwordMissMatch}>
-            Passwords do not match
-          </div>
-          <div className="border-bottom pb-3 mb-2">
-            <button
-              type="submit"
-              className="btn btn-success w-100"
-              onClick={handlePasswordUpdate}
+            <Accordion.Item eventKey="1">
+              <Accordion.Header className={styleRouter.header}>
+                Change Password
+              </Accordion.Header>
+              <Accordion.Body>
+                <form>
+                  <div className="mb-3">
+                    <label className="form-label fw-bold">New Password</label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      name="password1"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label fw-bold">
+                      Confirm Password
+                    </label>
+                    <input
+                      type="password"
+                      className="form-control"
+                      name="password2"
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <div className="text-danger" hidden={!passwordMissMatch}>
+                    Passwords do not match
+                  </div>
+                  <div className="border-bottom pb-3 mb-2">
+                    <button
+                      type="submit"
+                      className="btn btn-success w-100"
+                      onClick={handlePasswordUpdate}
+                    >
+                      Change Password
+                    </button>
+                  </div>
+                </form>
+              </Accordion.Body>
+            </Accordion.Item>
+          </Accordion>
+        </div>
+        <div className={styleRouter.isDesktop ? "col-8" : ""}>
+          <div>
+            <div
+              className={
+                styleRouter.pageSectionTitle + " row justify-content-between"
+              }
             >
-              Change Password
-            </button>
-          </div>
-        </form>
-      </div>
-      <div>
-        <div>
-          <div className="row border-bottom pb-3 justify-content-between mb-3">
-            <div className="col">
-              <h1>My Skills</h1>
-            </div>
-            <div className="col d-flex justify-content-end">
-              <button
-                className="btn btn-info"
-                onClick={() => openAddModal("offered")}
-              >
-                Add A Skill
-              </button>
+              <div className="col">
+                {styleRouter.isDesktop ? (
+                  <h2 className="text-left border-bottom pb-3 mb-2">
+                    My Skills
+                  </h2>
+                ) : (
+                  <h1 className="text-left border-bottom pb-3 mb-2">
+                    My Skills
+                  </h1>
+                )}
+              </div>
+              <div className="col d-flex justify-content-end align-items-start">
+                <button className="btn btn-info" onClick={openAddModal}>
+                  Add A Skill
+                </button>
+              </div>
             </div>
           </div>
-          {offeredSkills().length > 0 ? (
+          <div className={styleRouter.isDesktop ? "row" : ""}>
             <div className={styleRouter.pageSection}>
+              <div className={styleRouter.pageSectionTitle}>Skills I Offer</div>
               <div>
-                <div className={styleRouter.header}>Skills I Offer</div>
+                {offeredSkills().length > 0 ? (
+                  <SkillDisplayList
+                    skillRelationshipList={offeredSkills()}
+                    openModalFunction={openOfferedModal}
+                  />
+                ) : (
+                  <div>Nothing yet! Click "Add Skill" to update this list.</div>
+                )}
               </div>
-              <SkillDisplayList
-                skillRelationshipList={offeredSkills()}
-                openModalFunction={openOfferedModal}
-              />
             </div>
-          ) : (
-            <></>
-          )}
-          {desiredSkills().length > 0 ? (
             <div className={styleRouter.pageSection}>
-              <div>
-                <div className={styleRouter.header}>Skills I Want To Learn</div>
+              <div className={styleRouter.pageSectionTitle}>
+                Skills I Want To Learn
               </div>
-              <SkillDisplayList
-                skillRelationshipList={desiredSkills()}
-                openModalFunction={openDesiredModal}
-              />
+              <div>
+                {desiredSkills().length > 0 ? (
+                  <SkillDisplayList
+                    skillRelationshipList={desiredSkills()}
+                    openModalFunction={openDesiredModal}
+                  />
+                ) : (
+                  <div>Nothing yet! Click "Add Skill" to update this list.</div>
+                )}
+              </div>
             </div>
-          ) : (
-            <></>
-          )}
+          </div>
         </div>
       </div>
     </div>

@@ -1,17 +1,18 @@
 import Form from "react-bootstrap/Form";
 import AuthService from "../../utils/auth.js";
-import Modal from 'react-bootstrap/Modal'; // modal alert
-import Button from 'react-bootstrap/Button'; //modal alert
+import Modal from "react-bootstrap/Modal"; // modal alert
+import Button from "react-bootstrap/Button"; //modal alert
 
 import { useState } from "react";
 // import SkillAdder from "../SkillAdder/SkillAdder";
 import TypeableDropdown from "../TypeableDropdown/TypeableDropdown.jsx";
 import { QUERY_SKILLS_BY_NAME } from "../../utils/queries";
 import { QUERY_SKILL_RELATIONSHIPS_BY_USER_ID } from "../../utils/queries";
+import { QUERY_SKILL_RELATIONSHIPS_BY_USER_ID } from "../../utils/queries";
 import { useGlobalContext } from "../../utils/GlobalState.jsx";
 import SkillAddFormStyleRouter from "./SkillAddFormStyleRouter.js";
-import { useQuery } from "@apollo/client"; // 
-import { useEffect } from "react"; // 
+import { useQuery } from "@apollo/client"; //
+import { useEffect } from "react"; //
 
 const SkillAddForm = ({ submitButtonFunction }) => {
   const [state, dispatch] = useGlobalContext();
@@ -19,23 +20,25 @@ const SkillAddForm = ({ submitButtonFunction }) => {
   const [formState, setFormState] = useState({
     yearsOfExperience: "0",
     userId: AuthService.getProfile().data._id,
-    existingSkills: [] // need to store the names of existing skills
-
+    existingSkills: [], // need to store the names of existing skills
   });
   // fetching the skills user already have
   const { data: skillsData } = useQuery(QUERY_SKILL_RELATIONSHIPS_BY_USER_ID, {
-    variables: { userId: formState.userId }
+    variables: { userId: formState.userId },
   });
   // modal alert states
   const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     if (skillsData && skillsData.getSkillRelationshipsByUserId) {
       //store in state (the names)
-      const skillNames = skillsData.getSkillRelationshipsByUserId.map(skillRel => skillRel.skill.name)
+      const skillNames = skillsData.getSkillRelationshipsByUserId.map(
+        (skillRel) => skillRel.skill.name
+      );
       setFormState((prevState) => ({
-        ...prevState, existingSkills: skillNames
+        ...prevState,
+        existingSkills: skillNames,
       }));
     }
   }, [skillsData]);
@@ -47,7 +50,6 @@ const SkillAddForm = ({ submitButtonFunction }) => {
       return;
     }
     setFormState({ ...formState, skill: data, skillId: data._id });
-
   }
 
   function handleSubmit(event) {
@@ -226,9 +228,9 @@ const SkillAddForm = ({ submitButtonFunction }) => {
         >
           Add Skill
         </button>
-        <button className="btn btn-danger" onClick={showObject}>
+        {/* <button className="btn btn-danger" onClick={showObject}>
           Show Object
-        </button>
+        </button> */}
       </Form>
       <Modal show={showModal} onHide={() => setShowModal(false)}>
         <Modal.Header closeButton>
