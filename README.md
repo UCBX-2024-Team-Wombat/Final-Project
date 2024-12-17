@@ -72,14 +72,6 @@ Resolve issue with detecting change in & hashing password on update
   - https://stackoverflow.com/a/70000238/8032508
 - Use: `User.js`
 
-## LinkToRender
-
-- https://skillhub-uvg0.onrender.com/
-
-## LinkToRender
-
-- https://skillhub-uvg0.onrender.com/
-
 Handling dynamic content, when rendering lists of elements.
 
 - Source:
@@ -111,3 +103,16 @@ MangoDB logic operations
 
 - https://developer.mozilla.org/en-US/docs/Web/API/WebSocket/close
 - Use: client/components/chat.jsx
+
+To center image on home screen
+-  https://stackoverflow.com/questions/10879955/how-to-align-an-image-dead-center-with-bootstrap 
+
+- https://getbootstrap.com/docs/5.0/forms/form-control/  
+- https://www.w3schools.com/html/html_form_elements.asp 
+- https://www.w3schools.com/js/js_loop_for.asp 
+- https://mongoosejs.com/docs/api/model.html#Model.find()  
+- https://mongoosejs.com/docs/api/model.html#Model.findByIdAndUpdate() 
+
+## LinkToRender
+
+- https://skillhub-uvg0.onrender.com/

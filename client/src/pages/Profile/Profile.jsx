@@ -24,30 +24,40 @@ import {
 } from "../../utils/standardValues.js";
 
 const Profile = () => {
-  const [newUserData, setUserData] = useState();
   const [passwordMissMatch, setPasswordMissMatch] = useState(false);
   const { loading, data } = useQuery(QUERY_ME);
   const [modifyUser] = useMutation(MODIFY_USER);
+  const [newUserData, setNewUserData] = useState({ ...data?.me });
+  const [settingsUpdate, setSettingsUpdate] = useState(false);
+  const [state, dispatch] = useGlobalContext();
+  const [showUpdatModal, setShowUpdateModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [skillRelationshipPayload, setSkillRelationshipPayload] = useState({});
+  const [updateSkill] = useMutation(MODIFY_SKILL_RELATIONSHIP);
+  const [addSkillRelationship] = useMutation(ADD_SKILL_RELATIONSHIP);
+  const styleRouter = new ProfileStyleRouter(state);
+  const { data: relationshipsData, refetch: refetchSkillRelationships } =
+    useQuery(QUERY_SKILL_RELATIONSHIPS_BY_USER_ID, {
+      variables: { userId: AuthService.getProfile().data._id },
+    });
 
-  const userData = useMemo(() => data?.me || {}, [data]);
+  const skillRelationships =
+    relationshipsData?.getSkillRelationshipsByUserId || [];
+
+  const userData = data?.me || {};
 
   useEffect(() => {
     if (userData) {
-      setUserData({
-        username: userData.username,
-        email: userData.email,
-      });
+      setNewUserData({ ...userData });
     }
   }, [userData]);
 
   const stateDisplay = () => {
     const states = [];
 
-    for (let i = 0; i < 50; i++) {
-      states.push(
-        <option value={US_STATES[i].name}>{US_STATES[i].name}</option>
-      );
-    }
+    US_STATES.map((state) => {
+      states.push(<option value={state.name}>{state.name}</option>);
+    });
 
     return states;
   };
@@ -75,24 +85,6 @@ const Profile = () => {
 
     return meeting;
   };
-
-  const [state, dispatch] = useGlobalContext();
-  const [showUpdatModal, setShowUpdateModal] = useState(false);
-  const [showAddModal, setShowAddModal] = useState(false);
-  const [skillRelationshipPayload, setSkillRelationshipPayload] = useState({});
-  const [updateSkill] = useMutation(MODIFY_SKILL_RELATIONSHIP);
-  const [addSkillRelationship] = useMutation(ADD_SKILL_RELATIONSHIP);
-  const styleRouter = new ProfileStyleRouter(state);
-  const {
-    loading: loadingRelationships,
-    data: relationshipsData,
-    refetch: refetchSkillRelationships,
-  } = useQuery(QUERY_SKILL_RELATIONSHIPS_BY_USER_ID, {
-    variables: { userId: AuthService.getProfile().data._id },
-  });
-
-  const skillRelationships =
-    relationshipsData?.getSkillRelationshipsByUserId || [];
 
   function openOfferedModal(payload) {
     setSkillRelationshipPayload({ ...payload, modalType: "offered" });
@@ -195,10 +187,11 @@ const Profile = () => {
     return [];
   };
 
-  const handleChange = (e) => {
+  const handleUserFieldChange = (e) => {
     const { name, value } = e.target;
+    console.log("name", name, "value", value);
 
-    setUserData({
+    setNewUserData({
       ...newUserData,
       [name]: value,
     });
@@ -227,8 +220,6 @@ const Profile = () => {
           userInput: payload,
         },
       });
-
-      alert("Profile updated!");
     } catch (err) {
       console.error(err);
       alert("Error cannot update profile.");
@@ -239,11 +230,16 @@ const Profile = () => {
     e.preventDefault();
 
     try {
+      const formattedNewUserData = { ...newUserData };
+
+      delete formattedNewUserData.__typename;
+      delete formattedNewUserData._id;
+
       await modifyUser({
-        variables: { userId: userData._id, userInput: newUserData },
+        variables: { userId: userData._id, userInput: formattedNewUserData },
       });
 
-      alert("Settings updated!");
+      setSettingsUpdate(true);
     } catch (err) {
       console.log(err);
     }
@@ -305,7 +301,7 @@ const Profile = () => {
                       className="form-control"
                       name="username"
                       value={newUserData.username}
-                      onChange={handleChange}
+                      onChange={handleUserFieldChange}
                     />
                   </div>
                   <div className="mb-3">
@@ -315,7 +311,7 @@ const Profile = () => {
                       className="form-control"
                       name="email"
                       value={newUserData.email}
-                      onChange={handleChange}
+                      onChange={handleUserFieldChange}
                     />
                   </div>
                   <div className="mb-3">
@@ -325,8 +321,8 @@ const Profile = () => {
                       className="form-control"
                       name="bio"
                       rows="3"
-                      value={userData.bio}
-                      onChange={handleChange}
+                      value={newUserData.bio}
+                      onChange={handleUserFieldChange}
                     />
                   </div>
                   <div className="mb-3">
@@ -335,8 +331,8 @@ const Profile = () => {
                       type="text"
                       className="form-control"
                       name="city"
-                      value={userData.city}
-                      onChange={handleChange}
+                      value={newUserData.city}
+                      onChange={handleUserFieldChange}
                     />
                   </div>
                   <div className="mb-3">
@@ -345,9 +341,9 @@ const Profile = () => {
                       id="stateOrProvince"
                       className="form-select"
                       name="stateOrProvince"
-                      value={userData.stateOrProvince}
-                      placeholder={userData.stateOrProvince}
-                      onChange={handleChange}
+                      value={newUserData.stateOrProvince}
+                      placeholder={newUserData.stateOrProvince}
+                      onChange={handleUserFieldChange}
                     >
                       {stateDisplay()}
                     </select>
@@ -358,8 +354,8 @@ const Profile = () => {
                       id="gender"
                       className="form-select"
                       name="gender"
-                      value={userData.gender}
-                      onChange={handleChange}
+                      value={newUserData.gender}
+                      onChange={handleUserFieldChange}
                     >
                       {genderOptions()}
                     </select>
@@ -372,8 +368,8 @@ const Profile = () => {
                       id="meetingPreference"
                       className="form-select"
                       name="meetingPreference"
-                      value={userData.meetingPreference}
-                      onChange={handleChange}
+                      value={newUserData.meetingPreference}
+                      onChange={handleUserFieldChange}
                     >
                       {meetingPreferences()}
                     </select>
@@ -386,11 +382,17 @@ const Profile = () => {
                     >
                       Update My Info
                     </button>
+                    {settingsUpdate ? (
+                      <div className="text-success mt-2 text-center">
+                        Settings updated!
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 </form>
               </Accordion.Body>
             </Accordion.Item>
-
             <Accordion.Item eventKey="1">
               <Accordion.Header className={styleRouter.header}>
                 Change Password
@@ -403,7 +405,7 @@ const Profile = () => {
                       type="password"
                       className="form-control"
                       name="password1"
-                      onChange={handleChange}
+                      onChange={handleUserFieldChange}
                     />
                   </div>
                   <div className="mb-3">
@@ -414,7 +416,7 @@ const Profile = () => {
                       type="password"
                       className="form-control"
                       name="password2"
-                      onChange={handleChange}
+                      onChange={handleUserFieldChange}
                     />
                   </div>
                   <div className="text-danger" hidden={!passwordMissMatch}>
