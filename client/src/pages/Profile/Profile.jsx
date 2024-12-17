@@ -39,6 +39,7 @@ const Profile = () => {
   const { data: relationshipsData, refetch: refetchSkillRelationships } =
     useQuery(QUERY_SKILL_RELATIONSHIPS_BY_USER_ID, {
       variables: { userId: AuthService.getProfile().data._id },
+      pollInterval: 500,
     });
 
   const skillRelationships =
