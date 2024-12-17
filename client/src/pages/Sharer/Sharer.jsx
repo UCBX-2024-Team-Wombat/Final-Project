@@ -29,7 +29,7 @@ const Sharer = () => {
   const { data: sharerData } = useQuery(QUERY_USER, {
     variables: { userId: params.userId },
   });
-  const me = AuthService.getProfile().data;
+  const me = AuthService.getProfile()?.data;
   const sharer = sharerData ? sharerData.user : {};
 
   const {
@@ -90,35 +90,43 @@ const Sharer = () => {
               <Modal.Title>Introduce Yourself!</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              {!messageSent ? (
-                <div className="mb-3">
-                  Let {sharer.username} know that you're interested in trading
-                  skills! Be sure to let them know which skill or skills you'd
-                  like to learn, and what skills you offer that they might be
-                  interested in.
-                </div>
+              {!me ? (
+                <div>Log in or sign up to send messages to other sharers.</div>
               ) : (
-                <></>
-              )}
-              {!messageSent ? (
-                <Form onSubmit={handleSubmitIntroMessage}>
-                  <Form.Group className="mb-3">
-                    <Form.Control
-                      as="textarea"
-                      rows={4}
-                      onChange={(event) => setIntroMessage(event.target.value)}
-                    />
-                  </Form.Group>
-                  <Button className="btn-info w-100" type="submit">
-                    Send Introduction
-                  </Button>
-                </Form>
-              ) : (
-                <div>
-                  Your message has been sent! You can check your inbox to see
-                  when they reply, as well as to check in on any other
-                  conversations you have.
-                </div>
+                <>
+                  {!messageSent ? (
+                    <div className="mb-3">
+                      Let {sharer.username} know that you're interested in
+                      trading skills! Be sure to let them know which skill or
+                      skills you'd like to learn, and what skills you offer that
+                      they might be interested in.
+                    </div>
+                  ) : (
+                    <></>
+                  )}
+                  {!messageSent ? (
+                    <Form onSubmit={handleSubmitIntroMessage}>
+                      <Form.Group className="mb-3">
+                        <Form.Control
+                          as="textarea"
+                          rows={4}
+                          onChange={(event) =>
+                            setIntroMessage(event.target.value)
+                          }
+                        />
+                      </Form.Group>
+                      <Button className="btn-info w-100" type="submit">
+                        Send Introduction
+                      </Button>
+                    </Form>
+                  ) : (
+                    <div>
+                      Your message has been sent! You can check your inbox to
+                      see when they reply, as well as to check in on any other
+                      conversations you have.
+                    </div>
+                  )}
+                </>
               )}
             </Modal.Body>
           </Modal>
